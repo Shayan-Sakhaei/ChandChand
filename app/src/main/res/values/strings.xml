@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ChandChand</string>
+    <string name="fixtures">بازی ها</string>
+    <string name="leagues">لیگ ها</string>
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fixtures_graph"
+        android:icon="@drawable/ic_soccer_field_24"
+        android:menuCategory="secondary"
+        android:title="@string/fixtures" />
+
+    <item
+        android:id="@+id/leagues_graph"
+        android:icon="@drawable/ic_cup_24"
+        android:menuCategory="secondary"
+        android:title="@string/leagues" />
+
+</menu>
