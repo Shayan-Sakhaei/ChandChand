@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/fixtures_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fixtures_graph"
+    app:startDestination="@id/fixturesFragment">
 
+    <fragment
+        android:id="@+id/fixturesFragment"
+        android:name="com.android.chandchand.presentation.fixtures.FixturesFragment"
+        android:label="fragment_fixtures"
+        tools:layout="@layout/fragment_fixtures" />
 </navigation>

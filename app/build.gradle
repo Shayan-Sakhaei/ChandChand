@@ -18,10 +18,12 @@ android {
         applicationId "com.android.chandchand"
         minSdkVersion 19
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -46,6 +48,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -58,6 +64,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //MULTIDEX
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     //FRAGMENT
     implementation("androidx.fragment:fragment-ktx:1.2.5")
@@ -84,4 +93,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("se.ansman.kotshi:api:2.2.3")
     kapt("se.ansman.kotshi:compiler:2.2.3")
+
+    //EPOXY
+    implementation("com.airbnb.android:epoxy:4.1.0")
+    kapt("com.airbnb.android:epoxy-processor:4.1.0")
 }

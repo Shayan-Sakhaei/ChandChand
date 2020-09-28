@@ -6,8 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.android.chandchand.databinding.FragmentLeaguesBinding
+import com.android.chandchand.presentation.model.LeagueTitleModel
+import com.android.chandchand.presentation.model.LeaguesTitleList
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LeaguesFragment : Fragment() {
+
+    @Inject
+    lateinit var leaguesTitleList: LeaguesTitleList
 
     private var _binding: FragmentLeaguesBinding? = null
     private val binding get() = _binding!!
@@ -22,6 +30,22 @@ class LeaguesFragment : Fragment() {
     ): View? {
         _binding = FragmentLeaguesBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        populateLeaguesTitle(leaguesTitleList.leagues)
+    }
+
+    private fun populateLeaguesTitle(leaguesTitle: List<LeagueTitleModel>) {
+        binding.ervLeagues.withModels {
+            leaguesTitle.map {
+                LeagueTitleEpoxyItem(it)
+                    .setSelectedLeagueCallback {
+                    }
+                    .id(it.id).addTo(this)
+            }
+        }
     }
 
     override fun onDestroyView() {

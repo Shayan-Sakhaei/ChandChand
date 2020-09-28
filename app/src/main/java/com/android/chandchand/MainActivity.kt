@@ -8,7 +8,9 @@ import androidx.navigation.NavDestination
 import com.android.chandchand.databinding.ActivityMainBinding
 import com.android.chandchand.presentation.NavigationListener
 import com.android.chandchand.presentation.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationListener {
 
     private lateinit var binding: ActivityMainBinding
@@ -18,6 +20,9 @@ class MainActivity : AppCompatActivity(), NavigationListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -50,5 +55,4 @@ class MainActivity : AppCompatActivity(), NavigationListener {
         arguments: Bundle?
     ) {
     }
-
 }

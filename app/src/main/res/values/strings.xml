@@ -2,4 +2,12 @@
     <string name="app_name">ChandChand</string>
     <string name="fixtures">بازی ها</string>
     <string name="leagues">لیگ ها</string>
+
+    <string name="persian_gulf_cup">لیگ برتر خلیج فارس</string>
+    <string name="english_premier_league">لیگ برتر انگلیس</string>
+    <string name="spanish_la_liga">لالیگا اسپانیا</string>
+    <string name="german_bundesliga_1">بوندسلیگا آلمان</string>
+    <string name="italian_serie_a">سری آ ایتالیا</string>
+    <string name="french_ligue_1">لیگ یک فرانسه</string>
+
 </resources>
