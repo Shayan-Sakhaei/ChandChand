@@ -5,26 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
-import com.android.chandchand.databinding.FragmentLeaguesBinding
-import com.android.chandchand.presentation.model.LeagueTitleModel
-import com.android.chandchand.presentation.model.LeaguesTitleList
+import com.android.chandchand.databinding.FragmentStandingsBinding
+import com.android.chandchand.domain.entities.StandingEntity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class LeaguesFragment : Fragment() {
+class StandingsFragment : Fragment() {
 
     private val viewModel: LeaguesViewModel by navGraphViewModels(R.id.leagues_graph) {
         defaultViewModelProviderFactory
     }
 
-    @Inject
-    lateinit var leaguesTitleList: LeaguesTitleList
-
-    private var _binding: FragmentLeaguesBinding? = null
+    private var _binding: FragmentStandingsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,24 +29,24 @@ class LeaguesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLeaguesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentStandingsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        populateLeaguesTitle(leaguesTitleList.leagues)
+        viewModel.apply {
+            standingsResponse.observe(viewLifecycleOwner, ::populateStandings)
+        }
     }
 
-    private fun populateLeaguesTitle(leaguesTitle: List<LeagueTitleModel>) {
-        binding.ervLeagues.withModels {
-            leaguesTitle.map {
-                LeagueTitleEpoxyItem(it)
-                    .setSelectedLeagueCallback { selectedLeagueTitleModel ->
-                        viewModel.getStandings(selectedLeagueTitleModel.id)
-                        findNavController().navigate(LeaguesFragmentDirections.actionLeaguesFragmentToStandingsFragment())
+    private fun populateStandings(standings: List<StandingEntity>) {
+        binding.ervStandings.withModels {
+            standings.map {
+                StandingEpoxyItem(it)
+                    .setSelectedTeamIdCallback { selectedTeamId ->
                     }
-                    .id(it.id).addTo(this)
+                    .id(it.team_id).addTo(this)
             }
         }
     }

@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.chandchand.data.common.AppJsonAdapterFactory
 import com.android.chandchand.data.common.AuthInterceptor
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -29,7 +30,9 @@ object OkHttpModule {
     @Provides
     fun provideMoshi(): Moshi {
         val builder = Moshi.Builder()
-        builder.add(AppJsonAdapterFactory.INSTANCE)
+        builder
+            .add(AppJsonAdapterFactory.INSTANCE)
+            .add(KotlinJsonAdapterFactory())
         return builder.build()
     }
 

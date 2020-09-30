@@ -1,0 +1,33 @@
+package com.android.chandchand.domain.entities
+
+data class StandingEntity(
+    val rank: Int?,
+    val team_id: Int,
+    val teamName: String?,
+    val logo: String?,
+    val leagueId: String?,
+    val forme: String?,
+    val status: String?,
+    val description: String?,
+    val allMatchsPlayed: Int?,
+    val allWin: Int?,
+    val allDraw: Int?,
+    val allLose: Int?,
+    val allGoalsFor: Int?,
+    val allGoalsAgainst: Int?,
+    val homeMatchsPlayed: Int?,
+    val homeWin: Int?,
+    val homeDraw: Int?,
+    val homeLose: Int?,
+    val homeGoalsFor: Int?,
+    val homeGoalsAgainst: Int?,
+    val awayMatchsPlayed: Int?,
+    val awayWin: Int?,
+    val awayDraw: Int?,
+    val awayLose: Int?,
+    val awayGoalsFor: Int?,
+    val awayGoalsAgainst: Int?,
+    val goalsDiff: Int?,
+    val points: Int?,
+    val lastUpdate: String?
+)

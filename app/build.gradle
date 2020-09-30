@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 Properties localProperties = new Properties()
 if (project.rootProject.file("local.properties").exists()) {
@@ -97,4 +98,13 @@ dependencies {
     //EPOXY
     implementation("com.airbnb.android:epoxy:4.1.0")
     kapt("com.airbnb.android:epoxy-processor:4.1.0")
+
+    //KTX
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07")
+
+    //GLIDE
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 }

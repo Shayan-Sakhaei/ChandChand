@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation
+package com.android.chandchand.presentation.utils
 
 import android.content.Intent
 import android.util.SparseArray

@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.android.chandchand.databinding.ActivityMainBinding
-import com.android.chandchand.presentation.NavigationListener
-import com.android.chandchand.presentation.setupWithNavController
+import com.android.chandchand.presentation.utils.NavigationListener
+import com.android.chandchand.presentation.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
