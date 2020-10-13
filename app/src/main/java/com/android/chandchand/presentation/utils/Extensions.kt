@@ -1,7 +1,12 @@
 package com.android.chandchand.presentation.utils
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.util.SparseArray
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
@@ -11,6 +16,57 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.android.chandchand.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.shape.MaterialShapeDrawable
+import java.text.SimpleDateFormat
+import java.util.*
+
+
+fun Long.toDate(): String {
+    val sdf = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
+    return sdf.format(this)
+}
+
+fun getDateFromToday(days: Int): String {
+    val calendar = Calendar.getInstance()
+    val sdf = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
+    calendar.add(Calendar.DAY_OF_YEAR, days)
+    return sdf.format(Date(calendar.timeInMillis))
+}
+
+fun Long.toHourMin(): String {
+    val hourMinFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val date = Date(this * 1000)
+    return hourMinFormat.format(date)
+}
+
+fun Int.toDp(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
+fun Int.toDpf(): Float = (this / Resources.getSystem().displayMetrics.density)
+fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
+fun Int.toPxf(): Float = (this * Resources.getSystem().displayMetrics.density)
+
+fun View.roundedColoredStrokeBackground(
+    cornerRadius: Int,
+    context: Context,
+    colorResId: Int,
+    strokeColorResId: Int
+) {
+    this.background = MaterialShapeDrawable().apply {
+        setCornerSize(cornerRadius.toPxf())
+        fillColor = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                context,
+                colorResId
+            )
+        )
+        strokeColor = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                context,
+                strokeColorResId
+            )
+        )
+        strokeWidth = 2.toPxf()
+    }
+}
 
 interface NavigationListener : NavController.OnDestinationChangedListener
 

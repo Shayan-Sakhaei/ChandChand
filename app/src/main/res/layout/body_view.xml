@@ -1,0 +1,109 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/iv_prediction_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_prediction_with_border_40" />
+
+        <ImageView
+            android:id="@+id/iv_home_logo"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_prediction_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cup_24" />
+
+        <ImageView
+            android:id="@+id/iv_away_logo"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_prediction_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cup_24" />
+
+        <TextView
+            android:id="@+id/tv_away_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_prediction_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_away_logo"
+            tools:text="پرسپولیس" />
+
+        <TextView
+            android:id="@+id/tv_home_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_prediction_icon"
+            app:layout_constraintTop_toBottomOf="@+id/iv_home_logo"
+            tools:text="سپاهان" />
+
+        <TextView
+            android:id="@+id/tv_match_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_prediction_icon"
+            app:layout_constraintStart_toStartOf="@+id/iv_prediction_icon"
+            app:layout_constraintTop_toBottomOf="@+id/iv_prediction_icon"
+            tools:text="18:00" />
+
+        <TextView
+            android:id="@+id/tv_away_goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/iv_away_logo"
+            app:layout_constraintStart_toStartOf="@+id/iv_away_logo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_away_name"
+            tools:text="4" />
+
+        <TextView
+            android:id="@+id/tv_home_goals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/iv_home_logo"
+            app:layout_constraintStart_toStartOf="@+id/iv_home_logo"
+            app:layout_constraintTop_toBottomOf="@+id/tv_home_name"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/tv_match_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/colorError"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/iv_prediction_icon"
+            app:layout_constraintStart_toStartOf="@+id/iv_prediction_icon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_match_time"
+            tools:text="اتمام بازی" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

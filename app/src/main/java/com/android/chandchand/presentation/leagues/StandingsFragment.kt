@@ -36,7 +36,7 @@ class StandingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.apply {
-            standingsResponse.observe(viewLifecycleOwner, ::populateStandings)
+            standings.observe(viewLifecycleOwner, ::populateStandings)
         }
     }
 

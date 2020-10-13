@@ -9,5 +9,16 @@
         android:id="@+id/fixturesFragment"
         android:name="com.android.chandchand.presentation.fixtures.FixturesFragment"
         android:label="fragment_fixtures"
-        tools:layout="@layout/fragment_fixtures" />
+        tools:layout="@layout/fragment_fixtures" >
+        <action
+            android:id="@+id/action_fixturesFragment_to_somedayFixturesFragment"
+            app:destination="@id/somedayFixturesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/somedayFixturesFragment"
+        android:name="com.android.chandchand.presentation.fixtures.SomedayFixturesFragment"
+        android:label="fragment_someday_fixtures"
+        tools:layout="@layout/fragment_someday_fixtures" />
+
 </navigation>

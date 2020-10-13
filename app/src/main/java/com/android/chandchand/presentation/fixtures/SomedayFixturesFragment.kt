@@ -8,59 +8,59 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
-import com.android.chandchand.databinding.FragmentFixturesBinding
-import com.android.chandchand.presentation.model.DateModel
+import com.android.chandchand.databinding.FragmentSomedayFixturesBinding
+import com.android.chandchand.presentation.model.LeagueModel
+import com.android.chandchand.presentation.utils.WeekDay
 import com.android.chandchand.presentation.utils.toDate
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hamsaa.persiandatepicker.Listener
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 
-
 @AndroidEntryPoint
-class FixturesFragment : Fragment() {
+class SomedayFixturesFragment : Fragment(), FixturesController.HeaderClickListener {
 
     private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
         defaultViewModelProviderFactory
     }
 
-    private var _binding: FragmentFixturesBinding? = null
+    private var _binding: FragmentSomedayFixturesBinding? = null
     private val binding get() = _binding!!
 
     lateinit var datePicker: PersianDatePickerDialog
+
+    private lateinit var fixturesController: FixturesController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFixturesBinding.inflate(layoutInflater, container, false)
+        fixturesController = FixturesController(this)
+        _binding = FragmentSomedayFixturesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.ervSomedayFixtures.setController(fixturesController)
+        viewModel.somedayDateModel.observe(viewLifecycleOwner) { dateModel ->
+            binding.tvDateDescription.text = dateModel.description
+            viewModel.getFixtures(dateModel.date, WeekDay.Someday)
+        }
+        viewModel.somedayFixtures.observe(viewLifecycleOwner) {
+            fixturesController.setData(it)
+        }
         setUp()
     }
 
     private fun setUp() {
-        binding.fixturesViewPager.adapter = FixturesPagerAdapter(this)
-        TabLayoutMediator(binding.fixturesTabLayout, binding.fixturesViewPager) { tab, position ->
-            when (position) {
-                0 -> {
-                    tab.text = getString(R.string.yesterday)
-                }
-                1 -> {
-                    tab.text = getString(R.string.today)
-                }
-                2 -> {
-                    tab.text = getString(R.string.tomorrow)
-                }
-                3 -> {
-                    tab.text = getString(R.string.day_after_tomorrow)
-                }
-            }
-        }.attach()
+        binding.ibClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         datePicker = PersianDatePickerDialog(requireContext())
             .setPositiveButtonResource(R.string.choose)
@@ -72,15 +72,13 @@ class FixturesFragment : Fragment() {
             .setListener(object : Listener {
                 override fun onDateSelected(persianCalendar: PersianCalendar?) {
                     persianCalendar?.run {
-                        val selectedDate = this.timeInMillis.toDate()
-                        val selectedDateDescription = String.format(
+                        binding.tvDateDescription.text = String.format(
                             "%s  %s",
                             getString(R.string.fixtures_of),
                             this.persianLongDate
                         )
-                        viewModel._somedayDateModel.value =
-                            DateModel(selectedDate, selectedDateDescription)
-                        findNavController().navigate(FixturesFragmentDirections.actionFixturesFragmentToSomedayFixturesFragment())
+                        val selectedDate = this.timeInMillis.toDate()
+                        viewModel.getFixtures(selectedDate, WeekDay.Someday)
                     }
                 }
 
@@ -95,5 +93,9 @@ class FixturesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onHeaderClicked(leagueModel: LeagueModel) {
+        viewModel.somedayLeagueTapped(leagueModel)
     }
 }

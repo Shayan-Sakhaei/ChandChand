@@ -17,10 +17,11 @@ class LeaguesViewModel @ViewModelInject constructor(
     private val getStandingsUseCase: GetStandingsUseCase
 ) : ViewModel() {
 
-    private val _standingsResponse = MutableLiveData<List<StandingEntity>>()
-    val standingsResponse: LiveData<List<StandingEntity>> get() = _standingsResponse
+    private val _standings = MutableLiveData<List<StandingEntity>>()
+    val standings: LiveData<List<StandingEntity>> get() = _standings
 
     fun getStandings(leagueId: Int) {
+        _standings.value = emptyList()
         viewModelScope.launch {
             getStandingsUseCase.execute(leagueId)
                 .onStart { }
@@ -28,7 +29,7 @@ class LeaguesViewModel @ViewModelInject constructor(
                 .collect { standingEntities ->
                     when (standingEntities) {
                         is Result.Success -> {
-                            _standingsResponse.value = standingEntities.data
+                            _standings.value = standingEntities.data
                         }
                         is Result.Error -> {
                         }

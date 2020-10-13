@@ -24,4 +24,12 @@
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
 
+    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="tabTextColor">@color/colorWhite70</item>
+        <item name="tabSelectedTextColor">@color/colorWhite</item>
+        <item name="tabIndicatorColor">@color/colorWhite</item>
+        <item name="tabIndicator">@drawable/tab_indicator</item>
+    </style>
+
 </resources>

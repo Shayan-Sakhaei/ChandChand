@@ -10,4 +10,18 @@
     <string name="italian_serie_a">سری آ ایتالیا</string>
     <string name="french_ligue_1">لیگ یک فرانسه</string>
 
+    <string name="yesterday">دیروز</string>
+    <string name="today">امروز</string>
+    <string name="tomorrow">فردا</string>
+    <string name="day_after_tomorrow">پس فردا</string>
+    <string name="calendar">تقویم</string>
+    <string name="quit">انصراف</string>
+    <string name="choose">انتخاب</string>
+
+    <string name="postponed">تعویق</string>
+    <string name="cancelled">کنسل شد</string>
+    <string name="match_finished">اتمام بازی</string>
+    <string name="ongoing">در حال برگذاری</string>
+    <string name="fixtures_of">بازی های</string>
+
 </resources>

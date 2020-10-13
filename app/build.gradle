@@ -100,11 +100,14 @@ dependencies {
     kapt("com.airbnb.android:epoxy-processor:4.1.0")
 
     //KTX
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha07")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-beta01")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-beta01")
 
     //GLIDE
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    kapt("com.github.bumptech.glide:compiler:4.11.0")
+
+    //PERSIAN DATE PICKER
+    implementation("com.github.aliab:Persian-Date-Picker-Dialog:1.5.2")
 }
