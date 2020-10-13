@@ -49,7 +49,8 @@ class LeaguesFragment : Fragment() {
             leaguesTitle.map {
                 LeagueTitleEpoxyItem(it)
                     .setSelectedLeagueCallback { selectedLeagueTitleModel ->
-                        viewModel.getStandings(selectedLeagueTitleModel.id)
+                        viewModel._selectedLeagueTitleModel.value = selectedLeagueTitleModel
+//                        viewModel.getStandings(selectedLeagueTitleModel.id)
                         findNavController().navigate(LeaguesFragmentDirections.actionLeaguesFragmentToStandingsFragment())
                     }
                     .id(it.id).addTo(this)

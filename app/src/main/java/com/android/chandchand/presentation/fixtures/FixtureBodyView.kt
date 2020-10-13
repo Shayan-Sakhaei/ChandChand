@@ -18,7 +18,7 @@ import com.google.android.material.card.MaterialCardView
 class FixtureBodyView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = R.attr.materialCardViewStyle
+    defStyle: Int = R.style.CustomMaterialCardView
 ) : MaterialCardView(context, attrs, defStyle) {
 
     private val binding = BodyViewBinding.inflate(LayoutInflater.from(context), this)

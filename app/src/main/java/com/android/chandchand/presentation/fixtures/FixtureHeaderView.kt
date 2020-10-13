@@ -18,7 +18,7 @@ import com.google.android.material.card.MaterialCardView
 class FixtureHeaderView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = R.attr.materialCardViewStyle
+    defStyle: Int = R.style.CustomMaterialCardView
 ) : MaterialCardView(context, attrs, defStyle) {
 
     private val binding = HeaderViewBinding.inflate(LayoutInflater.from(context), this)

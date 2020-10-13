@@ -24,4 +24,13 @@
     <string name="ongoing">در حال برگذاری</string>
     <string name="fixtures_of">بازی های</string>
 
+    <string name="point">امتیاز</string>
+    <string name="difference">تفاضل</string>
+    <string name="lose">باخت</string>
+    <string name="draw">مساوی</string>
+    <string name="win">برد</string>
+    <string name="match">بازی</string>
+    <string name="table">جدول</string>
+    <string name="statistics">آمار</string>
+
 </resources>

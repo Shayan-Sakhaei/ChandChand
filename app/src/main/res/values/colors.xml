@@ -19,6 +19,26 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 
-    <color name="colorWhite70">#B3FFFFFF</color>
+    <color name="colorWhite00">#00ffffff</color>
+    <color name="colorWhite90">#E6ffffff</color>
+    <color name="colorWhite80">#CCffffff</color>
+    <color name="colorWhite70">#B3ffffff</color>
+    <color name="colorWhite60">#99ffffff</color>
+    <color name="colorWhite50">#80ffffff</color>
+    <color name="colorWhite40">#66ffffff</color>
+    <color name="colorWhite30">#4Dffffff</color>
+    <color name="colorWhite20">#33ffffff</color>
+    <color name="colorWhite10">#1Affffff</color>
+
+    <color name="colorBlack00">#00000000</color>
+    <color name="colorBlack90">#E6000000</color>
+    <color name="colorBlack80">#CC000000</color>
+    <color name="colorBlack70">#B3000000</color>
+    <color name="colorBlack60">#99000000</color>
+    <color name="colorBlack50">#80000000</color>
+    <color name="colorBlack40">#66000000</color>
+    <color name="colorBlack30">#4D000000</color>
+    <color name="colorBlack20">#33000000</color>
+    <color name="colorBlack10">#1A000000</color>
 
 </resources>

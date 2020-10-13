@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentStandingsBinding
@@ -35,9 +36,12 @@ class StandingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.apply {
-            standings.observe(viewLifecycleOwner, ::populateStandings)
+        viewModel.selectedLeagueTitleModel.observe(viewLifecycleOwner) { selectedLeagueTitleModel ->
+            binding.tvTitle.text = selectedLeagueTitleModel.name
+            viewModel.getStandings(selectedLeagueTitleModel.id)
         }
+        viewModel.standings.observe(viewLifecycleOwner, ::populateStandings)
+        setUp()
     }
 
     private fun populateStandings(standings: List<StandingEntity>) {
@@ -48,6 +52,12 @@ class StandingsFragment : Fragment() {
                     }
                     .id(it.team_id).addTo(this)
             }
+        }
+    }
+
+    private fun setUp() {
+        binding.ibBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

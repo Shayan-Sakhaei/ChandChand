@@ -22,6 +22,8 @@
         android:layout_height="54dp"
         android:background="@color/colorBackground"
         android:layoutDirection="rtl"
+        app:itemTextAppearanceActive="@style/CustomBottomNavigationTextAppearanceCaption"
+        app:itemTextAppearanceInactive="@style/CustomBottomNavigationTextAppearanceCaption"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/nav_host_container"
         app:layout_constraintStart_toStartOf="parent"

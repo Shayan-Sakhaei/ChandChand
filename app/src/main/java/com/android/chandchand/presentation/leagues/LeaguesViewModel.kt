@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.entities.StandingEntity
 import com.android.chandchand.domain.usecase.GetStandingsUseCase
+import com.android.chandchand.presentation.model.LeagueTitleModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -16,6 +17,9 @@ import kotlinx.coroutines.launch
 class LeaguesViewModel @ViewModelInject constructor(
     private val getStandingsUseCase: GetStandingsUseCase
 ) : ViewModel() {
+
+    val _selectedLeagueTitleModel = MutableLiveData<LeagueTitleModel>()
+    val selectedLeagueTitleModel: LiveData<LeagueTitleModel> get() = _selectedLeagueTitleModel
 
     private val _standings = MutableLiveData<List<StandingEntity>>()
     val standings: LiveData<List<StandingEntity>> get() = _standings

@@ -1,44 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/league_title_view_root"
+    style="@style/CustomMaterialCardView"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="64dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="12dp"
+    app:elevation="4dp">
 
-    <TextView
-        android:id="@+id/tv_league_title"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/material_text_title"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_league_logo"
-        app:layout_constraintEnd_toStartOf="@+id/iv_league_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_league_logo"
-        tools:text="لیگ برتر خلیج فارس" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_league_logo"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_grip"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_league_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/shabnam_bold"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/material_text_body1"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_league_logo"
+            app:layout_constraintEnd_toStartOf="@+id/iv_league_logo"
+            app:layout_constraintStart_toEndOf="@+id/ib_arrow_left"
+            app:layout_constraintTop_toTopOf="@+id/iv_league_logo"
+            tools:text="لیگ برتر خلیج فارس" />
 
-    <ImageView
-        android:id="@+id/iv_grip"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_grip_24" />
+        <ImageView
+            android:id="@+id/iv_league_logo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_grip"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_persian_gulf_cup_32" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_grip"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_grip_24" />
+
+        <ImageButton
+            android:id="@+id/ib_arrow_left"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

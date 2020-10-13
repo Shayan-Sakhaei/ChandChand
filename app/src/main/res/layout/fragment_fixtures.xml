@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/fixtures_tab_layout"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
             android:layout_marginEnd="56dp"
+            android:fontFamily="@font/shabnam_bold"
             android:gravity="center"
             android:text="@string/fixtures"
             android:textColor="@color/colorWhite"

@@ -13,7 +13,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="41" />
@@ -101,9 +101,21 @@
         android:layout_height="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/shabnam_bold"
         android:gravity="center"
+        android:textColor="@color/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="99" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorBlack10"
+        app:layout_constraintEnd_toEndOf="@+id/tv_team_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_points" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
