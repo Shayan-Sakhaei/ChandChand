@@ -12,8 +12,10 @@ import com.android.chandchand.databinding.FragmentLeaguesBinding
 import com.android.chandchand.presentation.model.LeagueTitleModel
 import com.android.chandchand.presentation.model.LeaguesTitleList
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class LeaguesFragment : Fragment() {
 
@@ -50,7 +52,6 @@ class LeaguesFragment : Fragment() {
                 LeagueTitleEpoxyItem(it)
                     .setSelectedLeagueCallback { selectedLeagueTitleModel ->
                         viewModel._selectedLeagueTitleModel.value = selectedLeagueTitleModel
-//                        viewModel.getStandings(selectedLeagueTitleModel.id)
                         findNavController().navigate(LeaguesFragmentDirections.actionLeaguesFragmentToStandingsFragment())
                     }
                     .id(it.id).addTo(this)
