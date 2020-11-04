@@ -33,7 +33,7 @@ class FixtureEntityUiMapper @Inject constructor() :
                 2857 -> {
                     italianSerieA.add(fixtureEntity)
                 }
-                2795 -> {
+                2755 -> {
                     germanBundesliga1.add(fixtureEntity)
                 }
                 2664 -> {

@@ -7,92 +7,135 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetFixturesUseCase
+import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
 import com.android.chandchand.presentation.model.DateModel
-import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.WeekDay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 class FixturesViewModel @ViewModelInject constructor(
     private val getFixturesUseCase: GetFixturesUseCase,
     private val entityUiMapper: FixtureEntityUiMapper
-) : ViewModel() {
+) : ViewModel(), IModel<FixturesState, FixturesIntent> {
 
-    private val _yesterdayFixtures = MutableLiveData<List<FixturesPerLeagueModel>>()
-    val yesterdayFixtures: LiveData<List<FixturesPerLeagueModel>> get() = _yesterdayFixtures
+    override val intents: Channel<FixturesIntent> = Channel(Channel.UNLIMITED)
+    private val _state = MutableStateFlow(FixturesState())
+    override val state: StateFlow<FixturesState> get() = _state
 
-    private val _todayFixtures = MutableLiveData<List<FixturesPerLeagueModel>>()
-    val todayFixtures: LiveData<List<FixturesPerLeagueModel>> get() = _todayFixtures
+    init {
+        viewModelScope.launch {
+            handleIntent()
+        }
+    }
 
-    private val _tomorrowFixtures = MutableLiveData<List<FixturesPerLeagueModel>>()
-    val tomorrowFixtures: LiveData<List<FixturesPerLeagueModel>> get() = _tomorrowFixtures
-
-    private val _dayAfterTomorrowFixtures = MutableLiveData<List<FixturesPerLeagueModel>>()
-    val dayAfterTomorrowFixtures: LiveData<List<FixturesPerLeagueModel>> get() = _dayAfterTomorrowFixtures
+    private suspend fun handleIntent() {
+        intents.consumeAsFlow().collect {
+            when (it) {
+                is FixturesIntent.GetFixtures -> getFixtures(it.date, it.weekDay)
+            }
+        }
+    }
 
     val _somedayDateModel = MutableLiveData<DateModel>()
     val somedayDateModel: LiveData<DateModel> get() = _somedayDateModel
 
-    private val _somedayFixtures = MutableLiveData<List<FixturesPerLeagueModel>>()
-    val somedayFixtures: LiveData<List<FixturesPerLeagueModel>> get() = _somedayFixtures
+    private suspend fun updateState(handler: suspend (intent: FixturesState) -> FixturesState) {
+        _state.value = handler(state.value)
+    }
 
 
     fun getFixtures(date: String, weekDay: WeekDay) {
         viewModelScope.launch {
-            getFixturesUseCase.execute(date)
-                .onStart { }
-                .catch { }
-                .collect { fixtureEntities ->
-                    when (fixtureEntities) {
-                        is Result.Success -> {
-                            when (weekDay) {
-                                is WeekDay.Yesterday -> {
-                                    _yesterdayFixtures.value =
-                                        entityUiMapper.map(
+            try {
+                updateState { it.copy(isLoading = true) }
+                getFixturesUseCase.execute(date)
+                    .onStart {}
+                    .catch {}
+                    .collect { fixtureEntities ->
+                        when (fixtureEntities) {
+                            is Result.Success -> {
+                                when (weekDay) {
+                                    is WeekDay.Yesterday -> {
+                                        val yesterdayFixtures = entityUiMapper.map(
                                             fixtureEntities.data
                                         )
-                                }
-                                is WeekDay.Today -> {
-                                    _todayFixtures.value =
-                                        entityUiMapper.map(
-                                            fixtureEntities.data
-                                        )
-                                }
-                                is WeekDay.Tomorrow -> {
-                                    _tomorrowFixtures.value =
-                                        entityUiMapper.map(
-                                            fixtureEntities.data
-                                        )
-                                }
-                                is WeekDay.DayAfterTomorrow -> {
-                                    _dayAfterTomorrowFixtures.value =
-                                        entityUiMapper.map(
-                                            fixtureEntities.data
-                                        )
-                                }
-                                is WeekDay.Someday -> {
-                                    _somedayFixtures.value =
-                                        entityUiMapper.map(
-                                            fixtureEntities.data
-                                        )
+                                        updateState {
+                                            it.copy(
+                                                isLoading = false,
+                                                yesterdayFixtures = yesterdayFixtures
+                                            )
+                                        }
+                                    }
+                                    is WeekDay.Today -> {
+                                        val todayFixtures =
+                                            entityUiMapper.map(
+                                                fixtureEntities.data
+                                            )
+                                        updateState {
+                                            it.copy(
+                                                isLoading = false,
+                                                todayFixtures = todayFixtures
+                                            )
+                                        }
+                                    }
+                                    is WeekDay.Tomorrow -> {
+                                        val tomorrowFixtures =
+                                            entityUiMapper.map(
+                                                fixtureEntities.data
+                                            )
+                                        updateState {
+                                            it.copy(
+                                                isLoading = false,
+                                                tomorrowFixtures = tomorrowFixtures
+                                            )
+                                        }
+                                    }
+                                    is WeekDay.DayAfterTomorrow -> {
+                                        val dayAfterTomorrowFixtures =
+                                            entityUiMapper.map(
+                                                fixtureEntities.data
+                                            )
+                                        updateState {
+                                            it.copy(
+                                                isLoading = false,
+                                                dayAfterTomorrowFixtures = dayAfterTomorrowFixtures
+                                            )
+                                        }
+                                    }
+                                    is WeekDay.Someday -> {
+                                        val somedayFixtures =
+                                            entityUiMapper.map(
+                                                fixtureEntities.data
+                                            )
+                                        updateState {
+                                            it.copy(
+                                                isLoading = false,
+                                                somedayFixtures = somedayFixtures
+                                            )
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        is Result.Error -> {
+                            is Result.Error -> {
+                                updateState { it.copy(isLoading = false, errorMessage = "failed!") }
+                            }
                         }
                     }
-                }
+            } catch (e: Exception) {
+                updateState { it.copy(isLoading = false, errorMessage = e.message) }
+            }
         }
     }
 
 
     fun yesterdayLeagueTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _yesterdayFixtures.value
-        if (oldFixturesPerLeague != null) {
+        val oldFixturesPerLeague = _state.value.yesterdayFixtures
+        if (oldFixturesPerLeague.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
             val newFixtureList = oldFixturesPerLeague.map {
                 if (it.leagueModel == leagueModel) {
@@ -101,13 +144,15 @@ class FixturesViewModel @ViewModelInject constructor(
                     it
                 }
             }
-            _yesterdayFixtures.value = newFixtureList
+            viewModelScope.launch {
+                updateState { it.copy(yesterdayFixtures = newFixtureList) }
+            }
         }
     }
 
     fun todayLeagueTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _todayFixtures.value
-        if (oldFixturesPerLeague != null) {
+        val oldFixturesPerLeague = _state.value.todayFixtures
+        if (oldFixturesPerLeague.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
             val newFixtureList = oldFixturesPerLeague.map {
                 if (it.leagueModel == leagueModel) {
@@ -116,13 +161,15 @@ class FixturesViewModel @ViewModelInject constructor(
                     it
                 }
             }
-            _todayFixtures.value = newFixtureList
+            viewModelScope.launch {
+                updateState { it.copy(todayFixtures = newFixtureList) }
+            }
         }
     }
 
     fun tomorrowLeagueTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _tomorrowFixtures.value
-        if (oldFixturesPerLeague != null) {
+        val oldFixturesPerLeague = _state.value.tomorrowFixtures
+        if (oldFixturesPerLeague.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
             val newFixtureList = oldFixturesPerLeague.map {
                 if (it.leagueModel == leagueModel) {
@@ -131,13 +178,15 @@ class FixturesViewModel @ViewModelInject constructor(
                     it
                 }
             }
-            _tomorrowFixtures.value = newFixtureList
+            viewModelScope.launch {
+                updateState { it.copy(tomorrowFixtures = newFixtureList) }
+            }
         }
     }
 
     fun dayAfterTomorrowLeagueTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _dayAfterTomorrowFixtures.value
-        if (oldFixturesPerLeague != null) {
+        val oldFixturesPerLeague = _state.value.dayAfterTomorrowFixtures
+        if (oldFixturesPerLeague.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
             val newFixtureList = oldFixturesPerLeague.map {
                 if (it.leagueModel == leagueModel) {
@@ -146,13 +195,15 @@ class FixturesViewModel @ViewModelInject constructor(
                     it
                 }
             }
-            _dayAfterTomorrowFixtures.value = newFixtureList
+            viewModelScope.launch {
+                updateState { it.copy(dayAfterTomorrowFixtures = newFixtureList) }
+            }
         }
     }
 
     fun somedayLeagueTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _somedayFixtures.value
-        if (oldFixturesPerLeague != null) {
+        val oldFixturesPerLeague = _state.value.somedayFixtures
+        if (oldFixturesPerLeague.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
             val newFixtureList = oldFixturesPerLeague.map {
                 if (it.leagueModel == leagueModel) {
@@ -161,7 +212,9 @@ class FixturesViewModel @ViewModelInject constructor(
                     it
                 }
             }
-            _somedayFixtures.value = newFixtureList
+            viewModelScope.launch {
+                updateState { it.copy(somedayFixtures = newFixtureList) }
+            }
         }
     }
 }

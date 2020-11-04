@@ -32,7 +32,7 @@ class LeaguesTitleList @Inject constructor(@ApplicationContext context: Context)
             LeagueTitleModel(
                 context.getString(R.string.german_bundesliga_1),
                 R.drawable.ic_bundesliga_32,
-                2795
+                2755
             ),
             LeagueTitleModel(
                 context.getString(R.string.french_ligue_1),
