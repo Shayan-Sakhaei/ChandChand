@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_fixturesFragment_to_somedayFixturesFragment"
             app:destination="@id/somedayFixturesFragment" />
+        <action
+            android:id="@+id/action_fixturesFragment_to_liveFixturesFragment"
+            app:destination="@id/liveFixturesFragment" />
     </fragment>
 
     <fragment
@@ -20,5 +23,10 @@
         android:name="com.android.chandchand.presentation.fixtures.SomedayFixturesFragment"
         android:label="fragment_someday_fixtures"
         tools:layout="@layout/fragment_someday_fixtures" />
+    <fragment
+        android:id="@+id/liveFixturesFragment"
+        android:name="com.android.chandchand.presentation.fixtures.livefixtures.LiveFixturesFragment"
+        android:label="fragment_live_fixtures"
+        tools:layout="@layout/fragment_live_fixtures" />
 
 </navigation>

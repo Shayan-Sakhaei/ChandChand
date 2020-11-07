@@ -16,8 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.hamsaa.persiandatepicker.Listener
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FixturesFragment : Fragment() {
 
@@ -89,6 +91,10 @@ class FixturesFragment : Fragment() {
 
         binding.ibCalendar.setOnClickListener {
             datePicker.show()
+        }
+
+        binding.ibTv.setOnClickListener {
+            findNavController().navigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment())
         }
     }
 

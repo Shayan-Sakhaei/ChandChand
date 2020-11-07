@@ -26,12 +26,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_calendar_24" />
 
+        <ImageButton
+            android:id="@+id/ib_tv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ib_calendar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_tv_24" />
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginEnd="56dp"
+            android:layout_marginStart="104dp"
+            android:layout_marginEnd="104dp"
             android:fontFamily="@font/shabnam_bold"
             android:gravity="center"
             android:text="@string/fixtures"

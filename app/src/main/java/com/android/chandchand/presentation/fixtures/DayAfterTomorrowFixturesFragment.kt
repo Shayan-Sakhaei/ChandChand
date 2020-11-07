@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentDayAfterTomorrowFixturesBinding
+import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.WeekDay
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DayAfterTomorrowFixturesFragment : Fragment(), FixturesController.HeaderClickListener,
+class DayAfterTomorrowFixturesFragment : Fragment(), HeaderClickListener,
     IView<FixturesState> {
 
     private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {

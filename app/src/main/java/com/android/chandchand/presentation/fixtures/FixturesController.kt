@@ -1,8 +1,8 @@
 package com.android.chandchand.presentation.fixtures
 
 import com.airbnb.epoxy.TypedEpoxyController
+import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
-import com.android.chandchand.presentation.model.LeagueModel
 
 class FixturesController(
     private val headerClickListener: HeaderClickListener
@@ -35,9 +35,5 @@ class FixturesController(
                 }
             }
         }
-    }
-
-    interface HeaderClickListener {
-        fun onHeaderClicked(leagueModel: LeagueModel)
     }
 }

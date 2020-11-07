@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentSomedayFixturesBinding
+import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.WeekDay
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SomedayFixturesFragment : Fragment(), FixturesController.HeaderClickListener,
+class SomedayFixturesFragment : Fragment(), HeaderClickListener,
     IView<FixturesState> {
 
     private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {

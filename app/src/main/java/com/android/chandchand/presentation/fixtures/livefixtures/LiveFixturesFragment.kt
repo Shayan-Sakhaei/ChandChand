@@ -1,19 +1,17 @@
-package com.android.chandchand.presentation.fixtures
+package com.android.chandchand.presentation.fixtures.livefixtures
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.navGraphViewModels
-import com.android.chandchand.R
-import com.android.chandchand.databinding.FragmentTodayFixturesBinding
+import androidx.navigation.fragment.findNavController
+import com.android.chandchand.databinding.FragmentLiveFixturesBinding
 import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.model.LeagueModel
-import com.android.chandchand.presentation.utils.WeekDay
-import com.android.chandchand.presentation.utils.getDateFromToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
@@ -22,48 +20,58 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class TodayFixturesFragment : Fragment(), HeaderClickListener, IView<FixturesState> {
+class LiveFixturesFragment : Fragment(), HeaderClickListener,
+    IView<LiveFixturesState> {
 
-    private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
+    private val viewModel: LiveFixturesViewModel by viewModels {
         defaultViewModelProviderFactory
     }
 
-    private var _binding: FragmentTodayFixturesBinding? = null
+    private var _binding: FragmentLiveFixturesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var fixturesController: FixturesController
+    private lateinit var liveFixturesController: LiveFixturesController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fixturesController = FixturesController(this)
-        sendIntent(FixturesIntent.GetFixtures(getDateFromToday(0), WeekDay.Today))
+        liveFixturesController = LiveFixturesController(this)
+        sendIntent(LiveFixturesIntent.GetLiveFixtures)
         viewModel.state.onEach { state ->
             render(state)
         }.launchIn(lifecycleScope)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTodayFixturesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentLiveFixturesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ervTodayFixtures.setController(fixturesController)
+        binding.ervLiveFixtures.setController(liveFixturesController)
+        setUp()
     }
 
-    private fun sendIntent(intent: FixturesIntent) {
+    private fun sendIntent(intent: LiveFixturesIntent) {
         lifecycleScope.launch {
             viewModel.intents.send(intent)
         }
     }
 
-    override fun render(state: FixturesState) {
+
+    override fun render(state: LiveFixturesState) {
         with(state) {
-            fixturesController.setData(todayFixtures)
+            liveFixturesController.setData(liveFixtures)
+        }
+    }
+
+    private fun setUp() {
+        binding.ibClose.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
@@ -73,6 +81,6 @@ class TodayFixturesFragment : Fragment(), HeaderClickListener, IView<FixturesSta
     }
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
-        viewModel.todayLeagueTapped(leagueModel)
+        viewModel.onLeagueTapped(leagueModel)
     }
 }
