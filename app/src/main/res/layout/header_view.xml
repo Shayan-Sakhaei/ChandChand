@@ -4,7 +4,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="64dp"
+        android:background="?attr/colorSurface">
 
         <ImageView
             android:id="@+id/iv_drop_down_arrow_icon"
@@ -14,12 +15,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_drop_down_arrow_down_24" />
+            app:srcCompat="@drawable/ic_drop_down_arrow_down_24"
+            app:tint="?attr/colorArrowIcon" />
 
         <TextView
             android:id="@+id/tv_fixtures_count"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="12dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"

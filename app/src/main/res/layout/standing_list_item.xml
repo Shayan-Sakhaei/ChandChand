@@ -13,7 +13,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryVariant"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="41" />
@@ -103,7 +103,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/shabnam_bold"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryVariant"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="99" />

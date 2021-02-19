@@ -1,11 +1,11 @@
 package com.android.chandchand.presentation.fixtures
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.android.chandchand.presentation.common.HeaderClickListener
+import com.android.chandchand.presentation.common.LeagueFixturesClickListener
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 
 class FixturesController(
-    private val headerClickListener: HeaderClickListener
+    private val leagueFixturesClickListener: LeagueFixturesClickListener
 ) : TypedEpoxyController<List<FixturesPerLeagueModel>>() {
 
     override fun buildModels(container: List<FixturesPerLeagueModel>?) {
@@ -15,7 +15,7 @@ class FixturesController(
                 leagueModel(fixtureModel.leagueModel)
                 onHeaderExpanded { model, _, _, _ ->
                     model.leagueModel().let { league ->
-                        headerClickListener.onHeaderClicked(league)
+                        leagueFixturesClickListener.onHeaderClicked(league)
                     }
                 }
             }
@@ -31,6 +31,13 @@ class FixturesController(
                         awayGoals(fixtureEntity.goals_away)
                         status(fixtureEntity.status_short)
                         time(fixtureEntity.timestamp)
+                        onPredictionClicked { _, _, _, _ ->
+                            leagueFixturesClickListener.onPredictionClicked(
+                                fixtureEntity.id,
+                                fixtureEntity.home_team_logo,
+                                fixtureEntity.away_team_logo
+                            )
+                        }
                     }
                 }
             }

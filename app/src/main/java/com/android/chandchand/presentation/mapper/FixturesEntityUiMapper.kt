@@ -21,7 +21,7 @@ class FixtureEntityUiMapper @Inject constructor() :
 
         item.map { fixtureEntity ->
             when (fixtureEntity.league_id) {
-                923 -> {
+                3030 -> {
                     persianGulfCup.add(fixtureEntity)
                 }
                 2790 -> {

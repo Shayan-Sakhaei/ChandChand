@@ -1,13 +1,13 @@
 package com.android.chandchand.presentation.fixtures.livefixtures
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.android.chandchand.presentation.common.HeaderClickListener
+import com.android.chandchand.presentation.common.LeagueFixturesClickListener
 import com.android.chandchand.presentation.fixtures.fixtureBodyView
 import com.android.chandchand.presentation.fixtures.fixtureHeaderView
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 
 class LiveFixturesController(
-    private val headerClickListener: HeaderClickListener
+    private val leagueFixturesClickListener: LeagueFixturesClickListener
 ) : TypedEpoxyController<LiveFixturesPerLeagueModels>() {
 
     override fun buildModels(contanier: LiveFixturesPerLeagueModels?) {
@@ -20,7 +20,7 @@ class LiveFixturesController(
                     leagueModel(liveFixtureModel.leagueModel)
                     onHeaderExpanded { model, _, _, _ ->
                         model.leagueModel().let { league ->
-                            headerClickListener.onHeaderClicked(league)
+                            leagueFixturesClickListener.onHeaderClicked(league)
                         }
                     }
                 }

@@ -11,14 +11,14 @@ import com.android.chandchand.R
 import com.android.chandchand.databinding.HeaderViewBinding
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.roundedColoredStrokeBackground
-import com.android.chandchand.presentation.utils.toPxf
+import com.android.chandchand.presentation.utils.toDpf
 import com.google.android.material.card.MaterialCardView
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 class FixtureHeaderView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = R.style.CustomMaterialCardView
+    defStyle: Int = R.style.ShapeAppearance_ChandChand_MediumComponent
 ) : MaterialCardView(context, attrs, defStyle) {
 
     private val binding = HeaderViewBinding.inflate(LayoutInflater.from(context), this)
@@ -42,13 +42,13 @@ class FixtureHeaderView @JvmOverloads constructor(
     init {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         useCompatPadding = true
-        cardElevation = 4.toPxf()
-        radius = 12.toPxf()
+        cardElevation = 4.toDpf()
+        radius = 12.toDpf()
         setOnClickListener { onHeaderExpanded?.onClick(this) }
         binding.tvFixturesCount.roundedColoredStrokeBackground(
-            8,
+            10,
             context,
-            R.color.colorWhite,
+            R.color.colorCountBackground,
             R.color.colorPrimary
         )
     }

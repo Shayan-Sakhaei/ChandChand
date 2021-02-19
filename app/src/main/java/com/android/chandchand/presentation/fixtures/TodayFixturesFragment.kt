@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentTodayFixturesBinding
-import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
+import com.android.chandchand.presentation.common.LeagueFixturesClickListener
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.WeekDay
 import com.android.chandchand.presentation.utils.getDateFromToday
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class TodayFixturesFragment : Fragment(), HeaderClickListener, IView<FixturesState> {
+class TodayFixturesFragment : Fragment(), LeagueFixturesClickListener, IView<FixturesState> {
 
     private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
         defaultViewModelProviderFactory
@@ -74,5 +75,13 @@ class TodayFixturesFragment : Fragment(), HeaderClickListener, IView<FixturesSta
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
         viewModel.todayLeagueTapped(leagueModel)
+    }
+
+    override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {
+        findNavController().navigate(
+            FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                fixtureId, homeTeamLogo, awayTeamLogo
+            )
+        )
     }
 }

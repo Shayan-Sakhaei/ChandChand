@@ -1,7 +1,7 @@
 package com.android.chandchand.domain.entities
 
 data class FixtureEntity(
-    val id: Int?,
+    val id: Int,
     val league_id: Int?,
     val league_name: String?,
     val league_country: String?,

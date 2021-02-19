@@ -2,24 +2,30 @@
 <resources>
 
     <color name="colorPrimary">#2CC78A</color>
-    <color name="colorPrimaryDark">#1F8B60</color>
     <color name="colorPrimaryVariant">#1F8B60</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorSecondary">#313182</color>
+    <color name="colorPrimaryDark">#1F8B60</color>
+    <color name="colorSecondary">#2C57C7</color>
     <color name="colorSecondaryVariant">#202055</color>
-    <color name="colorOnSecondary">#FFFFFF</color>
-
-    <color name="colorBackground">#FAFAFA</color>
-    <color name="colorOnBackground">#323232</color>
-    <color name="colorSurface">#FAFAFA</color>
-    <color name="colorOnSurface">#000000</color>
+    <color name="colorBackground">#F7F9FA</color>
+    <color name="colorSurface">#FFFFFF</color>
     <color name="colorError">#EB3D63</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorOnBackground">#272A2F</color>
+    <color name="colorOnSurface">#272A2F</color>
     <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorText">#000000</color>
+    <color name="colorAppBar">#2CC78A</color>
+    <color name="colorCountBackground">#FFFFFF</color>
+    <color name="colorArrowIcon">#939497</color>
+    <color name="colorSurfaceSecondary">#F7F9FA</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 
-    <color name="colorWhite00">#00ffffff</color>
+    <color name="colorBorder">#E3E9F5</color>
+
     <color name="colorWhite90">#E6ffffff</color>
     <color name="colorWhite80">#CCffffff</color>
     <color name="colorWhite70">#B3ffffff</color>
@@ -30,7 +36,6 @@
     <color name="colorWhite20">#33ffffff</color>
     <color name="colorWhite10">#1Affffff</color>
 
-    <color name="colorBlack00">#00000000</color>
     <color name="colorBlack90">#E6000000</color>
     <color name="colorBlack80">#CC000000</color>
     <color name="colorBlack70">#B3000000</color>

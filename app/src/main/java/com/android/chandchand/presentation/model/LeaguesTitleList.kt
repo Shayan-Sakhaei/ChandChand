@@ -12,7 +12,7 @@ class LeaguesTitleList @Inject constructor(@ApplicationContext context: Context)
             LeagueTitleModel(
                 context.getString(R.string.persian_gulf_cup),
                 R.drawable.ic_persian_gulf_cup_32,
-                923
+                3030
             ),
             LeagueTitleModel(
                 context.getString(R.string.english_premier_league),

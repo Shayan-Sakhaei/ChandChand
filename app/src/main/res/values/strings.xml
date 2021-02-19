@@ -33,5 +33,7 @@
     <string name="table">جدول</string>
     <string name="statistics">آمار</string>
     <string name="ongoing_fixtures">بازی های در حال برگزاری</string>
+    <string name="fixture_prediction">پیش بینی بازی</string>
 
+    <string name="standings_transition_name">standings</string>
 </resources>

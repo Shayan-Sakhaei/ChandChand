@@ -1,9 +1,11 @@
 package com.android.chandchand.presentation.leagues
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -12,6 +14,8 @@ import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentStandingsBinding
 import com.android.chandchand.domain.entities.StandingEntity
 import com.android.chandchand.presentation.common.IView
+import com.android.chandchand.presentation.utils.themeColor
+import com.google.android.material.transition.MaterialContainerTransform
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
@@ -31,6 +35,13 @@ class StandingsFragment : Fragment(), IView<LeaguesState> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedElementEnterTransition = MaterialContainerTransform().apply {
+            drawingViewId = R.id.nav_host_container
+            duration = resources.getInteger(R.integer.reply_motion_duration_long).toLong()
+            scrimColor = Color.TRANSPARENT
+            setAllContainerColors(requireContext().themeColor(R.attr.colorSurface))
+        }
     }
 
     override fun onCreateView(
@@ -43,6 +54,7 @@ class StandingsFragment : Fragment(), IView<LeaguesState> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ViewCompat.setTransitionName(binding.root, getString(R.string.standings_transition_name))
         viewModel.selectedLeagueTitleModel.observe(viewLifecycleOwner) { selectedLeagueTitleModel ->
             binding.tvTitle.text = selectedLeagueTitleModel.name
             sendIntent(LeaguesIntent.GetStandings(selectedLeagueTitleModel.id))

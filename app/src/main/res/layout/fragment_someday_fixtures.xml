@@ -11,7 +11,7 @@
         android:id="@+id/someday_toolbar"
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorAppBar"
         app:layout_constraintEnd_toStartOf="@+id/fixtures_tab_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

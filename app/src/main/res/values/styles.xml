@@ -1,61 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="colorOnBackground">@color/colorOnBackground</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
-        <item name="colorError">@color/colorError</item>
-        <item name="colorOnError">@color/colorOnError</item>
 
-        <item name="android:fontFamily">@font/shabnam</item>
-
-        <item name="android:textViewStyle">@style/CustomTextView</item>
-    </style>
-
-    <style name="CustomTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/colorOnSurface</item>
-    </style>
-
-    <style name="CustomBottomNavigationTextAppearanceCaption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="fontFamily">@font/shabnam_bold</item>
-        <item name="android:fontFamily">@font/shabnam_bold</item>
-    </style>
-
-    <style name="CustomTabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="android:background">@color/colorPrimary</item>
+    <style name="ChandChandTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">?attr/colorAppBar</item>
         <item name="tabTextColor">@color/colorWhite70</item>
         <item name="tabSelectedTextColor">@color/colorWhite</item>
         <item name="tabIndicatorColor">@color/colorWhite</item>
         <item name="tabIndicator">@drawable/tab_indicator</item>
-        <item name="tabTextAppearance">@style/CustomTabLayoutTextAppearance</item>
-    </style>
-
-    <style name="CustomTabLayoutTextAppearance" parent="TextAppearance.MaterialComponents.Button">
-        <item name="fontFamily">@font/shabnam_bold</item>
-        <item name="android:fontFamily">@font/shabnam_bold</item>
-    </style>
-
-    <style name="CustomMaterialCardView" parent="Widget.MaterialComponents.CardView">
-        <item name="materialThemeOverlay">@style/CustomMaterialCardThemeOverlay</item>
-        <item name="shapeAppearance">@style/CustomMaterialCardShapeAppearance</item>
-    </style>
-
-    <style name="CustomMaterialCardThemeOverlay" parent="">
-        <item name="colorSurface">@color/colorWhite</item>
-        <item name="colorOnSurface">@color/colorWhite10</item>
-    </style>
-
-    <style name="CustomMaterialCardShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">12dp</item>
+        <item name="tabTextAppearance">@style/TextAppearance.ChandChand.Button</item>
     </style>
 
 </resources>

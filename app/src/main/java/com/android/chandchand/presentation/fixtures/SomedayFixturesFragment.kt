@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentSomedayFixturesBinding
-import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
+import com.android.chandchand.presentation.common.LeagueFixturesClickListener
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.WeekDay
 import com.android.chandchand.presentation.utils.toDate
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SomedayFixturesFragment : Fragment(), HeaderClickListener,
+class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
     IView<FixturesState> {
 
     private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
@@ -118,5 +118,13 @@ class SomedayFixturesFragment : Fragment(), HeaderClickListener,
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
         viewModel.somedayLeagueTapped(leagueModel)
+    }
+
+    override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {
+        findNavController().navigate(
+            SomedayFixturesFragmentDirections.actionSomedayFixturesFragmentToPredictionsFragment(
+                fixtureId, homeTeamLogo, awayTeamLogo
+            )
+        )
     }
 }

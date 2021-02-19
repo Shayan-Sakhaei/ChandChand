@@ -10,7 +10,7 @@
         android:id="@+id/fixtures_toolbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorAppBar"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +57,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fixtures_tab_layout"
-        style="@style/CustomTabLayout"
+        style="@style/ChandChandTabLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layoutDirection="rtl"

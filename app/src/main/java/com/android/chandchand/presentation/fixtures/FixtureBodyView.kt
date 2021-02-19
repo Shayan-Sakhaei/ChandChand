@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.AfterPropsSet
+import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.android.chandchand.R
@@ -18,7 +19,7 @@ import com.google.android.material.card.MaterialCardView
 class FixtureBodyView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = R.style.CustomMaterialCardView
+    defStyle: Int = R.style.ShapeAppearance_ChandChand_MediumComponent
 ) : MaterialCardView(context, attrs, defStyle) {
 
     private val binding = BodyViewBinding.inflate(LayoutInflater.from(context), this)
@@ -39,6 +40,8 @@ class FixtureBodyView @JvmOverloads constructor(
         @ModelProp set
     var time: Long? = null
         @ModelProp set
+    var onPredictionClicked: OnClickListener? = null
+        @CallbackProp set
 
     @AfterPropsSet
     fun bind() {
@@ -76,7 +79,6 @@ class FixtureBodyView @JvmOverloads constructor(
                 binding.tvMatchStatus.text = context.getString(R.string.match_finished)
                 binding.tvHomeGoals.text = homeGoals
                 binding.tvAwayGoals.text = awayGoals
-                binding.ivPredictionIcon.isEnabled = false
                 binding.tvMatchStatus.isVisible = true
                 binding.tvHomeGoals.isVisible = true
                 binding.tvAwayGoals.isVisible = true
@@ -96,7 +98,8 @@ class FixtureBodyView @JvmOverloads constructor(
     init {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         useCompatPadding = true
-        cardElevation = 4.toPxf()
-        radius = 12.toPxf()
+        cardElevation = 4.toDpf()
+        radius = 12.toDpf()
+        binding.ivPredictionIcon.setOnClickListener { onPredictionClicked?.onClick(it) }
     }
 }

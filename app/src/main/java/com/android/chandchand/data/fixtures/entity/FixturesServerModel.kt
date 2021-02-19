@@ -14,7 +14,7 @@ data class FixApi(
 )
 
 data class FixFixtures(
-    @Json(name = "fixture_id") val fixture_id: Int? = 0,
+    @Json(name = "fixture_id") val fixture_id: Int,
     @Json(name = "league_id") val league_id: Int? = 0,
     @Json(name = "league") val league: FixLeague,
     @Json(name = "event_date") val event_date: String? = "",

@@ -1,12 +1,25 @@
 package com.android.chandchand.presentation.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.util.SparseArray
+import android.util.TypedValue
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.Interpolator
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.StyleRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.use
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
@@ -15,20 +28,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.android.chandchand.R
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.MaterialShapeDrawable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 fun Long.toDate(): String {
-    val sdf = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return sdf.format(this)
 }
 
 fun getDateFromToday(days: Int): String {
     val calendar = Calendar.getInstance()
-    val sdf = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     calendar.add(Calendar.DAY_OF_YEAR, days)
     return sdf.format(Date(calendar.timeInMillis))
 }
@@ -39,10 +55,10 @@ fun Long.toHourMin(): String {
     return hourMinFormat.format(date)
 }
 
-fun Int.toDp(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
-fun Int.toDpf(): Float = (this / Resources.getSystem().displayMetrics.density)
-fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
-fun Int.toPxf(): Float = (this * Resources.getSystem().displayMetrics.density)
+fun Int.toPx(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
+fun Int.toPxf(): Float = (this / Resources.getSystem().displayMetrics.density)
+fun Int.toDp(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
+fun Int.toDpf(): Float = (this * Resources.getSystem().displayMetrics.density)
 
 fun View.roundedColoredStrokeBackground(
     cornerRadius: Int,
@@ -51,7 +67,7 @@ fun View.roundedColoredStrokeBackground(
     strokeColorResId: Int
 ) {
     this.background = MaterialShapeDrawable().apply {
-        setCornerSize(cornerRadius.toPxf())
+        setCornerSize(cornerRadius.toDpf())
         fillColor = ColorStateList.valueOf(
             ContextCompat.getColor(
                 context,
@@ -64,8 +80,45 @@ fun View.roundedColoredStrokeBackground(
                 strokeColorResId
             )
         )
-        strokeWidth = 2.toPxf()
+        strokeWidth = 2.toDpf()
     }
+}
+
+suspend fun bitmapFromUrl(context: Context, url: String): Bitmap = withContext(Dispatchers.IO) {
+    Glide.with(context).asBitmap().load(url).submit(64.toDp(), 64.toDp()).get()
+}
+
+@ColorInt
+@SuppressLint("Recycle")
+fun Context.themeColor(
+    @AttrRes themeAttrId: Int
+): Int {
+    return obtainStyledAttributes(
+        intArrayOf(themeAttrId)
+    ).use {
+        it.getColor(0, Color.MAGENTA)
+    }
+}
+
+@StyleRes
+fun Context.themeStyle(@AttrRes attr: Int): Int {
+    val tv = TypedValue()
+    theme.resolveAttribute(attr, tv, true)
+    return tv.data
+}
+
+@SuppressLint("Recycle")
+fun Context.themeInterpolator(@AttrRes attr: Int): Interpolator {
+    return AnimationUtils.loadInterpolator(
+        this,
+        obtainStyledAttributes(intArrayOf(attr)).use {
+            it.getResourceId(0, android.R.interpolator.fast_out_slow_in)
+        }
+    )
+}
+
+fun Context.getDrawableOrNull(@DrawableRes id: Int?): Drawable? {
+    return if (id == null || id == 0) null else AppCompatResources.getDrawable(this, id)
 }
 
 interface NavigationListener : NavController.OnDestinationChangedListener

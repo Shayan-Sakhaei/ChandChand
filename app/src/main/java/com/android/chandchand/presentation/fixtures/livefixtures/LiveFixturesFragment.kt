@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android.chandchand.databinding.FragmentLiveFixturesBinding
-import com.android.chandchand.presentation.common.HeaderClickListener
 import com.android.chandchand.presentation.common.IView
+import com.android.chandchand.presentation.common.LeagueFixturesClickListener
 import com.android.chandchand.presentation.model.LeagueModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class LiveFixturesFragment : Fragment(), HeaderClickListener,
+class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
     IView<LiveFixturesState> {
 
     private val viewModel: LiveFixturesViewModel by viewModels {
@@ -39,7 +39,6 @@ class LiveFixturesFragment : Fragment(), HeaderClickListener,
         viewModel.state.onEach { state ->
             render(state)
         }.launchIn(lifecycleScope)
-
     }
 
     override fun onCreateView(
@@ -82,5 +81,13 @@ class LiveFixturesFragment : Fragment(), HeaderClickListener,
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
         viewModel.onLeagueTapped(leagueModel)
+    }
+
+    override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {
+        findNavController().navigate(
+            LiveFixturesFragmentDirections.actionLiveFixturesFragmentToPredictionsFragment(
+                fixtureId, homeTeamLogo, awayTeamLogo
+            )
+        )
     }
 }

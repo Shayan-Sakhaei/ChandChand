@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorAppBar" format="color" />
+    <attr name="colorCountBackground" format="color" />
+    <attr name="colorArrowIcon" format="color" />
+    <attr name="colorSurfaceSecondary" format="color" />
+</resources>

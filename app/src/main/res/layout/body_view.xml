@@ -5,13 +5,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
         android:paddingBottom="16dp">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_prediction_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_prediction_icon"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cup_24" />
+            app:srcCompat="@drawable/ic_flag_placeholder_32" />
 
         <ImageView
             android:id="@+id/iv_away_logo"
@@ -35,7 +37,7 @@
             app:layout_constraintEnd_toStartOf="@+id/iv_prediction_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cup_24" />
+            app:srcCompat="@drawable/ic_flag_placeholder_32" />
 
         <TextView
             android:id="@+id/tv_away_name"

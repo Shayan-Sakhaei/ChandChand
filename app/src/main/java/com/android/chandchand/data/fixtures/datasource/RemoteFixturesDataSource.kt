@@ -8,7 +8,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RemoteFixturesDataSource @Inject constructor(
-    private val api: FixturesApi,
+    private val api: FixturesApi
 ) : FixturesDataSource {
     override suspend fun getFixturesByDate(date: String): Response<FixturesServerModel> =
         api.getAllFixturesByDate(date)

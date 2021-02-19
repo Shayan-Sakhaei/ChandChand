@@ -1,0 +1,37 @@
+<resources>
+
+    <style name="Theme.ChandChand" parent="Base.Theme.ChandChand">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorError">@color/colorError</item>
+
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <item name="android:textColor">@color/colorText</item>
+
+        <item name="colorAppBar">@color/colorAppBar</item>
+        <item name="colorCountBackground">@color/colorCountBackground</item>
+        <item name="colorArrowIcon">@color/colorArrowIcon</item>
+        <item name="colorSurfaceSecondary">@color/colorCountBackground</item>
+    </style>
+
+    <style name="Base.Theme.ChandChand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+        <!--        <item name="android:windowLightStatusBar" tools:ignore="newApi">?attr/isLightTheme</item>-->
+        <item name="android:fontFamily">@font/shabnam</item>
+        <item name="shapeAppearanceMediumComponent">
+            @style/ShapeAppearance.ChandChand.MediumComponent
+        </item>
+    </style>
+
+</resources>
