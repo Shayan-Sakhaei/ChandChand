@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation.fixtures.livefixtures
+package com.android.chandchand.presentation.fixtures.daily
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.android.chandchand.databinding.FragmentLiveFixturesBinding
+import com.android.chandchand.databinding.FragmentTomorrowFixturesBinding
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.common.LeagueFixturesClickListener
+import com.android.chandchand.presentation.fixtures.*
 import com.android.chandchand.presentation.model.LeagueModel
+import com.android.chandchand.presentation.utils.getDateFromToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
@@ -20,22 +22,22 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
-    IView<LiveFixturesState> {
+class TomorrowFixturesFragment : Fragment(), LeagueFixturesClickListener,
+    IView<FixturesState> {
 
-    private val viewModel: LiveFixturesViewModel by viewModels {
+    private val viewModel: FixturesViewModel by viewModels {
         defaultViewModelProviderFactory
     }
 
-    private var _binding: FragmentLiveFixturesBinding? = null
+    private var _binding: FragmentTomorrowFixturesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var liveFixturesController: LiveFixturesController
+    private lateinit var fixturesController: FixturesController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        liveFixturesController = LiveFixturesController(this)
-        sendIntent(LiveFixturesIntent.GetLiveFixtures)
+        fixturesController = FixturesController(this)
+        sendIntent(FixturesIntent.GetFixtures(getDateFromToday(1)))
         viewModel.state.onEach { state ->
             render(state)
         }.launchIn(lifecycleScope)
@@ -45,32 +47,24 @@ class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLiveFixturesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentTomorrowFixturesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ervLiveFixtures.setController(liveFixturesController)
-        setUp()
+        binding.ervTomorrowFixtures.setController(fixturesController)
     }
 
-    private fun sendIntent(intent: LiveFixturesIntent) {
+    private fun sendIntent(intent: FixturesIntent) {
         lifecycleScope.launch {
             viewModel.intents.send(intent)
         }
     }
 
-
-    override fun render(state: LiveFixturesState) {
+    override fun render(state: FixturesState) {
         with(state) {
-            liveFixturesController.setData(liveFixtures)
-        }
-    }
-
-    private fun setUp() {
-        binding.ibClose.setOnClickListener {
-            findNavController().navigateUp()
+            fixturesController.setData(fixtures)
         }
     }
 
@@ -80,12 +74,12 @@ class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
     }
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
-        viewModel.onLeagueTapped(leagueModel)
+        viewModel.onLeagueHeaderTapped(leagueModel)
     }
 
     override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {
         findNavController().navigate(
-            LiveFixturesFragmentDirections.actionLiveFixturesFragmentToPredictionsFragment(
+            FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
                 fixtureId, homeTeamLogo, awayTeamLogo
             )
         )

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.fixtures.livefixtures.LiveFixturesFragment">
+    tools:context=".presentation.fixtures.live.LiveFixturesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/live_toolbar"

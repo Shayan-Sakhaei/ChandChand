@@ -23,16 +23,22 @@
 
     <fragment
         android:id="@+id/somedayFixturesFragment"
-        android:name="com.android.chandchand.presentation.fixtures.SomedayFixturesFragment"
+        android:name="com.android.chandchand.presentation.fixtures.daily.SomedayFixturesFragment"
         android:label="fragment_someday_fixtures"
         tools:layout="@layout/fragment_someday_fixtures" >
         <action
             android:id="@+id/action_somedayFixturesFragment_to_predictionsFragment"
             app:destination="@id/predictionsFragment" />
+        <argument
+            android:name="selectedDate"
+            app:argType="string" />
+        <argument
+            android:name="selectedDateDescription"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/liveFixturesFragment"
-        android:name="com.android.chandchand.presentation.fixtures.livefixtures.LiveFixturesFragment"
+        android:name="com.android.chandchand.presentation.fixtures.live.LiveFixturesFragment"
         android:label="fragment_live_fixtures"
         tools:layout="@layout/fragment_live_fixtures" >
         <action

@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation.fixtures.livefixtures
+package com.android.chandchand.presentation.fixtures.live
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -74,7 +74,7 @@ class LiveFixturesViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onLeagueTapped(leagueModel: LeagueModel) {
+    fun onLeagueHeaderTapped(leagueModel: LeagueModel) {
         val oldFixturesPerLeague = _state.value.liveFixtures
         if (oldFixturesPerLeague.entities.isNotEmpty()) {
             val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())

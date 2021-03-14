@@ -1,19 +1,18 @@
-package com.android.chandchand.presentation.fixtures
+package com.android.chandchand.presentation.fixtures.daily
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
-import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentTodayFixturesBinding
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.common.LeagueFixturesClickListener
+import com.android.chandchand.presentation.fixtures.*
 import com.android.chandchand.presentation.model.LeagueModel
-import com.android.chandchand.presentation.utils.WeekDay
 import com.android.chandchand.presentation.utils.getDateFromToday
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +24,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class TodayFixturesFragment : Fragment(), LeagueFixturesClickListener, IView<FixturesState> {
 
-    private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
+    private val viewModel: FixturesViewModel by viewModels {
         defaultViewModelProviderFactory
     }
 
@@ -37,7 +36,7 @@ class TodayFixturesFragment : Fragment(), LeagueFixturesClickListener, IView<Fix
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fixturesController = FixturesController(this)
-        sendIntent(FixturesIntent.GetFixtures(getDateFromToday(0), WeekDay.Today))
+        sendIntent(FixturesIntent.GetFixtures(getDateFromToday(0)))
         viewModel.state.onEach { state ->
             render(state)
         }.launchIn(lifecycleScope)
@@ -64,7 +63,7 @@ class TodayFixturesFragment : Fragment(), LeagueFixturesClickListener, IView<Fix
 
     override fun render(state: FixturesState) {
         with(state) {
-            fixturesController.setData(todayFixtures)
+            fixturesController.setData(fixtures)
         }
     }
 
@@ -74,7 +73,7 @@ class TodayFixturesFragment : Fragment(), LeagueFixturesClickListener, IView<Fix
     }
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
-        viewModel.todayLeagueTapped(leagueModel)
+        viewModel.onLeagueHeaderTapped(leagueModel)
     }
 
     override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {

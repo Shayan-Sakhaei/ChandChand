@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fixtures.DayAfterTomorrowFixturesFragment">
+    tools:context=".presentation.fixtures.daily.DayAfterTomorrowFixturesFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/erv_day_after_tomorrow_fixtures"

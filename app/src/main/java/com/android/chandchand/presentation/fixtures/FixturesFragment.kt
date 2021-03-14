@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentFixturesBinding
-import com.android.chandchand.presentation.model.DateModel
 import com.android.chandchand.presentation.utils.toDate
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +21,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FixturesFragment : Fragment() {
-
-    private val viewModel: FixturesViewModel by navGraphViewModels(R.id.fixtures_graph) {
-        defaultViewModelProviderFactory
-    }
 
     private var _binding: FragmentFixturesBinding? = null
     private val binding get() = _binding!!
@@ -80,9 +75,12 @@ class FixturesFragment : Fragment() {
                             getString(R.string.fixtures_of),
                             this.persianLongDate
                         )
-                        viewModel._somedayDateModel.value =
-                            DateModel(selectedDate, selectedDateDescription)
-                        findNavController().navigate(FixturesFragmentDirections.actionFixturesFragmentToSomedayFixturesFragment())
+                        findNavController().navigate(
+                            FixturesFragmentDirections.actionFixturesFragmentToSomedayFixturesFragment(
+                                selectedDate,
+                                selectedDateDescription
+                            )
+                        )
                     }
                 }
 

@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation.fixtures.livefixtures
+package com.android.chandchand.presentation.fixtures.live
 
 import com.airbnb.epoxy.TypedEpoxyController
 import com.android.chandchand.presentation.common.LeagueFixturesClickListener
