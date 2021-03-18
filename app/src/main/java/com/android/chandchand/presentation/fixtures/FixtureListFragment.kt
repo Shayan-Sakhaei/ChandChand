@@ -46,9 +46,6 @@ class FixtureListFragment : Fragment(), LeagueFixturesClickListener, IView<Fixtu
             FixtureTabsModel.DayAfterTomorrow ->
                 sendIntent(FixturesIntent.GetFixtures(getDateFromToday(2)))
         }
-        viewModel.state.onEach { state ->
-            render(state)
-        }.launchIn(lifecycleScope)
     }
 
     override fun onCreateView(
@@ -62,6 +59,10 @@ class FixtureListFragment : Fragment(), LeagueFixturesClickListener, IView<Fixtu
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ervTodayFixtures.setController(fixturesController)
+
+        viewModel.state.onEach { state ->
+            render(state)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun sendIntent(intent: FixturesIntent) {
