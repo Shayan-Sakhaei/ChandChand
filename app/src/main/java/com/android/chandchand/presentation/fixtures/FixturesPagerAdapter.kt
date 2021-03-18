@@ -11,25 +11,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class FixturesPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = FixtureTabsModel.values().size
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> {
-                YesterdayFixturesFragment()
-            }
-            1 -> {
-                TodayFixturesFragment()
-            }
-            2 -> {
-                TomorrowFixturesFragment()
-            }
-            3 -> {
-                DayAfterTomorrowFixturesFragment()
-            }
-            else -> {
-                YesterdayFixturesFragment()
-            }
+        return when (FixtureTabsModel.values()[position]) {
+            FixtureTabsModel.Yesterday -> YesterdayFixturesFragment()
+            FixtureTabsModel.Today -> TodayFixturesFragment()
+            FixtureTabsModel.Tomorrow -> TomorrowFixturesFragment()
+            FixtureTabsModel.DayAfterTomorrow -> DayAfterTomorrowFixturesFragment()
         }
     }
 }

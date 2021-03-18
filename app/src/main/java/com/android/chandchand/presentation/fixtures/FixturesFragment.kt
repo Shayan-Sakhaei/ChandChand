@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentFixturesBinding
 import com.android.chandchand.presentation.utils.toDate
@@ -16,7 +15,6 @@ import ir.hamsaa.persiandatepicker.Listener
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -43,17 +41,17 @@ class FixturesFragment : Fragment() {
     private fun setUp() {
         binding.fixturesViewPager.adapter = FixturesPagerAdapter(this)
         TabLayoutMediator(binding.fixturesTabLayout, binding.fixturesViewPager) { tab, position ->
-            when (position) {
-                0 -> {
+            when (FixtureTabsModel.values()[position]) {
+                FixtureTabsModel.Yesterday -> {
                     tab.text = getString(R.string.yesterday)
                 }
-                1 -> {
+                FixtureTabsModel.Today -> {
                     tab.text = getString(R.string.today)
                 }
-                2 -> {
+                FixtureTabsModel.Tomorrow -> {
                     tab.text = getString(R.string.tomorrow)
                 }
-                3 -> {
+                FixtureTabsModel.DayAfterTomorrow -> {
                     tab.text = getString(R.string.day_after_tomorrow)
                 }
             }
