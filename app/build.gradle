@@ -117,5 +117,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
 
     //PALETTE
-    implementation ("androidx.palette:palette-ktx:1.0.0")
+    implementation("androidx.palette:palette-ktx:1.0.0")
+
+    //TEST
+    testImplementation ("androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion")
+    testImplementation ("androidx.test:core-ktx:$androidXTestCoreVersion")
+    testImplementation ("org.robolectric:robolectric:$robolectricVersion")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 }

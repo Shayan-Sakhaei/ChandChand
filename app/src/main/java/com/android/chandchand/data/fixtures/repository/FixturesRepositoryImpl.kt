@@ -7,10 +7,8 @@ import com.android.chandchand.domain.datasources.FixturesDataSource
 import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.domain.entities.LiveFixtureEntities
 import com.android.chandchand.domain.repositories.FixturesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class FixturesRepositoryImpl @Inject constructor(
@@ -31,7 +29,7 @@ class FixturesRepositoryImpl @Inject constructor(
                 }
                 emit(Result.Success(entities))
             }
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     override suspend fun getLiveFixtures(): Flow<Result<LiveFixtureEntities>> {
@@ -46,6 +44,6 @@ class FixturesRepositoryImpl @Inject constructor(
                 }
                 emit(Result.Success(LiveFixtureEntities(body.api.results, entities)))
             }
-        }.flowOn(Dispatchers.IO)
+        }
     }
 }
