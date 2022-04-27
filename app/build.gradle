@@ -120,8 +120,9 @@ dependencies {
     implementation("androidx.palette:palette-ktx:1.0.0")
 
     //TEST
-    testImplementation ("androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion")
-    testImplementation ("androidx.test:core-ktx:$androidXTestCoreVersion")
-    testImplementation ("org.robolectric:robolectric:$robolectricVersion")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion")
+    testImplementation("androidx.test:core-ktx:$androidXTestCoreVersion")
+    testImplementation("org.robolectric:robolectric:$robolectricVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }

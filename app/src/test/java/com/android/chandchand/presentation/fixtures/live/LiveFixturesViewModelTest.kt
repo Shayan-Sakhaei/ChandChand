@@ -9,6 +9,8 @@ import com.android.chandchand.domain.entities.LiveFixtureEntity
 import com.android.chandchand.domain.usecase.GetLiveFixturesUseCase
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -89,6 +91,20 @@ class LiveFixturesViewModelTest {
             Assert.assertEquals(assertion, state)
         }
     }
+
+
+    @Test
+    fun `getLiveFixtures should invoke GetLiveFixturesUseCase`() =
+        mainCoroutineRule.runBlockingTest {
+
+            getLiveFixturesUseCase = mockk()
+            viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+
+            val intent = LiveFixturesIntent.GetLiveFixtures
+            viewModel.intents.send(intent)
+
+            coVerify { getLiveFixturesUseCase.execute() }
+        }
 }
 
 private val fakeLiveFixtureEntities = LiveFixtureEntities(

@@ -17,7 +17,7 @@ class FixturesRepositoryImpl @Inject constructor(
     private val liveFixtureServerEntityMapper: LiveFixtureServerEntityMapper
 ) : FixturesRepository {
 
-    override suspend fun getFixtures(date: String): Flow<Result<List<FixtureEntity>>> {
+    override fun getFixtures(date: String): Flow<Result<List<FixtureEntity>>> {
         return flow {
             val response = remoteDataSource.getFixturesByDate(date)
             val body = response.body()
@@ -32,7 +32,7 @@ class FixturesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getLiveFixtures(): Flow<Result<LiveFixtureEntities>> {
+    override fun getLiveFixtures(): Flow<Result<LiveFixtureEntities>> {
         return flow {
             val response = remoteDataSource.getLiveFixtures()
             val body = response.body()

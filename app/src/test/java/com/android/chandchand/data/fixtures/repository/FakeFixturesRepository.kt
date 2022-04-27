@@ -12,7 +12,7 @@ class FakeFixturesRepository(
     private val liveFixtures: LiveFixtureEntities? = null
 ) : FixturesRepository {
 
-    override suspend fun getFixtures(date: String): Flow<Result<List<FixtureEntity>>> =
+    override fun getFixtures(date: String): Flow<Result<List<FixtureEntity>>> =
         flow {
             if (fixtures == null) {
                 emit(Result.Error("failed!"))
@@ -21,7 +21,7 @@ class FakeFixturesRepository(
             }
         }
 
-    override suspend fun getLiveFixtures(): Flow<Result<LiveFixtureEntities>> =
+    override fun getLiveFixtures(): Flow<Result<LiveFixtureEntities>> =
         flow {
             if (liveFixtures == null) {
                 emit(Result.Error("failed!"))

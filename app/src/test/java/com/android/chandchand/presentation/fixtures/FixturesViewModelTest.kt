@@ -7,6 +7,8 @@ import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.domain.usecase.GetFixturesUseCase
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -86,6 +88,19 @@ class FixturesViewModelTest {
             assertEquals(assertion, state)
         }
     }
+
+    @Test
+    fun `getFixtures should invoke GetFixturesUseCase`() =
+        mainCoroutineRule.runBlockingTest {
+
+            getFixturesUseCase = mockk()
+            viewModel = FixturesViewModel(getFixturesUseCase, mapper)
+
+            val intent = FixturesIntent.GetFixtures("2022-03-17")
+            viewModel.intents.send(intent)
+
+            coVerify { getFixturesUseCase.execute("2022-03-17") }
+        }
 }
 
 private val fakeFixtureEntities = listOf(

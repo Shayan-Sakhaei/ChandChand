@@ -2,6 +2,7 @@ package com.android.chandchand.data.fixtures.repository
 
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.data.fixtures.datasource.FakeFixturesDataSource
+import com.android.chandchand.data.fixtures.datasource.RemoteFixturesDataSource
 import com.android.chandchand.data.fixtures.entity.*
 import com.android.chandchand.data.fixtures.mapper.FixtureServerEntityMapper
 import com.android.chandchand.data.fixtures.mapper.LiveFixtureServerEntityMapper
@@ -9,12 +10,17 @@ import com.android.chandchand.domain.datasources.FixturesDataSource
 import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.domain.entities.LiveFixtureEntities
 import com.android.chandchand.domain.entities.LiveFixtureEntity
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import retrofit2.Response
 
 @ExperimentalCoroutinesApi
 class FixturesRepositoryImplTest {
@@ -44,9 +50,9 @@ class FixturesRepositoryImplTest {
 
         val assertions = listOf(Result.Success(fixtureEntityList))
 
-        Assert.assertEquals(assertions.size, states.size)
+        assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
+            assertEquals(assertion, state)
         }
     }
 
@@ -60,9 +66,9 @@ class FixturesRepositoryImplTest {
 
         val assertions = listOf(Result.Error(""))
 
-        Assert.assertEquals(assertions.size, states.size)
+        assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
+            assertEquals(assertion, state)
         }
     }
 
@@ -88,9 +94,9 @@ class FixturesRepositoryImplTest {
             )
         )
 
-        Assert.assertEquals(assertions.size, states.size)
+        assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
+            assertEquals(assertion, state)
         }
     }
 
@@ -104,10 +110,59 @@ class FixturesRepositoryImplTest {
 
         val assertions = listOf(Result.Error(""))
 
-        Assert.assertEquals(assertions.size, states.size)
+        assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
+            assertEquals(assertion, state)
         }
+    }
+
+    @Test
+    fun `getFixtures should invoke FixturesDataSource getFixturesByDate`() = runBlockingTest {
+
+        val fixtureEntityList: List<FixtureEntity> =
+            fakeServerFixtures.api.fixtures.map { fixFixture ->
+                fixturesMapper.map(fixFixture)
+            }
+
+        val expected = Result.Success(fixtureEntityList)
+
+        dataSource = mockk<RemoteFixturesDataSource>()
+        coEvery { dataSource.getFixturesByDate("2022-03-17") } returns Response.success(
+            fakeServerFixtures
+        )
+
+        repository = FixturesRepositoryImpl(dataSource, fixturesMapper, liveFixturesMapper)
+
+        val actual = repository.getFixtures("2022-03-17").first()
+
+        coVerify { dataSource.getFixturesByDate("2022-03-17") }
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `getLiveFixtures should invoke FixturesDataSource getLiveFixtures`() = runBlockingTest {
+
+        val liveFixtureEntityList: List<LiveFixtureEntity> =
+            fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
+                liveFixturesMapper.map(liveFixFixtures)
+            }
+
+        val expected = Result.Success(
+            LiveFixtureEntities(
+                fakeLiveServerFixtures.api.results,
+                liveFixtureEntityList
+            )
+        )
+
+        dataSource = mockk<RemoteFixturesDataSource>()
+        coEvery { dataSource.getLiveFixtures() } returns Response.success(fakeLiveServerFixtures)
+
+        repository = FixturesRepositoryImpl(dataSource, fixturesMapper, liveFixturesMapper)
+
+        val actual = repository.getLiveFixtures().first()
+
+        coVerify { dataSource.getLiveFixtures() }
+        assertEquals(expected, actual)
     }
 }
 
