@@ -125,4 +125,5 @@ dependencies {
     testImplementation("org.robolectric:robolectric:$robolectricVersion")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    debugImplementation 'androidx.fragment:fragment-testing:1.3.6'
 }
