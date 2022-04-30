@@ -45,6 +45,7 @@ class FixtureListFragment : Fragment(), LeagueFixturesClickListener, IView<Fixtu
                 sendIntent(FixturesIntent.GetFixtures(getDateFromToday(1)))
             FixtureTabsModel.DayAfterTomorrow ->
                 sendIntent(FixturesIntent.GetFixtures(getDateFromToday(2)))
+            else -> {}
         }
     }
 

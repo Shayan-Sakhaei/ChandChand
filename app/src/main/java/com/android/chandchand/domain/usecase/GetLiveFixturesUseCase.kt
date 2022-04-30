@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetLiveFixturesUseCase @Inject constructor(
     private val fixturesRepository: FixturesRepository
 ) {
-    suspend fun execute(): Flow<Result<LiveFixtureEntities>> {
+    fun execute(): Flow<Result<LiveFixtureEntities>> {
         return fixturesRepository.getLiveFixtures()
     }
 }

@@ -1,16 +1,21 @@
 package com.android.chandchand.presentation.predictions
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PredictionsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PredictionsViewModel @Inject constructor(
     private val getPredictionsUseCase: GetPredictionsUseCase
 ) : ViewModel(), IModel<PredictionsState, PredictionsIntent> {
 
@@ -19,7 +24,7 @@ class PredictionsViewModel @ViewModelInject constructor(
     override val state: StateFlow<PredictionsState> get() = _state
 
     fun send(intent: PredictionsIntent) {
-        intents.offer(intent)
+        intents.trySend(intent)
     }
 
     init {

@@ -1,18 +1,20 @@
 package com.android.chandchand.data.fixtures.entity
 
 import com.squareup.moshi.Json
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 data class FixturesServerModel(
     @Json(name = "api") val api: FixApi
 )
 
+@JsonClass(generateAdapter = true)
 data class FixApi(
     @Json(name = "results") val results: Int,
     @Json(name = "fixtures") val fixtures: List<FixFixtures>
 )
 
+@JsonClass(generateAdapter = true)
 data class FixFixtures(
     @Json(name = "fixture_id") val fixture_id: Int,
     @Json(name = "league_id") val league_id: Int? = 0,
@@ -34,6 +36,7 @@ data class FixFixtures(
     @Json(name = "score") val score: FixScore
 )
 
+@JsonClass(generateAdapter = true)
 data class FixLeague(
     @Json(name = "name") val name: String? = "",
     @Json(name = "country") val country: String? = "",
@@ -41,18 +44,21 @@ data class FixLeague(
     @Json(name = "flag") val flag: String? = ""
 )
 
+@JsonClass(generateAdapter = true)
 data class FixHomeTeam(
     @Json(name = "team_id") val team_id: Int? = 0,
     @Json(name = "team_name") val team_name: String? = "",
     @Json(name = "logo") val logo: String? = ""
 )
 
+@JsonClass(generateAdapter = true)
 data class FixAwayTeam(
     @Json(name = "team_id") val team_id: Int? = 0,
     @Json(name = "team_name") val team_name: String? = "",
     @Json(name = "logo") val logo: String? = ""
 )
 
+@JsonClass(generateAdapter = true)
 data class FixScore(
     @Json(name = "halftime") val halftime: String? = "",
     @Json(name = "fulltime") val fulltime: String? = "",

@@ -1,6 +1,5 @@
 package com.android.chandchand.presentation.leagues
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,13 +8,16 @@ import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetStandingsUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.model.LeagueTitleModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class LeaguesViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LeaguesViewModel @Inject constructor(
     private val getStandingsUseCase: GetStandingsUseCase
 ) : ViewModel(), IModel<LeaguesState, LeaguesIntent> {
 

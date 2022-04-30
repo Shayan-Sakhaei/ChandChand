@@ -2,16 +2,14 @@ package com.android.chandchand.presentation.di
 
 import android.content.Context
 import android.util.Log
-import com.android.chandchand.data.common.AppJsonAdapterFactory
 import com.android.chandchand.data.common.AuthInterceptor
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.OkHttpClient
@@ -24,16 +22,12 @@ import javax.inject.Singleton
 const val BASE_URL = "https://v2.api-football.com/"
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object OkHttpModule {
 
     @Provides
     fun provideMoshi(): Moshi {
-        val builder = Moshi.Builder()
-        builder
-            .add(AppJsonAdapterFactory.INSTANCE)
-            .add(KotlinJsonAdapterFactory())
-        return builder.build()
+        return Moshi.Builder().build()
     }
 
     @Provides

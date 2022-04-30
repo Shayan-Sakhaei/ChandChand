@@ -1,19 +1,21 @@
 package com.android.chandchand.data.leagues.entity
 
 import com.squareup.moshi.Json
-import se.ansman.kotshi.JsonSerializable
+import com.squareup.moshi.JsonClass
 
 
-@JsonSerializable
+@JsonClass(generateAdapter = true)
 data class StandingsServerModel(
     @Json(name = "api") val api: StdApi
 )
 
+@JsonClass(generateAdapter = true)
 data class StdApi(
     @Json(name = "results") val results: Int,
     @Json(name = "standings") val standings: List<List<StdStandings>>
 )
 
+@JsonClass(generateAdapter = true)
 data class StdStandings(
     @Json(name = "rank") val rank: Int? = 0,
     @Json(name = "team_id") val team_id: Int,
@@ -31,7 +33,7 @@ data class StdStandings(
     @Json(name = "lastUpdate") val lastUpdate: String? = ""
 )
 
-
+@JsonClass(generateAdapter = true)
 data class StdAll(
     @Json(name = "matchsPlayed") val matchsPlayed: Int? = 0,
     @Json(name = "win") val win: Int? = 0,
@@ -41,6 +43,7 @@ data class StdAll(
     @Json(name = "goalsAgainst") val goalsAgainst: Int? = 0
 )
 
+@JsonClass(generateAdapter = true)
 data class StdHome(
     @Json(name = "matchsPlayed") val matchsPlayed: Int? = 0,
     @Json(name = "win") val win: Int? = 0,
@@ -50,6 +53,7 @@ data class StdHome(
     @Json(name = "goalsAgainst") val goalsAgainst: Int? = 0
 )
 
+@JsonClass(generateAdapter = true)
 data class StdAway(
     @Json(name = "matchsPlayed") val matchsPlayed: Int? = 0,
     @Json(name = "win") val win: Int? = 0,

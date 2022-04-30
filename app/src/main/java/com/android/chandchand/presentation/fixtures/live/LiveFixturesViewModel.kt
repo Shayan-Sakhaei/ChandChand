@@ -1,6 +1,5 @@
 package com.android.chandchand.presentation.fixtures.live
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
@@ -9,13 +8,16 @@ import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class LiveFixturesViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LiveFixturesViewModel @Inject constructor(
     private val getLiveFixturesUseCase: GetLiveFixturesUseCase,
     private val liveEntityUiMapper: LiveFixtureEntityUiMapper
 ) : ViewModel(), IModel<LiveFixturesState, LiveFixturesIntent> {
