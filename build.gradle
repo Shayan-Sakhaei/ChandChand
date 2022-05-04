@@ -45,6 +45,9 @@ ext {
     persianDatePickerVersion = "1.5.2"
     coroutinesVersion = "1.6.1"
     paletteVersion = "1.0.0"
+    activityVersion = "1.4.0"
+    composeVersion = "1.1.1"
+    androidxLifecycleVersion = "2.4.1"
 
     junitVersion = "4.13.2"
     androidXTestCoreVersion = "1.4.0"
