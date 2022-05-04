@@ -1,4 +1,4 @@
-package com.android.chandchand
+package com.android.chandchand.di
 
 import android.content.ComponentName
 import android.content.Intent
@@ -8,6 +8,8 @@ import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import com.android.chandchand.HiltTestActivity
+import com.android.chandchand.R
 
 /**
  * launchFragmentInContainer from the androidx.fragment:fragment-testing library

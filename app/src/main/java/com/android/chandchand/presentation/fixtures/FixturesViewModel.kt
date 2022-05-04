@@ -7,6 +7,7 @@ import com.android.chandchand.domain.usecase.GetFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
 import com.android.chandchand.presentation.model.LeagueModel
+import com.android.chandchand.wrapEspressoIdlingResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -46,32 +47,39 @@ class FixturesViewModel @Inject constructor(
 
     fun getFixtures(date: String) {
         viewModelScope.launch {
-            try {
-                updateState { it.copy(isLoading = true) }
-                getFixturesUseCase.execute(date)
-                    .onStart {}
-                    .catch {}
-                    .collect { fixtureEntities ->
-                        when (fixtureEntities) {
-                            is Result.Success -> {
-                                val fixtures = entityUiMapper.map(
-                                    fixtureEntities.data
-                                )
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        fixtures = fixtures
+            wrapEspressoIdlingResource {
+                try {
+                    updateState { it.copy(isLoading = true) }
+                    getFixturesUseCase.execute(date)
+                        .onStart {}
+                        .catch {}
+                        .collect { fixtureEntities ->
+                            when (fixtureEntities) {
+                                is Result.Success -> {
+                                    val fixtures = entityUiMapper.map(
+                                        fixtureEntities.data
                                     )
-                                }
+                                    updateState {
+                                        it.copy(
+                                            isLoading = false,
+                                            fixtures = fixtures
+                                        )
+                                    }
 
-                            }
-                            is Result.Error -> {
-                                updateState { it.copy(isLoading = false, errorMessage = "failed!") }
+                                }
+                                is Result.Error -> {
+                                    updateState {
+                                        it.copy(
+                                            isLoading = false,
+                                            errorMessage = "failed!"
+                                        )
+                                    }
+                                }
                             }
                         }
-                    }
-            } catch (e: Exception) {
-                updateState { it.copy(isLoading = false, errorMessage = e.message) }
+                } catch (e: Exception) {
+                    updateState { it.copy(isLoading = false, errorMessage = e.message) }
+                }
             }
         }
     }
