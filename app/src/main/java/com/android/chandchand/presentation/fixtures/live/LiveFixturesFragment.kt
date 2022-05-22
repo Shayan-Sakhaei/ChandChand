@@ -30,11 +30,11 @@ class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
     private var _binding: FragmentLiveFixturesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var liveFixturesController: LiveFixturesController
+//    private lateinit var liveFixturesController: LiveFixturesController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        liveFixturesController = LiveFixturesController(this)
+//        liveFixturesController = LiveFixturesController(this)
         sendIntent(LiveFixturesIntent.GetLiveFixtures)
         viewModel.state.onEach { state ->
             render(state)
@@ -44,14 +44,14 @@ class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLiveFixturesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ervLiveFixtures.setController(liveFixturesController)
+//        binding.ervLiveFixtures.setController(liveFixturesController)
         setUp()
     }
 
@@ -64,7 +64,7 @@ class LiveFixturesFragment : Fragment(), LeagueFixturesClickListener,
 
     override fun render(state: LiveFixturesState) {
         with(state) {
-            liveFixturesController.setData(liveFixtures)
+//            liveFixturesController.setData(liveFixtures)
         }
     }
 

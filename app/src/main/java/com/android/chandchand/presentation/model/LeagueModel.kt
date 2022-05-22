@@ -6,6 +6,5 @@ import androidx.annotation.StringRes
 data class LeagueModel(
     @DrawableRes val leagueLogo: Int,
     @StringRes val leagueTitle: Int,
-    val fixturesCount: Int,
-    val isExpanded: Boolean = false,
+    val fixturesCount: Int
 )

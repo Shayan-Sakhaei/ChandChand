@@ -126,6 +126,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$androidxLifecycleVersion")
     implementation("androidx.constraintlayout:constraintlayout-compose:$constraintlayoutComposeVersion")
     implementation("io.coil-kt:coil-compose:$coilComposeVersion")
+    implementation("com.google.accompanist:accompanist-pager:$accompanistPagerVersion")
 
     //TEST
     testImplementation("junit:junit:$junitVersion")

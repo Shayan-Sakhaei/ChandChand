@@ -6,12 +6,18 @@ import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
-import com.android.chandchand.presentation.model.LeagueModel
+import com.android.chandchand.presentation.model.FixturesPerLeagueModel
+import com.android.chandchand.presentation.utils.DAY
+import com.android.chandchand.presentation.utils.getDateFromToday
 import com.android.chandchand.wrapEspressoIdlingResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,7 +41,8 @@ class FixturesViewModel @Inject constructor(
     private suspend fun handleIntent() {
         intents.consumeAsFlow().collect {
             when (it) {
-                is FixturesIntent.GetFixtures -> getFixtures(it.date)
+                is FixturesIntent.GetFixtures -> getFixtures()
+                is FixturesIntent.GetSomedayFixtures -> getSomedayFixtures(it.date)
             }
         }
     }
@@ -45,38 +52,104 @@ class FixturesViewModel @Inject constructor(
     }
 
 
-    fun getFixtures(date: String) {
+    fun getFixtures() {
         viewModelScope.launch {
             wrapEspressoIdlingResource {
                 try {
                     updateState { it.copy(isLoading = true) }
-                    getFixturesUseCase.execute(date)
-                        .onStart {}
-                        .catch {}
-                        .collect { fixtureEntities ->
-                            when (fixtureEntities) {
-                                is Result.Success -> {
-                                    val fixtures = entityUiMapper.map(
-                                        fixtureEntities.data
-                                    )
-                                    updateState {
-                                        it.copy(
-                                            isLoading = false,
-                                            fixtures = fixtures
-                                        )
-                                    }
 
+                    coroutineScope {
+                        val yesterday =
+                            async { getFixturesUseCase.execute(getDateFromToday(-1)) }
+                        val today =
+                            async { getFixturesUseCase.execute(getDateFromToday(0)) }
+                        val tomorrow =
+                            async { getFixturesUseCase.execute(getDateFromToday(1)) }
+                        val dayAfterTomorrow =
+                            async { getFixturesUseCase.execute(getDateFromToday(2)) }
+
+                        when (val yesterdayResponse = yesterday.await()) {
+                            is Result.Success -> {
+                                val fixtures = entityUiMapper.map(yesterdayResponse.data)
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        yesterdayFixtures = fixtures
+                                    )
                                 }
-                                is Result.Error -> {
-                                    updateState {
-                                        it.copy(
-                                            isLoading = false,
-                                            errorMessage = "failed!"
-                                        )
-                                    }
+                            }
+                            is Result.Error -> {
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "yesterday fixtures failed!"
+                                    )
                                 }
                             }
                         }
+
+                        when (val todayResponse = today.await()) {
+                            is Result.Success -> {
+                                val fixtures = entityUiMapper.map(todayResponse.data)
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        todayFixtures = fixtures
+                                    )
+                                }
+                            }
+                            is Result.Error -> {
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "today fixtures failed!"
+                                    )
+                                }
+                            }
+                        }
+
+                        when (val tomorrowResponse = tomorrow.await()) {
+                            is Result.Success -> {
+                                val fixtures = entityUiMapper.map(tomorrowResponse.data)
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        tomorrowFixtures = fixtures
+                                    )
+                                }
+                            }
+                            is Result.Error -> {
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "tomorrow fixtures failed!"
+                                    )
+                                }
+                            }
+                        }
+
+                        when (val dayAfterTomorrowResponse = dayAfterTomorrow.await()) {
+                            is Result.Success -> {
+                                val fixtures = entityUiMapper.map(dayAfterTomorrowResponse.data)
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        dayAfterTomorrowFixtures = fixtures
+                                    )
+                                }
+                            }
+                            is Result.Error -> {
+                                updateState {
+                                    it.copy(
+                                        isLoading = false,
+                                        errorMessage = "dayAfterTomorrow fixtures failed!"
+                                    )
+                                }
+                            }
+                        }
+
+
+                    }
                 } catch (e: Exception) {
                     updateState { it.copy(isLoading = false, errorMessage = e.message) }
                 }
@@ -84,20 +157,47 @@ class FixturesViewModel @Inject constructor(
         }
     }
 
+    fun getSomedayFixtures(date: String) {}
 
-    fun onLeagueHeaderTapped(leagueModel: LeagueModel) {
-        val oldFixturesPerLeague = _state.value.fixtures
-        if (oldFixturesPerLeague.isNotEmpty()) {
-            val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
-            val newFixtureList = oldFixturesPerLeague.map {
-                if (it.leagueModel == leagueModel) {
-                    it.copy(leagueModel = newLeague)
+    fun onLeagueHeaderClick(model: FixturesPerLeagueModel, day: DAY) {
+        val oldFixtureList = when (day) {
+            DAY.YESTERDAY -> {
+                _state.value.yesterdayFixtures
+            }
+            DAY.TODAY -> {
+                _state.value.todayFixtures
+            }
+            DAY.TOMORROW -> {
+                _state.value.tomorrowFixtures
+            }
+            DAY.DAY_AFTER_TOMORROW -> {
+                _state.value.dayAfterTomorrowFixtures
+            }
+        }
+
+        if (oldFixtureList.isNotEmpty()) {
+            val newFixtureList = oldFixtureList.map {
+                if (it == model) {
+                    it.copy(isExpanded = model.isExpanded.not())
                 } else {
                     it
                 }
             }
             viewModelScope.launch {
-                updateState { it.copy(fixtures = newFixtureList) }
+                when (day) {
+                    DAY.YESTERDAY -> {
+                        updateState { it.copy(yesterdayFixtures = newFixtureList) }
+                    }
+                    DAY.TODAY -> {
+                        updateState { it.copy(todayFixtures = newFixtureList) }
+                    }
+                    DAY.TOMORROW -> {
+                        updateState { it.copy(tomorrowFixtures = newFixtureList) }
+                    }
+                    DAY.DAY_AFTER_TOMORROW -> {
+                        updateState { it.copy(dayAfterTomorrowFixtures = newFixtureList) }
+                    }
+                }
             }
         }
     }

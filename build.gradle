@@ -50,6 +50,7 @@ ext {
     androidxLifecycleVersion = "2.4.1"
     constraintlayoutComposeVersion = "1.0.0"
     coilComposeVersion = "2.0.0-rc03"
+    accompanistPagerVersion = "0.23.1"
 
     junitVersion = "4.13.2"
     androidXTestCoreVersion = "1.4.0"

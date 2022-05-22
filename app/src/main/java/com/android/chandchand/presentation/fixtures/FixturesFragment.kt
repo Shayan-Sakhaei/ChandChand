@@ -4,98 +4,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.android.chandchand.R
-import com.android.chandchand.databinding.FragmentFixturesBinding
-import com.android.chandchand.presentation.utils.toDate
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.components.FixturesScreen
 import dagger.hilt.android.AndroidEntryPoint
-import ir.hamsaa.persiandatepicker.Listener
-import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
-import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FixturesFragment : Fragment() {
 
-    private var _binding: FragmentFixturesBinding? = null
-    private val binding get() = _binding!!
+    private val viewModel: FixturesViewModel by viewModels()
 
-    lateinit var datePicker: PersianDatePickerDialog
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sendIntent(FixturesIntent.GetFixtures)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentFixturesBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUp()
-    }
-
-    private fun setUp() {
-        binding.fixturesViewPager.adapter = FixturesPagerAdapter(this)
-        TabLayoutMediator(binding.fixturesTabLayout, binding.fixturesViewPager) { tab, position ->
-            when (FixtureTabsModel.values()[position]) {
-                FixtureTabsModel.Yesterday -> {
-                    tab.text = getString(R.string.yesterday)
-                }
-                FixtureTabsModel.Today -> {
-                    tab.text = getString(R.string.today)
-                }
-                FixtureTabsModel.Tomorrow -> {
-                    tab.text = getString(R.string.tomorrow)
-                }
-                FixtureTabsModel.DayAfterTomorrow -> {
-                    tab.text = getString(R.string.day_after_tomorrow)
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ChandChandTheme {
+                    FixturesScreen(viewModel)
                 }
             }
-        }.attach()
-
-        datePicker = PersianDatePickerDialog(requireContext())
-            .setPositiveButtonResource(R.string.choose)
-            .setNegativeButtonResource(R.string.quit)
-            .setTodayButtonResource(R.string.today)
-            .setMinYear(1388)
-            .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
-            .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
-            .setListener(object : Listener {
-                override fun onDateSelected(persianCalendar: PersianCalendar?) {
-                    persianCalendar?.run {
-                        val selectedDate = this.timeInMillis.toDate()
-                        val selectedDateDescription = String.format(
-                            "%s  %s",
-                            getString(R.string.fixtures_of),
-                            this.persianLongDate
-                        )
-                        findNavController().navigate(
-                            FixturesFragmentDirections.actionFixturesFragmentToSomedayFixturesFragment(
-                                selectedDate,
-                                selectedDateDescription
-                            )
-                        )
-                    }
-                }
-
-                override fun onDismissed() {}
-            })
-
-        binding.ibCalendar.setOnClickListener {
-            datePicker.show()
-        }
-
-        binding.ibTv.setOnClickListener {
-            findNavController().navigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment())
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun sendIntent(intent: FixturesIntent) {
+        lifecycleScope.launch {
+            viewModel.intents.send(intent)
+        }
     }
 }

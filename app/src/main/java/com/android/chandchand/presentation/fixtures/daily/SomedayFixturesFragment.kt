@@ -13,7 +13,9 @@ import com.android.chandchand.R
 import com.android.chandchand.databinding.FragmentSomedayFixturesBinding
 import com.android.chandchand.presentation.common.IView
 import com.android.chandchand.presentation.common.LeagueFixturesClickListener
-import com.android.chandchand.presentation.fixtures.*
+import com.android.chandchand.presentation.fixtures.FixturesIntent
+import com.android.chandchand.presentation.fixtures.FixturesState
+import com.android.chandchand.presentation.fixtures.FixturesViewModel
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.utils.toDate
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,11 +43,11 @@ class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
 
     lateinit var datePicker: PersianDatePickerDialog
 
-    private lateinit var fixturesController: FixturesController
+//    private lateinit var fixturesController: FixturesController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fixturesController = FixturesController(this)
+//        fixturesController = FixturesController(this)
         viewModel.state.onEach { state ->
             render(state)
         }.launchIn(lifecycleScope)
@@ -54,17 +56,17 @@ class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSomedayFixturesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ervSomedayFixtures.setController(fixturesController)
+//        binding.ervSomedayFixtures.setController(fixturesController)
 
         binding.tvDateDescription.text = args.selectedDateDescription
-        sendIntent(FixturesIntent.GetFixtures(args.selectedDate))
+        sendIntent(FixturesIntent.GetSomedayFixtures(args.selectedDate))
 
         setUp()
     }
@@ -77,7 +79,7 @@ class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
 
     override fun render(state: FixturesState) {
         with(state) {
-            fixturesController.setData(fixtures)
+//            fixturesController.setData(fixtures)
         }
     }
 
@@ -102,7 +104,7 @@ class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
                             this.persianLongDate
                         )
                         val selectedDate = this.timeInMillis.toDate()
-                        viewModel.getFixtures(selectedDate)
+                        viewModel.getSomedayFixtures(selectedDate)
                     }
                 }
 
@@ -120,7 +122,7 @@ class SomedayFixturesFragment : Fragment(), LeagueFixturesClickListener,
     }
 
     override fun onHeaderClicked(leagueModel: LeagueModel) {
-        viewModel.onLeagueHeaderTapped(leagueModel)
+//        viewModel.onLeagueHeaderClick(leagueModel)
     }
 
     override fun onPredictionClicked(fixtureId: Int, homeTeamLogo: String?, awayTeamLogo: String?) {

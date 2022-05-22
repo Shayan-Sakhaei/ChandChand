@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -22,15 +24,16 @@ import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.utils.toHourMin
+import com.android.chandchand.presentation.utils.*
 
 @Composable
 fun Fixture(fixture: FixtureEntity) {
+
     Card(
         modifier = Modifier
             .padding(start = 12.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
             .fillMaxWidth()
-            .height(144.dp),
+            .height(if (fixture.status_short == NOT_STARTED) 112.dp else 144.dp),
         elevation = 4.dp
     ) {
         ConstraintLayout(
@@ -38,8 +41,9 @@ fun Fixture(fixture: FixtureEntity) {
                 .fillMaxSize()
                 .background(MaterialTheme.colors.surface)
         ) {
-            val (homeTeamLogo, homeTeamName, predictionIcon, timeText,
-                awayTeamLogo, awayTeamName) = createRefs()
+            val (homeTeamLogo, homeTeamName, homeTeamGoals,
+                predictionIcon, timeText, statusText,
+                awayTeamLogo, awayTeamName, awayTeamGoals) = createRefs()
 
             Image(
                 modifier = Modifier
@@ -53,18 +57,6 @@ fun Fixture(fixture: FixtureEntity) {
                 painter = painterResource(id = R.drawable.ic_prediction_with_border_40),
                 contentDescription = "prediction icon"
             )
-
-            Text(
-                text = fixture.timestamp?.toHourMin() ?: "",
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .constrainAs(timeText) {
-                        start.linkTo(predictionIcon.start)
-                        end.linkTo(predictionIcon.end)
-                        top.linkTo(predictionIcon.bottom)
-                    })
 
             AsyncImage(model = fixture.home_team_logo,
                 contentDescription = "home team logo",
@@ -113,6 +105,223 @@ fun Fixture(fixture: FixtureEntity) {
                         end.linkTo(parent.end)
                         top.linkTo(awayTeamLogo.bottom)
                     })
+
+            when (fixture.status_short) {
+                NOT_STARTED -> {
+                    //TIME
+                    Text(
+                        text = fixture.timestamp?.toHourMin() ?: "",
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .constrainAs(timeText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+                }
+                MATCH_POSTPONED -> {
+                    //STATUS
+                    Text(
+                        text = stringResource(id = R.string.postponed),
+                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.body2,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 48.dp)
+                            .constrainAs(statusText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //HOME GOALS
+                    Text(
+                        text = "?",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(start = 14.dp)
+                            .constrainAs(homeTeamGoals) {
+                                start.linkTo(homeTeamName.start)
+                                end.linkTo(homeTeamName.end)
+                                top.linkTo(homeTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+
+                    //AWAY GOALS
+                    Text(
+                        text = "?",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(end = 14.dp)
+                            .constrainAs(awayTeamGoals) {
+                                start.linkTo(awayTeamName.start)
+                                end.linkTo(awayTeamName.end)
+                                top.linkTo(awayTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+                }
+                MATCH_CANCELLED -> {
+                    //STATUS
+                    Text(
+                        text = stringResource(id = R.string.cancelled),
+                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.body2,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 48.dp)
+                            .constrainAs(statusText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //HOME GOALS
+                    Text(
+                        text = "_",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(start = 14.dp)
+                            .constrainAs(homeTeamGoals) {
+                                start.linkTo(homeTeamName.start)
+                                end.linkTo(homeTeamName.end)
+                                top.linkTo(homeTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+
+                    //AWAY GOALS
+                    Text(
+                        text = "_",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(end = 14.dp)
+                            .constrainAs(awayTeamGoals) {
+                                start.linkTo(awayTeamName.start)
+                                end.linkTo(awayTeamName.end)
+                                top.linkTo(awayTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+                }
+                MATCH_FINISHED -> {
+                    //TIME
+                    Text(
+                        text = fixture.timestamp?.toHourMin() ?: "",
+                        style = MaterialTheme.typography.body1.copy(
+                            textDecoration = TextDecoration.LineThrough
+                        ),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .constrainAs(timeText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //STATUS
+                    Text(
+                        text = stringResource(id = R.string.match_finished),
+                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.body2,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 48.dp)
+                            .constrainAs(statusText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //HOME GOALS
+                    Text(
+                        text = fixture.goals_home ?: "",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(start = 14.dp)
+                            .constrainAs(homeTeamGoals) {
+                                start.linkTo(homeTeamName.start)
+                                end.linkTo(homeTeamName.end)
+                                top.linkTo(homeTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+
+                    //AWAY GOALS
+                    Text(
+                        text = fixture.goals_away ?: "",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(end = 14.dp)
+                            .constrainAs(awayTeamGoals) {
+                                start.linkTo(awayTeamName.start)
+                                end.linkTo(awayTeamName.end)
+                                top.linkTo(awayTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+                }
+                else -> {
+                    //TIME
+                    Text(
+                        text = fixture.timestamp?.toHourMin() ?: "",
+                        style = MaterialTheme.typography.body1,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .constrainAs(timeText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //STATUS
+                    Text(
+                        text = stringResource(id = R.string.ongoing),
+                        color = MaterialTheme.colors.error,
+                        style = MaterialTheme.typography.body2,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 48.dp)
+                            .constrainAs(statusText) {
+                                start.linkTo(predictionIcon.start)
+                                end.linkTo(predictionIcon.end)
+                                top.linkTo(predictionIcon.bottom)
+                            })
+
+                    //HOME GOALS
+                    Text(
+                        text = fixture.goals_home ?: "",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(start = 14.dp)
+                            .constrainAs(homeTeamGoals) {
+                                start.linkTo(homeTeamName.start)
+                                end.linkTo(homeTeamName.end)
+                                top.linkTo(homeTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+
+                    //AWAY GOALS
+                    Text(
+                        text = fixture.goals_away ?: "",
+                        style = MaterialTheme.typography.h5,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(end = 14.dp)
+                            .constrainAs(awayTeamGoals) {
+                                start.linkTo(awayTeamName.start)
+                                end.linkTo(awayTeamName.end)
+                                top.linkTo(awayTeamName.bottom)
+                                bottom.linkTo(parent.bottom)
+                            })
+                }
+            }
         }
     }
 }
