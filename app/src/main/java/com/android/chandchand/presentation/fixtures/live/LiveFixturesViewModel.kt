@@ -6,7 +6,8 @@ import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetLiveFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
-import com.android.chandchand.presentation.model.LeagueModel
+import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModel
+import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 import com.android.chandchand.wrapEspressoIdlingResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -80,13 +81,12 @@ class LiveFixturesViewModel @Inject constructor(
         }
     }
 
-    fun onLeagueHeaderTapped(leagueModel: LeagueModel) {
-/*        val oldFixturesPerLeague = _state.value.liveFixtures
-        if (oldFixturesPerLeague.entities.isNotEmpty()) {
-            val newLeague = leagueModel.copy(isExpanded = leagueModel.isExpanded.not())
-            val newFixtureList = oldFixturesPerLeague.entities.map {
-                if (it.leagueModel == leagueModel) {
-                    it.copy(leagueModel = newLeague)
+    fun onLeagueHeaderClick(model: LiveFixturesPerLeagueModel) {
+        val oldFixturesList = _state.value.liveFixtures
+        if (oldFixturesList.entities.isNotEmpty()) {
+            val newFixtureList = oldFixturesList.entities.map {
+                if (it == model) {
+                    it.copy(isExpanded = model.isExpanded.not())
                 } else {
                     it
                 }
@@ -101,6 +101,6 @@ class LiveFixturesViewModel @Inject constructor(
                     )
                 }
             }
-        }*/
+        }
     }
 }
