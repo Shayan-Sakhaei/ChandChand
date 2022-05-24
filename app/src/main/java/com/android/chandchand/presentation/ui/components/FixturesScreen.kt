@@ -14,10 +14,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDirections
 import com.android.chandchand.R
+import com.android.chandchand.presentation.fixtures.FixturesFragmentDirections
 import com.android.chandchand.presentation.fixtures.FixturesViewModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.utils.DAY
@@ -28,7 +31,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @Composable
-fun FixturesScreen(viewModel: FixturesViewModel) {
+fun FixturesScreen(
+    viewModel: FixturesViewModel,
+    onNavigate: (NavDirections) -> Unit,
+    onCalendarClick: () -> Unit
+) {
 
     val state by viewModel.state.collectAsState()
 
@@ -43,6 +50,23 @@ fun FixturesScreen(viewModel: FixturesViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     Column {
+        ChandChandAppBar(titleResId = R.string.fixtures) {
+            IconButton(onClick = { onCalendarClick() }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_calendar_24),
+                    contentDescription = "calendar",
+                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                )
+            }
+
+            IconButton(onClick = { onNavigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment()) }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_tv_24),
+                    contentDescription = "calendar",
+                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                )
+            }
+        }
         TabRow(
             selectedTabIndex = pagerState.currentPage,
             backgroundColor = MaterialTheme.colors.primary,
