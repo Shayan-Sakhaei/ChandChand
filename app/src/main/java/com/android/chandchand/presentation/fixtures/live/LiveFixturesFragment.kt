@@ -32,7 +32,7 @@ class LiveFixturesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 ChandChandTheme {
-                    LiveFixturesScreen(viewModel)
+                    LiveFixturesScreen(viewModel) {}
                 }
             }
         }
