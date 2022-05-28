@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
 import com.android.chandchand.presentation.fixtures.live.LiveFixturesViewModel
@@ -23,7 +24,7 @@ fun LiveFixturesScreen(
     val state by viewModel.state.collectAsState()
 
     Column {
-        ChandChandAppBar(titleResId = R.string.ongoing_fixtures)
+        ChandChandAppBar(title = stringResource(R.string.ongoing_fixtures))
         LazyColumn(modifier = Modifier.padding(top = 12.dp)) {
             items(state.liveFixtures.entities) { fixtures: LiveFixturesPerLeagueModel ->
                 LiveFixturesPerLeague(fixtures = fixtures) { liveFixturesPerLeagueModel: LiveFixturesPerLeagueModel ->

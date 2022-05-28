@@ -157,7 +157,29 @@ class FixturesViewModel @Inject constructor(
         }
     }
 
-    fun getSomedayFixtures(date: String) {}
+    fun getSomedayFixtures(date: String) {
+        viewModelScope.launch {
+            when (val response = getFixturesUseCase.execute(date)) {
+                is Result.Success -> {
+                    val fixtures = entityUiMapper.map(response.data)
+                    updateState {
+                        it.copy(
+                            isLoading = false,
+                            somedayFixtures = fixtures
+                        )
+                    }
+                }
+                is Result.Error -> {
+                    updateState {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = "someday fixtures failed!"
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     fun onLeagueHeaderClick(model: FixturesPerLeagueModel, day: DAY) {
         val oldFixtureList = when (day) {
@@ -172,6 +194,9 @@ class FixturesViewModel @Inject constructor(
             }
             DAY.DAY_AFTER_TOMORROW -> {
                 _state.value.dayAfterTomorrowFixtures
+            }
+            DAY.SOMEDAY -> {
+                _state.value.somedayFixtures
             }
         }
 
@@ -197,8 +222,17 @@ class FixturesViewModel @Inject constructor(
                     DAY.DAY_AFTER_TOMORROW -> {
                         updateState { it.copy(dayAfterTomorrowFixtures = newFixtureList) }
                     }
+                    DAY.SOMEDAY -> {
+                        updateState { it.copy(somedayFixtures = newFixtureList) }
+                    }
                 }
             }
+        }
+    }
+
+    fun setSomedayDate(date: String, dateDescription: String) {
+        viewModelScope.launch {
+            updateState { it.copy(somedayDate = date, somedayDateDescription = dateDescription) }
         }
     }
 }

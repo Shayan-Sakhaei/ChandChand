@@ -4,5 +4,6 @@ enum class DAY {
     YESTERDAY,
     TODAY,
     TOMORROW,
-    DAY_AFTER_TOMORROW
+    DAY_AFTER_TOMORROW,
+    SOMEDAY
 }

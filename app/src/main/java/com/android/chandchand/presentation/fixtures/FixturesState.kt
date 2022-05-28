@@ -10,5 +10,8 @@ data class FixturesState(
     val todayFixtures: List<FixturesPerLeagueModel> = listOf(),
     val tomorrowFixtures: List<FixturesPerLeagueModel> = listOf(),
     val dayAfterTomorrowFixtures: List<FixturesPerLeagueModel> = listOf(),
+    val somedayDate: String = "",
+    val somedayDateDescription: String = "",
+    val somedayFixtures: List<FixturesPerLeagueModel> = listOf(),
     val errorMessage: String? = null
 ) : IState

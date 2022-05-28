@@ -1,9 +1,12 @@
 package com.android.chandchand.presentation.ui.components
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +20,7 @@ import com.android.chandchand.presentation.theme.ChandChandTheme
 
 @Composable
 fun ChandChandAppBar(
-    @StringRes titleResId: Int,
+    title: String,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     ConstraintLayout(
@@ -28,7 +31,7 @@ fun ChandChandAppBar(
     ) {
         val titleRef = createRef()
         Text(
-            text = stringResource(titleResId),
+            text = title,
             style = MaterialTheme.typography.h6,
             color = contentColorFor(backgroundColor = MaterialTheme.colors.primary),
             modifier = Modifier.constrainAs(titleRef) {
@@ -52,20 +55,18 @@ fun ChandChandAppBar(
 @Preview(name = "Fixtures")
 private fun PreviewFixturesAppBar() {
     ChandChandTheme {
-        ChandChandAppBar(titleResId = R.string.fixtures) {
+        ChandChandAppBar(title = stringResource(R.string.fixtures)) {
             IconButton(onClick = { }) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.ic_calendar_24),
-                    contentDescription = "calendar",
-                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                    contentDescription = "calendar"
                 )
             }
 
             IconButton(onClick = { }) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.ic_tv_24),
-                    contentDescription = "calendar",
-                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                    contentDescription = "calendar"
                 )
             }
         }
@@ -76,6 +77,6 @@ private fun PreviewFixturesAppBar() {
 @Preview(name = "Leagues")
 private fun PreviewLeaguesAppBar() {
     ChandChandTheme {
-        ChandChandAppBar(titleResId = R.string.leagues)
+        ChandChandAppBar(title = stringResource(R.string.leagues))
     }
 }

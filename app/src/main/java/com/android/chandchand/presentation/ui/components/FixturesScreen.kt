@@ -1,5 +1,6 @@
 package com.android.chandchand.presentation.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,20 +51,18 @@ fun FixturesScreen(
     val coroutineScope = rememberCoroutineScope()
 
     Column {
-        ChandChandAppBar(titleResId = R.string.fixtures) {
+        ChandChandAppBar(title = stringResource(R.string.fixtures)) {
             IconButton(onClick = { onCalendarClick() }) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.ic_calendar_24),
-                    contentDescription = "calendar",
-                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                    contentDescription = "calendar"
                 )
             }
 
             IconButton(onClick = { onNavigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment()) }) {
-                Icon(
+                Image(
                     painter = painterResource(id = R.drawable.ic_tv_24),
-                    contentDescription = "calendar",
-                    tint = contentColorFor(backgroundColor = MaterialTheme.colors.primary)
+                    contentDescription = "calendar"
                 )
             }
         }
