@@ -19,6 +19,13 @@
         android:id="@+id/standingsFragment"
         android:name="com.android.chandchand.presentation.leagues.StandingsFragment"
         android:label="fragment_standings"
-        tools:layout="@layout/fragment_standings" />
+        tools:layout="@layout/fragment_standings" >
+        <argument
+            android:name="leagueId"
+            app:argType="integer" />
+        <argument
+            android:name="leagueTitleResId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

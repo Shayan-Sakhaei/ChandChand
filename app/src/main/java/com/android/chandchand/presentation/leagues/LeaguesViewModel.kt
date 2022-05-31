@@ -1,13 +1,10 @@
 package com.android.chandchand.presentation.leagues
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetStandingsUseCase
 import com.android.chandchand.presentation.common.IModel
-import com.android.chandchand.presentation.model.LeagueTitleModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -40,14 +37,11 @@ class LeaguesViewModel @Inject constructor(
         }
     }
 
-    val _selectedLeagueTitleModel = MutableLiveData<LeagueTitleModel>()
-    val selectedLeagueTitleModel: LiveData<LeagueTitleModel> get() = _selectedLeagueTitleModel
-
     private suspend fun updateState(handler: suspend (intent: LeaguesState) -> LeaguesState) {
         _state.value = handler(state.value)
     }
 
-    fun getStandings(leagueId: Int) {
+    private fun getStandings(leagueId: Int) {
         viewModelScope.launch {
             try {
                 updateState { it.copy(isLoading = true, standings = emptyList()) }
@@ -73,7 +67,6 @@ class LeaguesViewModel @Inject constructor(
             } catch (e: Exception) {
                 updateState { it.copy(isLoading = false, errorMessage = e.message) }
             }
-
         }
     }
 }
