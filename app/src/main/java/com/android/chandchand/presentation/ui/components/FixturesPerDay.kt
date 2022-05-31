@@ -6,18 +6,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 
 @Composable
 fun FixturesPerDay(
     fixtures: List<FixturesPerLeagueModel>,
-    onHeaderClick: (FixturesPerLeagueModel) -> Unit
+    onHeaderClick: (FixturesPerLeagueModel) -> Unit,
+    onPredictionClick: (FixtureEntity) -> Unit
 ) {
     LazyColumn(modifier = Modifier.padding(top = 12.dp)) {
         items(fixtures) { fixtures: FixturesPerLeagueModel ->
-            FixturesPerLeague(fixtures = fixtures) { fixturesPerLeagueModel: FixturesPerLeagueModel ->
-                onHeaderClick(fixturesPerLeagueModel)
-            }
+            FixturesPerLeague(
+                fixtures = fixtures,
+                onHeaderClick = { fixturesPerLeagueModel -> onHeaderClick(fixturesPerLeagueModel) },
+                onPredictionClick = { fixtureEntity -> onPredictionClick(fixtureEntity) }
+            )
         }
     }
 }

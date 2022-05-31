@@ -95,24 +95,72 @@ fun FixturesScreen(
         ) {
             when (currentPage) {
                 0 -> {
-                    FixturesPerDay(fixtures = state.yesterdayFixtures, onHeaderClick = {
-                        viewModel.onLeagueHeaderClick(it, DAY.YESTERDAY)
-                    })
+                    FixturesPerDay(
+                        fixtures = state.yesterdayFixtures,
+                        onHeaderClick = {
+                            viewModel.onLeagueHeaderClick(it, DAY.YESTERDAY)
+                        },
+                        onPredictionClick = { fixtureEntity ->
+                            onNavigate(
+                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                    fixtureEntity.id,
+                                    fixtureEntity.home_team_logo,
+                                    fixtureEntity.away_team_logo
+                                )
+                            )
+                        }
+                    )
                 }
                 1 -> {
-                    FixturesPerDay(fixtures = state.todayFixtures, onHeaderClick = {
-                        viewModel.onLeagueHeaderClick(it, DAY.TODAY)
-                    })
+                    FixturesPerDay(
+                        fixtures = state.todayFixtures,
+                        onHeaderClick = {
+                            viewModel.onLeagueHeaderClick(it, DAY.TODAY)
+                        },
+                        onPredictionClick = { fixtureEntity ->
+                            onNavigate(
+                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                    fixtureEntity.id,
+                                    fixtureEntity.home_team_logo,
+                                    fixtureEntity.away_team_logo
+                                )
+                            )
+                        }
+                    )
                 }
                 2 -> {
-                    FixturesPerDay(fixtures = state.tomorrowFixtures, onHeaderClick = {
-                        viewModel.onLeagueHeaderClick(it, DAY.TOMORROW)
-                    })
+                    FixturesPerDay(
+                        fixtures = state.tomorrowFixtures,
+                        onHeaderClick = {
+                            viewModel.onLeagueHeaderClick(it, DAY.TOMORROW)
+                        },
+                        onPredictionClick = { fixtureEntity ->
+                            onNavigate(
+                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                    fixtureEntity.id,
+                                    fixtureEntity.home_team_logo,
+                                    fixtureEntity.away_team_logo
+                                )
+                            )
+                        }
+                    )
                 }
                 3 -> {
-                    FixturesPerDay(fixtures = state.dayAfterTomorrowFixtures, onHeaderClick = {
-                        viewModel.onLeagueHeaderClick(it, DAY.DAY_AFTER_TOMORROW)
-                    })
+                    FixturesPerDay(
+                        fixtures = state.dayAfterTomorrowFixtures,
+                        onHeaderClick = {
+                            viewModel.onLeagueHeaderClick(it, DAY.DAY_AFTER_TOMORROW)
+                        },
+                        onPredictionClick = { fixtureEntity ->
+                            onNavigate(
+                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                    fixtureEntity.id,
+                                    fixtureEntity.home_team_logo,
+                                    fixtureEntity.away_team_logo
+                                )
+                            )
+                        }
+                    )
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.android.chandchand.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -24,7 +25,7 @@ import com.android.chandchand.presentation.ui.PreviewData
 import com.android.chandchand.presentation.utils.*
 
 @Composable
-fun Fixture(fixture: FixtureEntity) {
+fun Fixture(fixture: FixtureEntity, onPredictionClick: (FixtureEntity) -> Unit) {
 
     Card(
         modifier = Modifier
@@ -46,6 +47,7 @@ fun Fixture(fixture: FixtureEntity) {
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .size(40.dp)
+                    .clickable { onPredictionClick(fixture) }
                     .constrainAs(predictionIcon) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
@@ -327,6 +329,6 @@ fun Fixture(fixture: FixtureEntity) {
 @Preview(name = "Fixture", showBackground = true)
 private fun PreviewFixture() {
     ChandChandTheme {
-        Fixture(PreviewData.fixture)
+        Fixture(PreviewData.fixture) {}
     }
 }

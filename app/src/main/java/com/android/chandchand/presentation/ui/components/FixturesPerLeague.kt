@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
+import com.android.chandchand.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
@@ -24,7 +25,8 @@ import com.android.chandchand.presentation.ui.PreviewData
 @Composable
 fun FixturesPerLeague(
     fixtures: FixturesPerLeagueModel,
-    onHeaderClick: (FixturesPerLeagueModel) -> Unit
+    onHeaderClick: (FixturesPerLeagueModel) -> Unit,
+    onPredictionClick: (FixtureEntity) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -89,7 +91,10 @@ fun FixturesPerLeague(
         if (fixtures.isExpanded) {
             Column {
                 fixtures.fixtures.forEach { fixtureEntity ->
-                    Fixture(fixture = fixtureEntity)
+                    Fixture(
+                        fixture = fixtureEntity,
+                        onPredictionClick = { onPredictionClick(it) }
+                    )
                 }
             }
         }
@@ -101,10 +106,10 @@ fun FixturesPerLeague(
 private fun PreviewFixturesPerLeague() {
     ChandChandTheme {
         var fixtures by remember { mutableStateOf(PreviewData.fixturesPerLeague) }
-        FixturesPerLeague(fixtures) {
+        FixturesPerLeague(fixtures, {
             val prevState = fixtures.isExpanded
             fixtures = fixtures.copy(isExpanded = !prevState)
-        }
+        }, {})
     }
 }
 
