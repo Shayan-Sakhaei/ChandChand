@@ -128,6 +128,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:$coilComposeVersion")
     implementation("com.google.accompanist:accompanist-pager:$accompanistPagerVersion")
 
+    //PERSIAN DATE
+    implementation("com.github.samanzamani:PersianDate:${persiandateVersion}")
+
     //TEST
     testImplementation("junit:junit:$junitVersion")
     testImplementation("androidx.test:core-ktx:$androidXTestCoreVersion")

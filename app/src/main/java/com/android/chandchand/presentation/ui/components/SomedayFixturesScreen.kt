@@ -13,6 +13,8 @@ import com.android.chandchand.R
 import com.android.chandchand.presentation.fixtures.FixturesViewModel
 import com.android.chandchand.presentation.fixtures.daily.SomedayFixturesFragmentDirections
 import com.android.chandchand.presentation.utils.DAY
+import com.android.chandchand.presentation.utils.toHourMin
+import com.android.chandchand.presentation.utils.toPersianDate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,7 +49,9 @@ fun SomedayFixturesScreen(
                     SomedayFixturesFragmentDirections.actionSomedayFixturesFragmentToPredictionsFragment(
                         fixtureEntity.id,
                         fixtureEntity.home_team_logo,
-                        fixtureEntity.away_team_logo
+                        fixtureEntity.away_team_logo,
+                        fixtureEntity.date?.toPersianDate(),
+                        fixtureEntity.timestamp?.toHourMin()
                     )
                 )
             }

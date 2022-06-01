@@ -40,9 +40,13 @@ class FixturesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 ChandChandTheme {
-                    FixturesScreen(viewModel, { navDirections ->
-                        findNavController().navigate(navDirections)
-                    }, { datePicker.show() })
+                    FixturesScreen(
+                        viewModel,
+                        onNavigate = { navDirections ->
+                            findNavController().navigate(navDirections)
+                        },
+                        onCalendarClick = { datePicker.show() }
+                    )
                 }
             }
         }

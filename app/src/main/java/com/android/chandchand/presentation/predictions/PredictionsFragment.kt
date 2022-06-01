@@ -4,60 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.android.chandchand.databinding.FragmentPredictionBinding
-import com.android.chandchand.presentation.common.IView
+import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.components.PredictionsScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class PredictionsFragment : Fragment(), IView<PredictionsState> {
+class PredictionsFragment : Fragment() {
 
-    private val viewModel: PredictionsViewModel by viewModels {
-        defaultViewModelProviderFactory
+    private val viewModel: PredictionsViewModel by viewModels()
+
+    private val args: PredictionsFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.prepareState(
+            args.homeTeamLogo ?: "",
+            args.awayTeamLogo ?: "",
+            args.date ?: "",
+            args.time ?: ""
+        )
     }
-
-    val args: PredictionsFragmentArgs by navArgs()
-
-    private var _binding: FragmentPredictionBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentPredictionBinding.inflate(layoutInflater, container, false)
-        return binding.root
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ChandChandTheme {
+                    PredictionsScreen(viewModel = viewModel)
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.state.onEach { state ->
-            render(state)
-        }.launchIn(lifecycleScope)
         viewModel.send(PredictionsIntent.GetPredictions(args.fixtureId))
-        setUp()
-    }
-
-    override fun render(state: PredictionsState) {
-        with(state) {
-            predictions?.let {}
-        }
-    }
-
-    private fun setUp() {
-        binding.ibBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -25,6 +25,8 @@ import com.android.chandchand.presentation.fixtures.FixturesFragmentDirections
 import com.android.chandchand.presentation.fixtures.FixturesViewModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.utils.DAY
+import com.android.chandchand.presentation.utils.toHourMin
+import com.android.chandchand.presentation.utils.toPersianDate
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -105,7 +107,9 @@ fun FixturesScreen(
                                 FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
                                     fixtureEntity.id,
                                     fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo
+                                    fixtureEntity.away_team_logo,
+                                    fixtureEntity.date?.toPersianDate(),
+                                    fixtureEntity.timestamp?.toHourMin()
                                 )
                             )
                         }
@@ -122,7 +126,9 @@ fun FixturesScreen(
                                 FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
                                     fixtureEntity.id,
                                     fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo
+                                    fixtureEntity.away_team_logo,
+                                    fixtureEntity.date?.toPersianDate(),
+                                    fixtureEntity.timestamp?.toHourMin()
                                 )
                             )
                         }
@@ -139,7 +145,9 @@ fun FixturesScreen(
                                 FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
                                     fixtureEntity.id,
                                     fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo
+                                    fixtureEntity.away_team_logo,
+                                    fixtureEntity.date?.toPersianDate(),
+                                    fixtureEntity.timestamp?.toHourMin()
                                 )
                             )
                         }
@@ -156,7 +164,9 @@ fun FixturesScreen(
                                 FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
                                     fixtureEntity.id,
                                     fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo
+                                    fixtureEntity.away_team_logo,
+                                    fixtureEntity.date?.toPersianDate(),
+                                    fixtureEntity.timestamp?.toHourMin()
                                 )
                             )
                         }

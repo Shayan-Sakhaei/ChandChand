@@ -21,7 +21,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.util.forEach
-import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +32,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.shape.MaterialShapeDrawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import saman.zamani.persiandate.PersianDate
+import saman.zamani.persiandate.PersianDateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +54,12 @@ fun Long.toHourMin(): String {
     val hourMinFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val date = Date(this * 1000)
     return hourMinFormat.format(date)
+}
+
+fun String.toPersianDate(): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
+    val date = inputFormat.parse(this)
+    return PersianDateFormat("m/d").format(PersianDate(date))
 }
 
 fun Int.toPx(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()

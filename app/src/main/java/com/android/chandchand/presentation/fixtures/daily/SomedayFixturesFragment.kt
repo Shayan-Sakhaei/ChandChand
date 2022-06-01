@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.android.chandchand.R
 import com.android.chandchand.presentation.fixtures.FixturesIntent
@@ -45,9 +46,12 @@ class SomedayFixturesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 ChandChandTheme {
-                    SomedayFixturesScreen(viewModel = viewModel) {
-                        datePicker.show()
-                    }
+                    SomedayFixturesScreen(
+                        viewModel = viewModel,
+                        onNavigate = { navDirections ->
+                            findNavController().navigate(navDirections)
+                        },
+                        onCalendarClick = { datePicker.show() })
                 }
             }
         }

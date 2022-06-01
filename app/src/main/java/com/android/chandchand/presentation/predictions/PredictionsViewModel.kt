@@ -70,4 +70,17 @@ class PredictionsViewModel @Inject constructor(
                 }
         }
     }
+
+    fun prepareState(homeTeamLogoUrl: String, awayTeamLogoUrl: String, date: String, time: String) {
+        viewModelScope.launch {
+            updateState {
+                it.copy(
+                    homeTeamLogoUrl = homeTeamLogoUrl,
+                    awayTeamLogoUrl = awayTeamLogoUrl,
+                    date = date,
+                    time = time
+                )
+            }
+        }
+    }
 }
