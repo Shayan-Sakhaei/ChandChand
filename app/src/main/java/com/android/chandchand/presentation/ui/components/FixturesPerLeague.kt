@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
-import com.android.chandchand.domain.entities.FixtureEntity
+import com.android.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
@@ -26,7 +26,7 @@ import com.android.chandchand.presentation.ui.PreviewData
 fun FixturesPerLeague(
     fixtures: FixturesPerLeagueModel,
     onHeaderClick: (FixturesPerLeagueModel) -> Unit,
-    onPredictionClick: (FixtureEntity) -> Unit
+    onPredictionClick: (com.android.domain.entities.FixtureEntity) -> Unit
 ) {
     Column(
         modifier = Modifier

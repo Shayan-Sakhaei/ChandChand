@@ -2,13 +2,13 @@ package com.android.chandchand.data.leagues.mapper
 
 import com.android.chandchand.data.common.Mapper
 import com.android.chandchand.data.leagues.entity.StdStandings
-import com.android.chandchand.domain.entities.StandingEntity
+import com.android.domain.entities.StandingEntity
 import javax.inject.Inject
 
 class StandingServerEntityMapper @Inject constructor(
-) : Mapper<StdStandings, StandingEntity> {
-    override fun map(item: StdStandings): StandingEntity =
-        StandingEntity(
+) : Mapper<StdStandings, com.android.domain.entities.StandingEntity> {
+    override fun map(item: StdStandings): com.android.domain.entities.StandingEntity =
+        com.android.domain.entities.StandingEntity(
             item.rank,
             item.team_id,
             item.teamName,

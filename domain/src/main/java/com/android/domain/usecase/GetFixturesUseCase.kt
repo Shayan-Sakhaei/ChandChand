@@ -1,8 +1,7 @@
-package com.android.chandchand.domain.usecase
+package com.android.domain.usecase
 
-import com.android.chandchand.data.common.Result
-import com.android.chandchand.domain.entities.FixtureEntity
-import com.android.chandchand.domain.repositories.FixturesRepository
+import com.android.domain.entities.FixtureEntity
+import com.android.domain.repositories.FixturesRepository
 import javax.inject.Inject
 
 class GetFixturesUseCase @Inject constructor(

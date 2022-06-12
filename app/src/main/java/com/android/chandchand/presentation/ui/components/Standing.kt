@@ -16,12 +16,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.android.chandchand.R
-import com.android.chandchand.domain.entities.StandingEntity
+import com.android.domain.entities.StandingEntity
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
 
 @Composable
-fun Standing(standing: StandingEntity) {
+fun Standing(standing: com.android.domain.entities.StandingEntity) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.android.chandchand.domain.entities
+package com.android.domain.entities
 
 import com.android.chandchand.presentation.predictions.Winner
 

@@ -4,7 +4,7 @@ import com.android.chandchand.data.leagues.api.LeaguesApi
 import com.android.chandchand.data.leagues.datasource.RemoteLeaguesDataSource
 import com.android.chandchand.data.leagues.repository.LeaguesRepositoryImpl
 import com.android.chandchand.domain.datasources.LeaguesDataSource
-import com.android.chandchand.domain.repositories.LeaguesRepository
+import com.android.domain.repositories.LeaguesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ interface LeaguesModule {
     @Binds
     fun provideRepository(
         leaguesRepositoryImpl: LeaguesRepositoryImpl
-    ): LeaguesRepository
+    ): com.android.domain.repositories.LeaguesRepository
 
     companion object {
 

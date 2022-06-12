@@ -3,7 +3,7 @@ package com.android.chandchand.presentation.fixtures
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
-import com.android.chandchand.domain.usecase.GetFixturesUseCase
+import com.android.domain.usecase.GetFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class FixturesViewModel @Inject constructor(
-    private val getFixturesUseCase: GetFixturesUseCase,
+    private val getFixturesUseCase: com.android.domain.usecase.GetFixturesUseCase,
     private val entityUiMapper: FixtureEntityUiMapper
 ) : ViewModel(), IModel<FixturesState, FixturesIntent> {
 

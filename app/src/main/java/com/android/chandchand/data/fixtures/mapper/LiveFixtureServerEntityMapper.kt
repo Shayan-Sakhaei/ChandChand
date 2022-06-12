@@ -2,13 +2,13 @@ package com.android.chandchand.data.fixtures.mapper
 
 import com.android.chandchand.data.common.Mapper
 import com.android.chandchand.data.fixtures.entity.LiveFixFixtures
-import com.android.chandchand.domain.entities.LiveFixtureEntity
+import com.android.domain.entities.LiveFixtureEntity
 import javax.inject.Inject
 
 class LiveFixtureServerEntityMapper @Inject constructor(
-) : Mapper<LiveFixFixtures, LiveFixtureEntity> {
-    override fun map(item: LiveFixFixtures): LiveFixtureEntity =
-        LiveFixtureEntity(
+) : Mapper<LiveFixFixtures, com.android.domain.entities.LiveFixtureEntity> {
+    override fun map(item: LiveFixFixtures): com.android.domain.entities.LiveFixtureEntity =
+        com.android.domain.entities.LiveFixtureEntity(
             item.fixture_id,
             item.league_id,
             item.league.name,

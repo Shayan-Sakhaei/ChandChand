@@ -1,11 +1,4 @@
-package com.android.chandchand.domain.entities
-
-import com.android.chandchand.data.fixtures.entity.LiveFixEvents
-
-data class LiveFixtureEntities(
-    val results: Int,
-    val entities: List<LiveFixtureEntity>
-)
+package com.android.domain.entities
 
 data class LiveFixtureEntity(
     val id: Int?,
@@ -33,5 +26,5 @@ data class LiveFixtureEntity(
     val score_fulltime: String?,
     val score_extratime: String?,
     val score_penalty: String?,
-    val events: List<LiveFixEvents>
+    val events: List<LiveFixtureEventsEntity>
 )

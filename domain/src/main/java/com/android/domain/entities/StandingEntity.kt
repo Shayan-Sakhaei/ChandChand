@@ -1,4 +1,4 @@
-package com.android.chandchand.domain.entities
+package com.android.domain.entities
 
 data class StandingEntity(
     val rank: Int?,

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.android.chandchand.data.common.Result
-import com.android.chandchand.domain.usecase.GetPredictionsUseCase
+import com.android.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PredictionsViewModel @Inject constructor(
-    private val getPredictionsUseCase: GetPredictionsUseCase
+    private val getPredictionsUseCase: com.android.domain.usecase.GetPredictionsUseCase
 ) : ViewModel(), IModel<PredictionsState, PredictionsIntent> {
 
     override val intents: Channel<PredictionsIntent> = Channel(Channel.UNLIMITED)

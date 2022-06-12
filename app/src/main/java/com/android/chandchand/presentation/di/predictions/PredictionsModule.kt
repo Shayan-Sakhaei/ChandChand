@@ -4,7 +4,7 @@ import com.android.chandchand.data.predictions.api.PredictionsApi
 import com.android.chandchand.data.predictions.datasource.RemotePredictionsDataSource
 import com.android.chandchand.data.predictions.repository.PredictionsRepositoryImpl
 import com.android.chandchand.domain.datasources.PredictionsDataSource
-import com.android.chandchand.domain.repositories.PredictionsRepository
+import com.android.domain.repositories.PredictionsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ interface PredictionsModule {
     @Binds
     fun provideRepository(
         predictionsRepositoryImpl: PredictionsRepositoryImpl
-    ): PredictionsRepository
+    ): com.android.domain.repositories.PredictionsRepository
 
     companion object {
 

@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.android.chandchand.MainCoroutineRule
 import com.android.chandchand.data.fixtures.entity.LiveFixEvents
 import com.android.chandchand.data.fixtures.repository.FakeFixturesRepository
-import com.android.chandchand.domain.entities.LiveFixtureEntities
-import com.android.chandchand.domain.entities.LiveFixtureEntity
-import com.android.chandchand.domain.usecase.GetLiveFixturesUseCase
+import com.android.domain.entities.LiveFixtureEntities
+import com.android.domain.entities.LiveFixtureEntity
+import com.android.domain.usecase.GetLiveFixturesUseCase
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 import io.mockk.coVerify
@@ -26,7 +26,7 @@ class LiveFixturesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var getLiveFixturesUseCase: GetLiveFixturesUseCase
+    private lateinit var getLiveFixturesUseCase: com.android.domain.usecase.GetLiveFixturesUseCase
     private lateinit var mapper: LiveFixtureEntityUiMapper
     private lateinit var viewModel: LiveFixturesViewModel
 
@@ -37,7 +37,7 @@ class LiveFixturesViewModelTest {
 
     @Test
     fun `getLiveFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
-        getLiveFixturesUseCase = GetLiveFixturesUseCase(
+        getLiveFixturesUseCase = com.android.domain.usecase.GetLiveFixturesUseCase(
             FakeFixturesRepository(liveFixtures = fakeLiveFixtureEntities)
         )
         viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
@@ -68,7 +68,8 @@ class LiveFixturesViewModelTest {
 
     @Test
     fun `getLiveFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getLiveFixturesUseCase = GetLiveFixturesUseCase(FakeFixturesRepository())
+        getLiveFixturesUseCase =
+            com.android.domain.usecase.GetLiveFixturesUseCase(FakeFixturesRepository())
         viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
 
         val states = mutableListOf<LiveFixturesState>()
@@ -107,9 +108,9 @@ class LiveFixturesViewModelTest {
         }
 }
 
-private val fakeLiveFixtureEntities = LiveFixtureEntities(
+private val fakeLiveFixtureEntities = com.android.domain.entities.LiveFixtureEntities(
     1, listOf(
-        LiveFixtureEntity(
+        com.android.domain.entities.LiveFixtureEntity(
             836275,
             4067,
             "J. League Div.1",

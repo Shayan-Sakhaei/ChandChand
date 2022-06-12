@@ -4,12 +4,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.chandchand.R
-import com.android.chandchand.domain.entities.StandingEntity
+import com.android.domain.entities.StandingEntity
 import com.android.chandchand.presentation.utils.KotlinModel
 import com.bumptech.glide.Glide
 
 data class StandingEpoxyItem(
-    val item: StandingEntity
+    val item: com.android.domain.entities.StandingEntity
 ) : KotlinModel(R.layout.standing_list_item) {
 
     private val root by bind<ConstraintLayout>(R.id.standing_list_item_root)
