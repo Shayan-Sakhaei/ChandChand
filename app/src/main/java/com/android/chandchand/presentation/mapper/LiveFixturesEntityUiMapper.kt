@@ -2,24 +2,24 @@ package com.android.chandchand.presentation.mapper
 
 import com.android.chandchand.R
 import com.android.chandchand.data.common.Mapper
-import com.android.chandchand.domain.entities.LiveFixtureEntities
-import com.android.chandchand.domain.entities.LiveFixtureEntity
+import com.android.domain.entities.LiveFixtureEntities
+import com.android.domain.entities.LiveFixtureEntity
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 import javax.inject.Inject
 
 class LiveFixtureEntityUiMapper @Inject constructor() :
-    Mapper<LiveFixtureEntities, LiveFixturesPerLeagueModels> {
+    Mapper<com.android.domain.entities.LiveFixtureEntities, LiveFixturesPerLeagueModels> {
 
-    override fun map(item: LiveFixtureEntities): LiveFixturesPerLeagueModels {
+    override fun map(item: com.android.domain.entities.LiveFixtureEntities): LiveFixturesPerLeagueModels {
 
-        val persianGulfCup = ArrayList<LiveFixtureEntity>()
-        val englishPremierLeague = ArrayList<LiveFixtureEntity>()
-        val spanishLaLiga = ArrayList<LiveFixtureEntity>()
-        val italianSerieA = ArrayList<LiveFixtureEntity>()
-        val germanBundesliga1 = ArrayList<LiveFixtureEntity>()
-        val frenchLigue1 = ArrayList<LiveFixtureEntity>()
+        val persianGulfCup = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
+        val englishPremierLeague = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
+        val spanishLaLiga = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
+        val italianSerieA = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
+        val germanBundesliga1 = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
+        val frenchLigue1 = ArrayList<com.android.domain.entities.LiveFixtureEntity>()
 
         item.entities.map { fixtureEntity ->
             when (fixtureEntity.league_id) {

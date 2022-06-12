@@ -2,13 +2,13 @@ package com.android.chandchand.data.predictions.mapper
 
 import com.android.chandchand.data.common.Mapper
 import com.android.chandchand.data.predictions.entity.PredictionsServerModel
-import com.android.chandchand.domain.entities.PredictionsEntity
+import com.android.domain.entities.PredictionsEntity
 import javax.inject.Inject
 
 class PredictionsServerEntityMapper @Inject constructor(
-) : Mapper<PredictionsServerModel, PredictionsEntity> {
-    override fun map(item: PredictionsServerModel): PredictionsEntity =
-        PredictionsEntity(
+) : Mapper<PredictionsServerModel, com.android.domain.entities.PredictionsEntity> {
+    override fun map(item: PredictionsServerModel): com.android.domain.entities.PredictionsEntity =
+        com.android.domain.entities.PredictionsEntity(
             item.api.predictions[0].match_winner,
             item.api.predictions[0].under_over,
             item.api.predictions[0].goals_home,

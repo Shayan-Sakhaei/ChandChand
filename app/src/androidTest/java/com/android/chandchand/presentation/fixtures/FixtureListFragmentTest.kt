@@ -12,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android.chandchand.EspressoIdlingResource
 import com.android.chandchand.R
 import com.android.chandchand.di.launchFragmentInHiltContainer
-import com.android.chandchand.domain.repositories.FixturesRepository
+import com.android.domain.repositories.FixturesRepository
 import com.android.chandchand.fake.FakeFixturesRepository
 import com.android.chandchand.presentation.di.fixtures.FixturesModule
 import dagger.hilt.android.testing.BindValue
@@ -37,7 +37,7 @@ class FixtureListFragmentTest {
 
     @BindValue
     @JvmField
-    val fakeFixturesRepository: FixturesRepository = FakeFixturesRepository()
+    val fakeFixturesRepository: com.android.domain.repositories.FixturesRepository = FakeFixturesRepository()
 
     @Before
     fun setUp() {

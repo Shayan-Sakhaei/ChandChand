@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.android.chandchand.R
-import com.android.chandchand.domain.entities.LiveFixtureEntity
+import com.android.domain.entities.LiveFixtureEntity
 import com.android.chandchand.presentation.utils.*
 
 @Composable
-fun LiveFixture(fixture: LiveFixtureEntity) {
+fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
 
     Card(
         modifier = Modifier

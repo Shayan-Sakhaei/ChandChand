@@ -4,7 +4,7 @@ import com.android.chandchand.R
 import com.android.chandchand.data.fixtures.entity.*
 import com.android.chandchand.data.fixtures.mapper.FixtureServerEntityMapper
 import com.android.chandchand.data.fixtures.mapper.LiveFixtureServerEntityMapper
-import com.android.chandchand.domain.entities.StandingEntity
+import com.android.domain.entities.StandingEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LeagueModel
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModel
@@ -90,7 +90,7 @@ object PreviewData {
     )
 
 
-    val standing = StandingEntity(
+    val standing = com.android.domain.entities.StandingEntity(
         1,
         2742,
         "Persepolis FC",

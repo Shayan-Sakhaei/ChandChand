@@ -4,18 +4,18 @@ import com.android.chandchand.data.common.Result
 import com.android.chandchand.data.fixtures.mapper.FixtureServerEntityMapper
 import com.android.chandchand.data.fixtures.mapper.LiveFixtureServerEntityMapper
 import com.android.chandchand.domain.datasources.FixturesDataSource
-import com.android.chandchand.domain.entities.FixtureEntity
-import com.android.chandchand.domain.entities.LiveFixtureEntities
-import com.android.chandchand.domain.repositories.FixturesRepository
+import com.android.domain.entities.FixtureEntity
+import com.android.domain.entities.LiveFixtureEntities
+import com.android.domain.repositories.FixturesRepository
 import javax.inject.Inject
 
 class FixturesRepositoryImpl @Inject constructor(
     private val remoteDataSource: FixturesDataSource,
     private val fixtureServerEntityMapper: FixtureServerEntityMapper,
     private val liveFixtureServerEntityMapper: LiveFixtureServerEntityMapper
-) : FixturesRepository {
+) : com.android.domain.repositories.FixturesRepository {
 
-    override suspend fun getFixtures(date: String): Result<List<FixtureEntity>> {
+    override suspend fun getFixtures(date: String): Result<List<com.android.domain.entities.FixtureEntity>> {
         val response = remoteDataSource.getFixturesByDate(date)
         val body = response.body()
         return if (!response.isSuccessful || body == null) {
@@ -28,7 +28,7 @@ class FixturesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getLiveFixtures(): Result<LiveFixtureEntities> {
+    override suspend fun getLiveFixtures(): Result<com.android.domain.entities.LiveFixtureEntities> {
         val response = remoteDataSource.getLiveFixtures()
         val body = response.body()
         return if (!response.isSuccessful || body == null) {
@@ -37,7 +37,12 @@ class FixturesRepositoryImpl @Inject constructor(
             val entities = body.api.fixtures.map {
                 liveFixtureServerEntityMapper.map(it)
             }
-            Result.Success(LiveFixtureEntities(body.api.results, entities))
+            Result.Success(
+                com.android.domain.entities.LiveFixtureEntities(
+                    body.api.results,
+                    entities
+                )
+            )
         }
     }
 }

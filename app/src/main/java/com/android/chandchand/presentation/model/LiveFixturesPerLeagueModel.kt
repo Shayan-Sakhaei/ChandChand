@@ -1,6 +1,6 @@
 package com.android.chandchand.presentation.model
 
-import com.android.chandchand.domain.entities.LiveFixtureEntity
+import com.android.domain.entities.LiveFixtureEntity
 
 data class LiveFixturesPerLeagueModels(
     val results: Int,
@@ -9,6 +9,6 @@ data class LiveFixturesPerLeagueModels(
 
 data class LiveFixturesPerLeagueModel(
     val leagueModel: LeagueModel,
-    val fixtures: List<LiveFixtureEntity>,
+    val fixtures: List<com.android.domain.entities.LiveFixtureEntity>,
     val isExpanded: Boolean = false
 )

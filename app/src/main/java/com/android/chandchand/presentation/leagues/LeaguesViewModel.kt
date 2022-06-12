@@ -3,7 +3,7 @@ package com.android.chandchand.presentation.leagues
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.data.common.Result
-import com.android.chandchand.domain.usecase.GetStandingsUseCase
+import com.android.domain.usecase.GetStandingsUseCase
 import com.android.chandchand.presentation.common.IModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class LeaguesViewModel @Inject constructor(
-    private val getStandingsUseCase: GetStandingsUseCase
+    private val getStandingsUseCase: com.android.domain.usecase.GetStandingsUseCase
 ) : ViewModel(), IModel<LeaguesState, LeaguesIntent> {
 
 

@@ -4,7 +4,7 @@ import com.android.chandchand.data.fixtures.api.FixturesApi
 import com.android.chandchand.data.fixtures.datasource.RemoteFixturesDataSource
 import com.android.chandchand.data.fixtures.repository.FixturesRepositoryImpl
 import com.android.chandchand.domain.datasources.FixturesDataSource
-import com.android.chandchand.domain.repositories.FixturesRepository
+import com.android.domain.repositories.FixturesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,7 @@ interface FixturesModule {
     @Binds
     fun provideRepository(
         leaguesRepositoryImpl: FixturesRepositoryImpl
-    ): FixturesRepository
+    ): com.android.domain.repositories.FixturesRepository
 
     companion object {
 

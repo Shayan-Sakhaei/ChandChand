@@ -7,9 +7,9 @@ import com.android.chandchand.data.fixtures.entity.*
 import com.android.chandchand.data.fixtures.mapper.FixtureServerEntityMapper
 import com.android.chandchand.data.fixtures.mapper.LiveFixtureServerEntityMapper
 import com.android.chandchand.domain.datasources.FixturesDataSource
-import com.android.chandchand.domain.entities.FixtureEntity
-import com.android.chandchand.domain.entities.LiveFixtureEntities
-import com.android.chandchand.domain.entities.LiveFixtureEntity
+import com.android.domain.entities.FixtureEntity
+import com.android.domain.entities.LiveFixtureEntities
+import com.android.domain.entities.LiveFixtureEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -43,7 +43,7 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getFixtures("2022-03-17").toList()
 
-        val fixtureEntityList: List<FixtureEntity> =
+        val fixtureEntityList: List<com.android.domain.entities.FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
@@ -80,14 +80,14 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getLiveFixtures().toList()
 
-        val liveFixtureEntityList: List<LiveFixtureEntity> =
+        val liveFixtureEntityList: List<com.android.domain.entities.LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
         val assertions = listOf(
             Result.Success(
-                LiveFixtureEntities(
+                com.android.domain.entities.LiveFixtureEntities(
                     fakeLiveServerFixtures.api.results,
                     liveFixtureEntityList
                 )
@@ -119,7 +119,7 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getFixtures should invoke FixturesDataSource getFixturesByDate`() = runBlockingTest {
 
-        val fixtureEntityList: List<FixtureEntity> =
+        val fixtureEntityList: List<com.android.domain.entities.FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
@@ -142,13 +142,13 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getLiveFixtures should invoke FixturesDataSource getLiveFixtures`() = runBlockingTest {
 
-        val liveFixtureEntityList: List<LiveFixtureEntity> =
+        val liveFixtureEntityList: List<com.android.domain.entities.LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
         val expected = Result.Success(
-            LiveFixtureEntities(
+            com.android.domain.entities.LiveFixtureEntities(
                 fakeLiveServerFixtures.api.results,
                 liveFixtureEntityList
             )

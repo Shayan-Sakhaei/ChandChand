@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
-import com.android.chandchand.domain.entities.StandingEntity
+import com.android.domain.entities.StandingEntity
 import com.android.chandchand.presentation.leagues.LeaguesViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -83,7 +83,7 @@ fun StandingsScreen(
         }
         Divider(color = Color.Black.copy(alpha = .10f), thickness = 1.dp)
         LazyColumn {
-            items(state.standings, key = { it.team_id }) { standingEntity: StandingEntity ->
+            items(state.standings, key = { it.team_id }) { standingEntity: com.android.domain.entities.StandingEntity ->
                 Standing(standing = standingEntity)
             }
         }
