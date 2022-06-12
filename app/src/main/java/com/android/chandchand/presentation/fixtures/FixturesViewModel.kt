@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.fixtures
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.chandchand.data.common.Result
+import com.android.data.common.Result
 import com.android.domain.usecase.GetFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
@@ -69,7 +69,7 @@ class FixturesViewModel @Inject constructor(
                             async { getFixturesUseCase.execute(getDateFromToday(2)) }
 
                         when (val yesterdayResponse = yesterday.await()) {
-                            is Result.Success -> {
+                            is com.android.data.common.Result.Success -> {
                                 val fixtures = entityUiMapper.map(yesterdayResponse.data)
                                 updateState {
                                     it.copy(
@@ -78,7 +78,7 @@ class FixturesViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            is Result.Error -> {
+                            is com.android.data.common.Result.Error -> {
                                 updateState {
                                     it.copy(
                                         isLoading = false,
@@ -89,7 +89,7 @@ class FixturesViewModel @Inject constructor(
                         }
 
                         when (val todayResponse = today.await()) {
-                            is Result.Success -> {
+                            is com.android.data.common.Result.Success -> {
                                 val fixtures = entityUiMapper.map(todayResponse.data)
                                 updateState {
                                     it.copy(
@@ -98,7 +98,7 @@ class FixturesViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            is Result.Error -> {
+                            is com.android.data.common.Result.Error -> {
                                 updateState {
                                     it.copy(
                                         isLoading = false,
@@ -109,7 +109,7 @@ class FixturesViewModel @Inject constructor(
                         }
 
                         when (val tomorrowResponse = tomorrow.await()) {
-                            is Result.Success -> {
+                            is com.android.data.common.Result.Success -> {
                                 val fixtures = entityUiMapper.map(tomorrowResponse.data)
                                 updateState {
                                     it.copy(
@@ -118,7 +118,7 @@ class FixturesViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            is Result.Error -> {
+                            is com.android.data.common.Result.Error -> {
                                 updateState {
                                     it.copy(
                                         isLoading = false,
@@ -129,7 +129,7 @@ class FixturesViewModel @Inject constructor(
                         }
 
                         when (val dayAfterTomorrowResponse = dayAfterTomorrow.await()) {
-                            is Result.Success -> {
+                            is com.android.data.common.Result.Success -> {
                                 val fixtures = entityUiMapper.map(dayAfterTomorrowResponse.data)
                                 updateState {
                                     it.copy(
@@ -138,7 +138,7 @@ class FixturesViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            is Result.Error -> {
+                            is com.android.data.common.Result.Error -> {
                                 updateState {
                                     it.copy(
                                         isLoading = false,
@@ -160,7 +160,7 @@ class FixturesViewModel @Inject constructor(
     fun getSomedayFixtures(date: String) {
         viewModelScope.launch {
             when (val response = getFixturesUseCase.execute(date)) {
-                is Result.Success -> {
+                is com.android.data.common.Result.Success -> {
                     val fixtures = entityUiMapper.map(response.data)
                     updateState {
                         it.copy(
@@ -169,7 +169,7 @@ class FixturesViewModel @Inject constructor(
                         )
                     }
                 }
-                is Result.Error -> {
+                is com.android.data.common.Result.Error -> {
                     updateState {
                         it.copy(
                             isLoading = false,

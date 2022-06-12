@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.leagues
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.chandchand.data.common.Result
+import com.android.data.common.Result
 import com.android.domain.usecase.GetStandingsUseCase
 import com.android.chandchand.presentation.common.IModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +50,7 @@ class LeaguesViewModel @Inject constructor(
                     .catch { }
                     .collect { standingEntities ->
                         when (standingEntities) {
-                            is Result.Success -> {
+                            is com.android.data.common.Result.Success -> {
                                 updateState {
                                     it.copy(
                                         isLoading = false,
@@ -58,7 +58,7 @@ class LeaguesViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            is Result.Error -> {
+                            is com.android.data.common.Result.Error -> {
                                 updateState { it.copy(isLoading = false, errorMessage = "failed!") }
                             }
                         }
