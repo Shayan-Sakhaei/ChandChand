@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.fixtures.live
 
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.MainCoroutineRule
-import com.android.chandchand.data.fixtures.entity.LiveFixEvents
+import com.android.data.fixtures.entity.LiveFixEvents
 import com.android.chandchand.data.fixtures.repository.FakeFixturesRepository
 import com.android.domain.entities.LiveFixtureEntities
 import com.android.domain.entities.LiveFixtureEntity
@@ -137,7 +137,7 @@ private val fakeLiveFixtureEntities = com.android.domain.entities.LiveFixtureEnt
             null,
             null,
             listOf(
-                LiveFixEvents(
+                com.android.data.fixtures.entity.LiveFixEvents(
                     39,
                     null,
                     280,

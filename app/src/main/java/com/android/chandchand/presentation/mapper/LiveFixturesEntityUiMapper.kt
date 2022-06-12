@@ -1,7 +1,7 @@
 package com.android.chandchand.presentation.mapper
 
 import com.android.chandchand.R
-import com.android.chandchand.data.common.Mapper
+import com.android.data.common.Mapper
 import com.android.domain.entities.LiveFixtureEntities
 import com.android.domain.entities.LiveFixtureEntity
 import com.android.chandchand.presentation.model.LeagueModel
@@ -10,7 +10,7 @@ import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 import javax.inject.Inject
 
 class LiveFixtureEntityUiMapper @Inject constructor() :
-    Mapper<com.android.domain.entities.LiveFixtureEntities, LiveFixturesPerLeagueModels> {
+    com.android.data.common.Mapper<com.android.domain.entities.LiveFixtureEntities, LiveFixturesPerLeagueModels> {
 
     override fun map(item: com.android.domain.entities.LiveFixtureEntities): LiveFixturesPerLeagueModels {
 

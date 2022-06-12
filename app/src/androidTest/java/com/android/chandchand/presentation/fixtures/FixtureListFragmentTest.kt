@@ -14,7 +14,7 @@ import com.android.chandchand.R
 import com.android.chandchand.di.launchFragmentInHiltContainer
 import com.android.domain.repositories.FixturesRepository
 import com.android.chandchand.fake.FakeFixturesRepository
-import com.android.chandchand.presentation.di.fixtures.FixturesModule
+import com.android.data.di.fixtures.FixturesModule
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -27,7 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @ExperimentalCoroutinesApi
-@UninstallModules(FixturesModule::class)
+@UninstallModules(com.android.data.di.fixtures.FixturesModule::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class FixtureListFragmentTest {

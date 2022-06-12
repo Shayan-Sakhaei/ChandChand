@@ -1,14 +1,14 @@
 package com.android.chandchand.presentation.mapper
 
 import com.android.chandchand.R
-import com.android.chandchand.data.common.Mapper
+import com.android.data.common.Mapper
 import com.android.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LeagueModel
 import javax.inject.Inject
 
 class FixtureEntityUiMapper @Inject constructor() :
-    Mapper<List<com.android.domain.entities.FixtureEntity>, List<FixturesPerLeagueModel>> {
+    com.android.data.common.Mapper<List<com.android.domain.entities.FixtureEntity>, List<FixturesPerLeagueModel>> {
 
     override fun map(item: List<com.android.domain.entities.FixtureEntity>): List<FixturesPerLeagueModel> {
 

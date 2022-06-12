@@ -1,5 +1,6 @@
 package com.android.domain.usecase
 
+import com.android.domain.common.Result
 import com.android.domain.entities.StandingEntity
 import com.android.domain.repositories.LeaguesRepository
 import javax.inject.Inject

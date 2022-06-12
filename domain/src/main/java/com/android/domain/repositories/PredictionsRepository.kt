@@ -1,5 +1,6 @@
 package com.android.domain.repositories
 
+import com.android.domain.common.Result
 import com.android.domain.entities.PredictionsEntity
 
 interface PredictionsRepository {

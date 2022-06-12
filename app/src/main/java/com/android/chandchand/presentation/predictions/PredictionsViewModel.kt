@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.predictions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.chandchand.data.common.Result
+import com.android.data.common.Result
 import com.android.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,7 +54,7 @@ class PredictionsViewModel @Inject constructor(
                 }
                 .collect { predictionsEntity ->
                     when (predictionsEntity) {
-                        is Result.Success -> {
+                        is com.android.data.common.Result.Success -> {
                             updateState {
                                 it.copy(
                                     isLoading = false,
@@ -63,7 +63,7 @@ class PredictionsViewModel @Inject constructor(
                                 )
                             }
                         }
-                        is Result.Error -> {
+                        is com.android.data.common.Result.Error -> {
                             updateState { it.copy(isLoading = false, errorMessage = "failed!") }
                         }
                     }

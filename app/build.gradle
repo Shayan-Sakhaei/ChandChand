@@ -8,12 +8,6 @@ plugins {
     id("com.google.devtools.ksp").version("1.6.10-1.0.4")
 }
 
-Properties localProperties = new Properties()
-if (project.rootProject.file("local.properties").exists()) {
-    localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
-}
-
-
 android {
     compileSdkVersion 32
 
@@ -30,9 +24,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField "String", "API_KEY", localProperties.getProperty("API_KEY")
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -88,13 +79,6 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifecycleViewModelVersion")
 
-    //NETWORK
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion")
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-
     //EPOXY
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
@@ -110,10 +94,6 @@ dependencies {
 
     //PERSIAN DATE PICKER
     implementation("com.github.aliab:Persian-Date-Picker-Dialog:$persianDatePickerVersion")
-
-    //COROUTINES
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     //PALETTE
     implementation("androidx.palette:palette-ktx:$paletteVersion")

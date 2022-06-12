@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.fixtures.live
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.chandchand.data.common.Result
+import com.android.data.common.Result
 import com.android.domain.usecase.GetLiveFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
@@ -53,7 +53,7 @@ class LiveFixturesViewModel @Inject constructor(
                 try {
                     updateState { it.copy(isLoading = true) }
                     when (val liveResponse = getLiveFixturesUseCase.execute()) {
-                        is Result.Success -> {
+                        is com.android.data.common.Result.Success -> {
                             val liveFixtures = liveEntityUiMapper.map(
                                 liveResponse.data
                             )
@@ -64,7 +64,7 @@ class LiveFixturesViewModel @Inject constructor(
                                 )
                             }
                         }
-                        is Result.Error -> {
+                        is com.android.data.common.Result.Error -> {
                             updateState {
                                 it.copy(
                                     isLoading = false,

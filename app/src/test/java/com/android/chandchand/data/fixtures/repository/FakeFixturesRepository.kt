@@ -1,6 +1,6 @@
 package com.android.chandchand.data.fixtures.repository
 
-import com.android.chandchand.data.common.Result
+import com.android.data.common.Result
 import com.android.domain.entities.FixtureEntity
 import com.android.domain.entities.LiveFixtureEntities
 import com.android.domain.repositories.FixturesRepository
@@ -12,21 +12,21 @@ class FakeFixturesRepository(
     private val liveFixtures: com.android.domain.entities.LiveFixtureEntities? = null
 ) : com.android.domain.repositories.FixturesRepository {
 
-    override fun getFixtures(date: String): Flow<Result<List<com.android.domain.entities.FixtureEntity>>> =
+    override fun getFixtures(date: String): Flow<com.android.data.common.Result<List<com.android.domain.entities.FixtureEntity>>> =
         flow {
             if (fixtures == null) {
-                emit(Result.Error("failed!"))
+                emit(com.android.data.common.Result.Error("failed!"))
             } else {
-                emit(Result.Success(fixtures))
+                emit(com.android.data.common.Result.Success(fixtures))
             }
         }
 
-    override fun getLiveFixtures(): Flow<Result<com.android.domain.entities.LiveFixtureEntities>> =
+    override fun getLiveFixtures(): Flow<com.android.data.common.Result<com.android.domain.entities.LiveFixtureEntities>> =
         flow {
             if (liveFixtures == null) {
-                emit(Result.Error("failed!"))
+                emit(com.android.data.common.Result.Error("failed!"))
             } else {
-                emit(Result.Success(liveFixtures))
+                emit(com.android.data.common.Result.Success(liveFixtures))
             }
         }
 }
