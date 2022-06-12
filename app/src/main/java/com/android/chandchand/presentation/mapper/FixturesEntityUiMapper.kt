@@ -1,23 +1,23 @@
 package com.android.chandchand.presentation.mapper
 
 import com.android.chandchand.R
-import com.android.data.common.Mapper
-import com.android.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LeagueModel
+import com.android.domain.common.Mapper
+import com.android.domain.entities.FixtureEntity
 import javax.inject.Inject
 
 class FixtureEntityUiMapper @Inject constructor() :
-    com.android.data.common.Mapper<List<com.android.domain.entities.FixtureEntity>, List<FixturesPerLeagueModel>> {
+    Mapper<List<FixtureEntity>, List<FixturesPerLeagueModel>> {
 
-    override fun map(item: List<com.android.domain.entities.FixtureEntity>): List<FixturesPerLeagueModel> {
+    override fun map(item: List<FixtureEntity>): List<FixturesPerLeagueModel> {
 
-        val persianGulfCup = ArrayList<com.android.domain.entities.FixtureEntity>()
-        val englishPremierLeague = ArrayList<com.android.domain.entities.FixtureEntity>()
-        val spanishLaLiga = ArrayList<com.android.domain.entities.FixtureEntity>()
-        val italianSerieA = ArrayList<com.android.domain.entities.FixtureEntity>()
-        val germanBundesliga1 = ArrayList<com.android.domain.entities.FixtureEntity>()
-        val frenchLigue1 = ArrayList<com.android.domain.entities.FixtureEntity>()
+        val persianGulfCup = ArrayList<FixtureEntity>()
+        val englishPremierLeague = ArrayList<FixtureEntity>()
+        val spanishLaLiga = ArrayList<FixtureEntity>()
+        val italianSerieA = ArrayList<FixtureEntity>()
+        val germanBundesliga1 = ArrayList<FixtureEntity>()
+        val frenchLigue1 = ArrayList<FixtureEntity>()
 
         item.map { fixtureEntity ->
             when (fixtureEntity.league_id) {

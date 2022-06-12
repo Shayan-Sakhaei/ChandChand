@@ -52,9 +52,17 @@ android {
         includeAndroidResources = true
         returnDefaultValues = true
     }
+
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
+
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation("androidx.core:core-ktx:$androidxCoreKtxVersion")
     implementation("androidx.appcompat:appcompat:$appcompatVersion")

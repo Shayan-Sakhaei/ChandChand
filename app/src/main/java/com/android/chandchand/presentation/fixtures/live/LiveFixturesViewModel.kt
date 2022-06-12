@@ -2,13 +2,13 @@ package com.android.chandchand.presentation.fixtures.live
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.data.common.Result
-import com.android.domain.usecase.GetLiveFixturesUseCase
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModel
 import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
 import com.android.chandchand.wrapEspressoIdlingResource
+import com.android.domain.common.Result
+import com.android.domain.usecase.GetLiveFixturesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class LiveFixturesViewModel @Inject constructor(
-    private val getLiveFixturesUseCase: com.android.domain.usecase.GetLiveFixturesUseCase,
+    private val getLiveFixturesUseCase: GetLiveFixturesUseCase,
     private val liveEntityUiMapper: LiveFixtureEntityUiMapper
 ) : ViewModel(), IModel<LiveFixturesState, LiveFixturesIntent> {
 
@@ -53,7 +53,7 @@ class LiveFixturesViewModel @Inject constructor(
                 try {
                     updateState { it.copy(isLoading = true) }
                     when (val liveResponse = getLiveFixturesUseCase.execute()) {
-                        is com.android.data.common.Result.Success -> {
+                        is Result.Success -> {
                             val liveFixtures = liveEntityUiMapper.map(
                                 liveResponse.data
                             )
@@ -64,7 +64,7 @@ class LiveFixturesViewModel @Inject constructor(
                                 )
                             }
                         }
-                        is com.android.data.common.Result.Error -> {
+                        is Result.Error -> {
                             updateState {
                                 it.copy(
                                     isLoading = false,
