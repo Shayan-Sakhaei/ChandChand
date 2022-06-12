@@ -4,6 +4,6 @@ import com.android.domain.entities.FixtureEntity
 
 data class FixturesPerLeagueModel(
     val leagueModel: LeagueModel,
-    val fixtures: List<com.android.domain.entities.FixtureEntity>,
+    val fixtures: List<FixtureEntity>,
     val isExpanded: Boolean = false
 )

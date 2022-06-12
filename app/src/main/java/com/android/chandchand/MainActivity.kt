@@ -23,10 +23,6 @@ class MainActivity : AppCompatActivity(), NavigationListener {
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         }
-        (application as App).preferenceRepository
-            .nightModeLive.observe(this) { nightMode ->
-                nightMode?.let { delegate.localNightMode = it }
-            }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

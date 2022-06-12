@@ -2,21 +2,20 @@ package com.android.chandchand.presentation.predictions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.data.common.Result
-import com.android.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
+import com.android.domain.common.Result
+import com.android.domain.usecase.GetPredictionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PredictionsViewModel @Inject constructor(
-    private val getPredictionsUseCase: com.android.domain.usecase.GetPredictionsUseCase
+    private val getPredictionsUseCase: GetPredictionsUseCase
 ) : ViewModel(), IModel<PredictionsState, PredictionsIntent> {
 
     override val intents: Channel<PredictionsIntent> = Channel(Channel.UNLIMITED)
@@ -47,27 +46,20 @@ class PredictionsViewModel @Inject constructor(
 
     private fun getPredictions(fixtureId: Int) {
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true, errorMessage = null) }
-            getPredictionsUseCase.execute(fixtureId)
-                .catch {
-                    updateState { it.copy(isLoading = false, errorMessage = "failed") }
-                }
-                .collect { predictionsEntity ->
-                    when (predictionsEntity) {
-                        is com.android.data.common.Result.Success -> {
-                            updateState {
-                                it.copy(
-                                    isLoading = false,
-                                    predictions = predictionsEntity.data,
-                                    errorMessage = null
-                                )
-                            }
-                        }
-                        is com.android.data.common.Result.Error -> {
-                            updateState { it.copy(isLoading = false, errorMessage = "failed!") }
-                        }
+            when (val response = getPredictionsUseCase.execute(fixtureId)) {
+                is Result.Success -> {
+                    updateState {
+                        it.copy(
+                            isLoading = false,
+                            predictions = response.data,
+                            errorMessage = null
+                        )
                     }
                 }
+                is Result.Error -> {
+                    updateState { it.copy(isLoading = false, errorMessage = "failed!") }
+                }
+            }
         }
     }
 
