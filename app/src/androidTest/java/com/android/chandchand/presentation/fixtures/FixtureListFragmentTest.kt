@@ -12,9 +12,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android.chandchand.EspressoIdlingResource
 import com.android.chandchand.R
 import com.android.chandchand.di.launchFragmentInHiltContainer
-import com.android.domain.repositories.FixturesRepository
 import com.android.chandchand.fake.FakeFixturesRepository
 import com.android.data.di.fixtures.FixturesModule
+import com.android.domain.repositories.FixturesRepository
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -27,7 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @ExperimentalCoroutinesApi
-@UninstallModules(com.android.data.di.fixtures.FixturesModule::class)
+@UninstallModules(FixturesModule::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class FixtureListFragmentTest {
@@ -37,7 +37,7 @@ class FixtureListFragmentTest {
 
     @BindValue
     @JvmField
-    val fakeFixturesRepository: com.android.domain.repositories.FixturesRepository = FakeFixturesRepository()
+    val fakeFixturesRepository: FixturesRepository = FakeFixturesRepository()
 
     @Before
     fun setUp() {
@@ -50,6 +50,7 @@ class FixtureListFragmentTest {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
+    //TODO Migrate from View test to Compose test
     @Test
     fun fixtures_displayedInUi() {
         launchFragmentInHiltContainer<FixtureListFragment>(

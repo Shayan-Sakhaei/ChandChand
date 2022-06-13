@@ -2,11 +2,10 @@ package com.android.chandchand.presentation.fixtures
 
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.MainCoroutineRule
-import com.android.chandchand.data.fixtures.repository.FakeFixturesRepository
-import com.android.domain.entities.FixtureEntity
-import com.android.domain.usecase.GetFixturesUseCase
+import com.android.chandchand.presentation.fake.FakeFixturesRepository
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
+import com.android.domain.usecase.GetFixturesUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,7 +23,7 @@ class FixturesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var getFixturesUseCase: com.android.domain.usecase.GetFixturesUseCase
+    private lateinit var getFixturesUseCase: GetFixturesUseCase
     private lateinit var mapper: FixtureEntityUiMapper
     private lateinit var viewModel: FixturesViewModel
 
@@ -35,8 +34,11 @@ class FixturesViewModelTest {
 
     @Test
     fun `getFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
-        getFixturesUseCase =
-            com.android.domain.usecase.GetFixturesUseCase(FakeFixturesRepository(fixtures = fakeFixtureEntities))
+        getFixturesUseCase = GetFixturesUseCase(
+            FakeFixturesRepository(
+                fixtures = fakeFixtureEntities
+            )
+        )
         viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
         val states = mutableListOf<FixturesState>()
@@ -65,7 +67,7 @@ class FixturesViewModelTest {
 
     @Test
     fun `getFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getFixturesUseCase = com.android.domain.usecase.GetFixturesUseCase(FakeFixturesRepository())
+        getFixturesUseCase = GetFixturesUseCase(FakeFixturesRepository())
         viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
         val states = mutableListOf<FixturesState>()

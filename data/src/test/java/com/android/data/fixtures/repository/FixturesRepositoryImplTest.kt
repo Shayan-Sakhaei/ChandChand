@@ -1,12 +1,13 @@
-package com.android.chandchand.data.fixtures.repository
+package com.android.data.fixtures.repository
 
-import com.android.data.common.Result
-import com.android.chandchand.data.fixtures.datasource.FakeFixturesDataSource
-import com.android.data.fixtures.datasource.RemoteFixturesDataSource
-import com.android.chandchand.data.fixtures.entity.*
-import com.android.data.fixtures.mapper.FixtureServerEntityMapper
-import com.android.data.fixtures.mapper.LiveFixtureServerEntityMapper
 import com.android.data.datasources.FixturesDataSource
+import com.android.data.fixtures.datasource.FakeFixturesDataSource
+import com.android.data.fixtures.datasource.RemoteFixturesDataSource
+import com.android.data.fixtures.entity.*
+import com.android.data.fixtures.mapper.FixtureServerEntityMapper
+import com.android.data.fixtures.mapper.LiveFixEventsServerEntityMapper
+import com.android.data.fixtures.mapper.LiveFixtureServerEntityMapper
+import com.android.domain.common.Result
 import com.android.domain.entities.FixtureEntity
 import com.android.domain.entities.LiveFixtureEntities
 import com.android.domain.entities.LiveFixtureEntity
@@ -25,21 +26,23 @@ import retrofit2.Response
 @ExperimentalCoroutinesApi
 class FixturesRepositoryImplTest {
 
-    private lateinit var dataSource: com.android.data.datasources.FixturesDataSource
-    private lateinit var fixturesMapper: com.android.data.fixtures.mapper.FixtureServerEntityMapper
-    private lateinit var liveFixturesMapper: com.android.data.fixtures.mapper.LiveFixtureServerEntityMapper
-    private lateinit var repository: com.android.data.fixtures.repository.FixturesRepositoryImpl
+    private lateinit var dataSource: FixturesDataSource
+    private lateinit var fixturesMapper: FixtureServerEntityMapper
+    private lateinit var liveFixEventsMapper: LiveFixEventsServerEntityMapper
+    private lateinit var liveFixturesMapper: LiveFixtureServerEntityMapper
+    private lateinit var repository: FixturesRepositoryImpl
 
     @Before
     fun setUp() {
-        fixturesMapper = com.android.data.fixtures.mapper.FixtureServerEntityMapper()
-        liveFixturesMapper = com.android.data.fixtures.mapper.LiveFixtureServerEntityMapper()
+        fixturesMapper = FixtureServerEntityMapper()
+        liveFixEventsMapper = LiveFixEventsServerEntityMapper()
+        liveFixturesMapper = LiveFixtureServerEntityMapper(liveFixEventsMapper)
     }
 
     @Test
     fun `getFixtures Happy Path`() = runBlockingTest {
         dataSource = FakeFixturesDataSource(fixturesServerModel = fakeServerFixtures)
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -47,12 +50,12 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getFixtures("2022-03-17").toList()
 
-        val fixtureEntityList: List<com.android.domain.entities.FixtureEntity> =
+        val fixtureEntityList: List<FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
 
-        val assertions = listOf(com.android.data.common.Result.Success(fixtureEntityList))
+        val assertions = listOf(Result.Success(fixtureEntityList))
 
         assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
@@ -64,7 +67,7 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getFixtures Unhappy Path`() = runBlockingTest {
         dataSource = FakeFixturesDataSource()
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -72,7 +75,7 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getFixtures("2022-03-17").toList()
 
-        val assertions = listOf(com.android.data.common.Result.Error(""))
+        val assertions = listOf(Result.Error(""))
 
         assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
@@ -84,7 +87,7 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getLiveFixtures Happy Path`() = runBlockingTest {
         dataSource = FakeFixturesDataSource(liveFixturesServerModel = fakeLiveServerFixtures)
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -92,14 +95,14 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getLiveFixtures().toList()
 
-        val liveFixtureEntityList: List<com.android.domain.entities.LiveFixtureEntity> =
+        val liveFixtureEntityList: List<LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
         val assertions = listOf(
-            com.android.data.common.Result.Success(
-                com.android.domain.entities.LiveFixtureEntities(
+            Result.Success(
+                LiveFixtureEntities(
                     fakeLiveServerFixtures.api.results,
                     liveFixtureEntityList
                 )
@@ -116,7 +119,7 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getLiveFixtures Unhappy Path`() = runBlockingTest {
         dataSource = FakeFixturesDataSource()
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -124,7 +127,7 @@ class FixturesRepositoryImplTest {
 
         val states = repository.getLiveFixtures().toList()
 
-        val assertions = listOf(com.android.data.common.Result.Error(""))
+        val assertions = listOf(Result.Error(""))
 
         assertEquals(assertions.size, states.size)
         assertions.zip(states) { assertion, state ->
@@ -135,19 +138,19 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getFixtures should invoke FixturesDataSource getFixturesByDate`() = runBlockingTest {
 
-        val fixtureEntityList: List<com.android.domain.entities.FixtureEntity> =
+        val fixtureEntityList: List<FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
 
-        val expected = com.android.data.common.Result.Success(fixtureEntityList)
+        val expected = Result.Success(fixtureEntityList)
 
-        dataSource = mockk<com.android.data.fixtures.datasource.RemoteFixturesDataSource>()
+        dataSource = mockk<RemoteFixturesDataSource>()
         coEvery { dataSource.getFixturesByDate("2022-03-17") } returns Response.success(
             fakeServerFixtures
         )
 
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -162,22 +165,22 @@ class FixturesRepositoryImplTest {
     @Test
     fun `getLiveFixtures should invoke FixturesDataSource getLiveFixtures`() = runBlockingTest {
 
-        val liveFixtureEntityList: List<com.android.domain.entities.LiveFixtureEntity> =
+        val liveFixtureEntityList: List<LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
-        val expected = com.android.data.common.Result.Success(
-            com.android.domain.entities.LiveFixtureEntities(
+        val expected = Result.Success(
+            LiveFixtureEntities(
                 fakeLiveServerFixtures.api.results,
                 liveFixtureEntityList
             )
         )
 
-        dataSource = mockk<com.android.data.fixtures.datasource.RemoteFixturesDataSource>()
+        dataSource = mockk<RemoteFixturesDataSource>()
         coEvery { dataSource.getLiveFixtures() } returns Response.success(fakeLiveServerFixtures)
 
-        repository = com.android.data.fixtures.repository.FixturesRepositoryImpl(
+        repository = FixturesRepositoryImpl(
             dataSource,
             fixturesMapper,
             liveFixturesMapper
@@ -190,14 +193,14 @@ class FixturesRepositoryImplTest {
     }
 }
 
-private val fakeServerFixtures = com.android.data.fixtures.entity.FixturesServerModel(
-    com.android.data.fixtures.entity.FixApi(
+private val fakeServerFixtures = FixturesServerModel(
+    FixApi(
         results = 130,
         fixtures = listOf(
-            com.android.data.fixtures.entity.FixFixtures(
+            FixFixtures(
                 fixture_id = 844125,
                 league_id = 3935,
-                league = com.android.data.fixtures.entity.FixLeague(),
+                league = FixLeague(),
                 event_date = "2022-03-17T14:00:00+00:00",
                 event_timestamp = 1647525600,
                 firstHalfStart = "1647525600",
@@ -208,25 +211,25 @@ private val fakeServerFixtures = com.android.data.fixtures.entity.FixturesServer
                 elapsed = 90,
                 venue = "Azadi Stadium",
                 referee = "M. Seyedali",
-                homeTeam = com.android.data.fixtures.entity.FixHomeTeam(),
-                awayTeam = com.android.data.fixtures.entity.FixAwayTeam(),
+                homeTeam = FixHomeTeam(),
+                awayTeam = FixAwayTeam(),
                 goalsHomeTeam = "1",
                 goalsAwayTeam = "1",
-                score = com.android.data.fixtures.entity.FixScore()
+                score = FixScore()
             )
         )
     )
 )
 
 
-private val fakeLiveServerFixtures = com.android.data.fixtures.entity.LiveFixturesServerModel(
-    com.android.data.fixtures.entity.LiveFixApi(
+private val fakeLiveServerFixtures = LiveFixturesServerModel(
+    LiveFixApi(
         results = 2,
         fixtures = listOf(
-            com.android.data.fixtures.entity.LiveFixFixtures(
+            LiveFixFixtures(
                 fixture_id = 823624,
                 league_id = 3645,
-                league = com.android.data.fixtures.entity.LiveFixLeague(
+                league = LiveFixLeague(
                     name = "1. Liga U19",
                     country = "Czech-Republic",
                     logo = "https://media.api-sports.io/football/leagues/668.png",
@@ -242,18 +245,18 @@ private val fakeLiveServerFixtures = com.android.data.fixtures.entity.LiveFixtur
                 elapsed = 33,
                 venue = "UMT Kylešovice",
                 referee = null,
-                homeTeam = com.android.data.fixtures.entity.LiveFixHomeTeam(),
-                awayTeam = com.android.data.fixtures.entity.LiveFixAwayTeam(),
+                homeTeam = LiveFixHomeTeam(),
+                awayTeam = LiveFixAwayTeam(),
                 goalsHomeTeam = "0",
                 goalsAwayTeam = "1",
-                score = com.android.data.fixtures.entity.LiveFixScore(
+                score = LiveFixScore(
                     halftime = "0-1",
                     fulltime = null,
                     extratime = null,
                     penalty = null
                 ),
                 events = listOf(
-                    com.android.data.fixtures.entity.LiveFixEvents(
+                    LiveFixEvents(
                         elapsed = 24,
                         elapsed_plus = null,
                         team_id = 7970,

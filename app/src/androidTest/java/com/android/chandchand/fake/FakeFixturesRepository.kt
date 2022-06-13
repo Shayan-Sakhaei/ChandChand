@@ -19,7 +19,7 @@ class FakeFixturesRepository @Inject constructor(
     private val liveFixturesMapper =
         com.android.data.fixtures.mapper.LiveFixtureServerEntityMapper()
 
-    override fun getFixtures(date: String): Flow<com.android.data.common.Result<List<com.android.domain.entities.FixtureEntity>>> =
+    override suspend fun getFixtures(date: String): Flow<com.android.data.common.Result<List<com.android.domain.entities.FixtureEntity>>> =
         flow {
             val fixtureEntityList: List<com.android.domain.entities.FixtureEntity> =
                 fakeServerFixtures.api.fixtures.map { fixFixture ->
@@ -28,7 +28,7 @@ class FakeFixturesRepository @Inject constructor(
             emit(com.android.data.common.Result.Success(fixtureEntityList))
         }
 
-    override fun getLiveFixtures(): Flow<com.android.data.common.Result<com.android.domain.entities.LiveFixtureEntities>> =
+    override suspend fun getLiveFixtures(): Flow<com.android.data.common.Result<com.android.domain.entities.LiveFixtureEntities>> =
         flow {
             val liveFixtureEntityList: List<com.android.domain.entities.LiveFixtureEntity> =
                 fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
