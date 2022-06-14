@@ -80,7 +80,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
+<!--    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/erv_someday_fixtures"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -88,6 +88,6 @@
         android:layoutDirection="rtl"
         android:orientation="vertical"
         android:textDirection="rtl"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
 </LinearLayout>
