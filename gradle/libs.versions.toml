@@ -1,0 +1,85 @@
+[versions]
+coreKtxVersion = "1.7.0"
+appcompatVersion = "1.4.1"
+legacySupportVersion = "1.0.0"
+constraintlayoutVersion = "2.1.3"
+multidexVersion = "2.0.1"
+fragmentVersion = "1.4.1"
+materialVersion = "1.7.0-alpha01"
+navigationVersion = "2.4.2"
+hiltVersion = "2.38.1"
+hiltCompilerVersion = "1.1.0"
+hiltLifecycleViewModelVersion = "1.0.0-alpha03"
+retrofitVersion = "2.9.0"
+okhttpLoggingInterceptorVersion = "4.2.1"
+moshiVersion = "1.13.0"
+lifecycleKtxVersion = "2.5.0-alpha06"
+persianDatePickerVersion = "1.5.2"
+coroutinesVersion = "1.6.1"
+paletteVersion = "1.0.0"
+activityVersion = "1.4.0"
+composeVersion = "1.1.1"
+androidxLifecycleVersion = "2.4.1"
+constraintlayoutComposeVersion = "1.0.0"
+coilComposeVersion = "2.0.0-rc03"
+accompanistPagerVersion = "0.23.1"
+persiandateVersion = "1.3.4"
+junitVersion = "4.13.2"
+androidXTestCoreVersion = "1.4.0"
+androidXTestExtKotlinRunnerVersion = "1.1.3"
+robolectricVersion = "4.7.3"
+mockkVersion = "1.12.3"
+testExtJunit = "1.1.3"
+espressoVersion = "3.4.0"
+kspVersion = "1.6.10-1.0.4"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
+androidx-legacy-support = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportVersion" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidexVersion" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentVersion" }
+androidx-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationVersion" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationVersion" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleKtxVersion" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleKtxVersion" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleKtxVersion" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycleVersion" }
+androidx-hilt-lifecycle-viewmodel = { group = "androidx.hilt", name = "hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewModelVersion" }
+androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "paletteVersion" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityVersion" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeVersion" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeVersion" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "composeVersion" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
+coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilComposeVersion" }
+accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistPagerVersion" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
+retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofitVersion" }
+okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLoggingInterceptorVersion" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiVersion" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshiVersion" }
+persian-date-picker-dialog = { group = "com.github.aliab", name = "Persian-Date-Picker-Dialog", version.ref = "persianDatePickerVersion" }
+persian-date = { group = "com.github.samanzamani", name = "PersianDate", version.ref = "persiandateVersion" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidXTestCoreVersion" }
+androidx-test-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidXTestExtKotlinRunnerVersion" }
+robolectric-core = { group = "org.robolectric", name = "robolectric", version.ref = "robolectricVersion" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesVersion" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltVersion" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltVersion" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "testExtJunit" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoVersion" }
+androidx-test-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoVersion" }
+androidx-test-espresso-idling-resource = { group = "androidx.test.espresso", name = "espresso-idling-resource", version.ref = "espressoVersion" }
+androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentVersion" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui:", name = "ui-test-junit4", version.ref = "composeVersion" }
+
+[plugins]
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
