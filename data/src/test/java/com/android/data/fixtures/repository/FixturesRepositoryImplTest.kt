@@ -15,8 +15,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -48,19 +46,16 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val states = repository.getFixtures("2022-03-17").toList()
+        val state = repository.getFixtures("2022-03-17")
 
         val fixtureEntityList: List<FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
 
-        val assertions = listOf(Result.Success(fixtureEntityList))
+        val assertion = Result.Success(fixtureEntityList)
 
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
+        assertEquals(assertion, state)
     }
 
 
@@ -73,14 +68,11 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val states = repository.getFixtures("2022-03-17").toList()
+        val state = repository.getFixtures("2022-03-17")
 
-        val assertions = listOf(Result.Error(""))
+        val assertion = Result.Error("")
 
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
+        assertEquals(assertion, state)
     }
 
 
@@ -93,26 +85,22 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val states = repository.getLiveFixtures().toList()
+        val state = repository.getLiveFixtures()
 
         val liveFixtureEntityList: List<LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
-        val assertions = listOf(
+        val assertion =
             Result.Success(
                 LiveFixtureEntities(
                     fakeLiveServerFixtures.api.results,
                     liveFixtureEntityList
                 )
             )
-        )
 
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
+        assertEquals(assertion, state)
     }
 
 
@@ -125,14 +113,11 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val states = repository.getLiveFixtures().toList()
+        val state = repository.getLiveFixtures()
 
-        val assertions = listOf(Result.Error(""))
+        val assertion = Result.Error("")
 
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
+        assertEquals(assertion, state)
     }
 
     @Test
@@ -156,7 +141,7 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val actual = repository.getFixtures("2022-03-17").first()
+        val actual = repository.getFixtures("2022-03-17")
 
         coVerify { dataSource.getFixturesByDate("2022-03-17") }
         assertEquals(expected, actual)
@@ -186,7 +171,7 @@ class FixturesRepositoryImplTest {
             liveFixturesMapper
         )
 
-        val actual = repository.getLiveFixtures().first()
+        val actual = repository.getLiveFixtures()
 
         coVerify { dataSource.getLiveFixtures() }
         assertEquals(expected, actual)
