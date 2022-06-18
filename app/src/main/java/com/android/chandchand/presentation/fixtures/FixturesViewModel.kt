@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.presentation.common.IModel
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
+import com.android.chandchand.presentation.model.DailyFixturesState
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.utils.DAY
 import com.android.chandchand.presentation.utils.getDateFromToday
@@ -74,7 +75,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        yesterdayFixtures = fixtures
+                                        yesterdayFixturesState = DailyFixturesState(fixtures = fixtures)
                                     )
                                 }
                             }
@@ -82,7 +83,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        errorMessage = "yesterday fixtures failed!"
+                                        yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!")
                                     )
                                 }
                             }
@@ -94,7 +95,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        todayFixtures = fixtures
+                                        todayFixturesState = DailyFixturesState(fixtures = fixtures)
                                     )
                                 }
                             }
@@ -102,7 +103,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        errorMessage = "today fixtures failed!"
+                                        todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!")
                                     )
                                 }
                             }
@@ -114,7 +115,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        tomorrowFixtures = fixtures
+                                        tomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
                                     )
                                 }
                             }
@@ -122,7 +123,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        errorMessage = "tomorrow fixtures failed!"
+                                        tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
                                     )
                                 }
                             }
@@ -134,7 +135,7 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        dayAfterTomorrowFixtures = fixtures
+                                        dayAfterTomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
                                     )
                                 }
                             }
@@ -142,7 +143,9 @@ class FixturesViewModel @Inject constructor(
                                 updateState {
                                     it.copy(
                                         isLoading = false,
-                                        errorMessage = "dayAfterTomorrow fixtures failed!"
+                                        dayAfterTomorrowFixturesState = DailyFixturesState(
+                                            errorMessage = "dayAfterTomorrow fixtures failed!"
+                                        )
                                     )
                                 }
                             }
@@ -165,7 +168,7 @@ class FixturesViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             isLoading = false,
-                            somedayFixtures = fixtures
+                            somedayFixturesState = DailyFixturesState(fixtures = fixtures)
                         )
                     }
                 }
@@ -173,7 +176,7 @@ class FixturesViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             isLoading = false,
-                            errorMessage = "someday fixtures failed!"
+                            somedayFixturesState = DailyFixturesState(errorMessage = "someday fixtures failed!")
                         )
                     }
                 }
@@ -184,24 +187,24 @@ class FixturesViewModel @Inject constructor(
     fun onLeagueHeaderClick(model: FixturesPerLeagueModel, day: DAY) {
         val oldFixtureList = when (day) {
             DAY.YESTERDAY -> {
-                _state.value.yesterdayFixtures
+                _state.value.yesterdayFixturesState
             }
             DAY.TODAY -> {
-                _state.value.todayFixtures
+                _state.value.todayFixturesState
             }
             DAY.TOMORROW -> {
-                _state.value.tomorrowFixtures
+                _state.value.tomorrowFixturesState
             }
             DAY.DAY_AFTER_TOMORROW -> {
-                _state.value.dayAfterTomorrowFixtures
+                _state.value.dayAfterTomorrowFixturesState
             }
             DAY.SOMEDAY -> {
-                _state.value.somedayFixtures
+                _state.value.somedayFixturesState
             }
         }
 
-        if (oldFixtureList.isNotEmpty()) {
-            val newFixtureList = oldFixtureList.map {
+        if (oldFixtureList.fixtures.isNotEmpty()) {
+            val newFixtureList = oldFixtureList.fixtures.map {
                 if (it == model) {
                     it.copy(isExpanded = model.isExpanded.not())
                 } else {
@@ -211,19 +214,25 @@ class FixturesViewModel @Inject constructor(
             viewModelScope.launch {
                 when (day) {
                     DAY.YESTERDAY -> {
-                        updateState { it.copy(yesterdayFixtures = newFixtureList) }
+                        updateState { it.copy(yesterdayFixturesState = DailyFixturesState(fixtures = newFixtureList)) }
                     }
                     DAY.TODAY -> {
-                        updateState { it.copy(todayFixtures = newFixtureList) }
+                        updateState { it.copy(todayFixturesState = DailyFixturesState(fixtures = newFixtureList)) }
                     }
                     DAY.TOMORROW -> {
-                        updateState { it.copy(tomorrowFixtures = newFixtureList) }
+                        updateState { it.copy(tomorrowFixturesState = DailyFixturesState(fixtures = newFixtureList)) }
                     }
                     DAY.DAY_AFTER_TOMORROW -> {
-                        updateState { it.copy(dayAfterTomorrowFixtures = newFixtureList) }
+                        updateState {
+                            it.copy(
+                                dayAfterTomorrowFixturesState = DailyFixturesState(
+                                    fixtures = newFixtureList
+                                )
+                            )
+                        }
                     }
                     DAY.SOMEDAY -> {
-                        updateState { it.copy(somedayFixtures = newFixtureList) }
+                        updateState { it.copy(somedayFixturesState = DailyFixturesState(fixtures = newFixtureList)) }
                     }
                 }
             }

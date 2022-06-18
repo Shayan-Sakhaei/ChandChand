@@ -98,7 +98,7 @@ fun FixturesScreen(
             when (currentPage) {
                 0 -> {
                     FixturesPerDay(
-                        fixtures = state.yesterdayFixtures,
+                        fixtures = state.yesterdayFixturesState.fixtures,
                         onHeaderClick = {
                             viewModel.onLeagueHeaderClick(it, DAY.YESTERDAY)
                         },
@@ -117,7 +117,7 @@ fun FixturesScreen(
                 }
                 1 -> {
                     FixturesPerDay(
-                        fixtures = state.todayFixtures,
+                        fixtures = state.todayFixturesState.fixtures,
                         onHeaderClick = {
                             viewModel.onLeagueHeaderClick(it, DAY.TODAY)
                         },
@@ -136,7 +136,7 @@ fun FixturesScreen(
                 }
                 2 -> {
                     FixturesPerDay(
-                        fixtures = state.tomorrowFixtures,
+                        fixtures = state.tomorrowFixturesState.fixtures,
                         onHeaderClick = {
                             viewModel.onLeagueHeaderClick(it, DAY.TOMORROW)
                         },
@@ -155,7 +155,7 @@ fun FixturesScreen(
                 }
                 3 -> {
                     FixturesPerDay(
-                        fixtures = state.dayAfterTomorrowFixtures,
+                        fixtures = state.dayAfterTomorrowFixturesState.fixtures,
                         onHeaderClick = {
                             viewModel.onLeagueHeaderClick(it, DAY.DAY_AFTER_TOMORROW)
                         },
