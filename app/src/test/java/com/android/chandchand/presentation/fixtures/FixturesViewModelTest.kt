@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.android.chandchand.MainCoroutineRule
 import com.android.chandchand.presentation.fake.FakeFixturesRepository
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
+import com.android.chandchand.presentation.model.DailyFixturesState
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
+import com.android.domain.entities.FixtureEntity
 import com.android.domain.usecase.GetFixturesUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -48,14 +50,36 @@ class FixturesViewModelTest {
         }
 
         val fixturesPerLeague: List<FixturesPerLeagueModel> = mapper.map(fakeFixtureEntities)
+        val dailyFixturesState = DailyFixturesState(fixtures = fixturesPerLeague)
 
         val assertions = listOf(
             FixturesState(),
             FixturesState(isLoading = true),
-            FixturesState(isLoading = false, fixtures = fixturesPerLeague)
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = dailyFixturesState,
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = dailyFixturesState,
+                todayFixturesState = dailyFixturesState,
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = dailyFixturesState,
+                todayFixturesState = dailyFixturesState,
+                tomorrowFixturesState = dailyFixturesState
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = dailyFixturesState,
+                todayFixturesState = dailyFixturesState,
+                tomorrowFixturesState = dailyFixturesState,
+                dayAfterTomorrowFixturesState = dailyFixturesState,
+            )
         )
 
-        val intent = FixturesIntent.GetFixtures("2022-03-17")
+        val intent = FixturesIntent.GetFixtures
         viewModel.intents.send(intent)
 
         assertEquals(assertions.size, states.size)
@@ -79,10 +103,31 @@ class FixturesViewModelTest {
         val assertions = listOf(
             FixturesState(),
             FixturesState(isLoading = true),
-            FixturesState(isLoading = false, errorMessage = "failed!")
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
+            ),
+            FixturesState(
+                isLoading = false,
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!"),
+                dayAfterTomorrowFixturesState = DailyFixturesState(errorMessage = "dayAfterTomorrow fixtures failed!"),
+            )
         )
 
-        val intent = FixturesIntent.GetFixtures("2022-03-17")
+        val intent = FixturesIntent.GetFixtures
         viewModel.intents.send(intent)
 
         assertEquals(assertions.size, states.size)
@@ -98,15 +143,15 @@ class FixturesViewModelTest {
             getFixturesUseCase = mockk()
             viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
-            val intent = FixturesIntent.GetFixtures("2022-03-17")
+            val intent = FixturesIntent.GetFixtures
             viewModel.intents.send(intent)
 
-            coVerify { getFixturesUseCase.execute("2022-03-17") }
+            coVerify { getFixturesUseCase.execute(any()) }
         }
 }
 
 private val fakeFixtureEntities = listOf(
-    com.android.domain.entities.FixtureEntity(
+    FixtureEntity(
         844125,
         3935,
         "Persian Gulf Cup",

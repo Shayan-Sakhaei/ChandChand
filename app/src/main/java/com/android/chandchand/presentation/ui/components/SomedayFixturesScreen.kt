@@ -40,7 +40,7 @@ fun SomedayFixturesScreen(
         ChandChandAppBar(state.somedayDateDescription)
 
         FixturesPerDay(
-            fixtures = state.somedayFixtures,
+            fixtures = state.somedayFixturesState.fixtures,
             onHeaderClick = {
                 viewModel.onLeagueHeaderClick(it, DAY.SOMEDAY)
             },
