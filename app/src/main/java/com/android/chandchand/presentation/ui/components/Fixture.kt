@@ -19,13 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.android.chandchand.R
-import com.android.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
 import com.android.chandchand.presentation.utils.*
+import com.android.domain.entities.FixtureEntity
 
 @Composable
-fun Fixture(fixture: com.android.domain.entities.FixtureEntity, onPredictionClick: (com.android.domain.entities.FixtureEntity) -> Unit) {
+fun Fixture(fixture: FixtureEntity, onPredictionClick: (FixtureEntity) -> Unit) {
 
     Card(
         modifier = Modifier
