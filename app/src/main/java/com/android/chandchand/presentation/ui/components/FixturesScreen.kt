@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDirections
@@ -64,7 +66,7 @@ fun FixturesScreen(
             IconButton(onClick = { onNavigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment()) }) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_tv_24),
-                    contentDescription = "calendar"
+                    contentDescription = "live"
                 )
             }
         }
@@ -83,6 +85,7 @@ fun FixturesScreen(
         ) {
             tabs.forEachIndexed { index, text ->
                 Tab(
+                    modifier = Modifier.semantics { contentDescription = text },
                     selected = pagerState.currentPage == index,
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                     text = { Text(text = text) })
@@ -91,7 +94,9 @@ fun FixturesScreen(
 
         HorizontalPager(
             count = tabs.size,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .semantics { contentDescription = "HorizontalPager" },
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) {

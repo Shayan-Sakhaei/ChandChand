@@ -17,16 +17,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
-import com.android.domain.entities.FixtureEntity
 import com.android.chandchand.presentation.model.FixturesPerLeagueModel
 import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
+import com.android.domain.entities.FixtureEntity
 
 @Composable
 fun FixturesPerLeague(
     fixtures: FixturesPerLeagueModel,
     onHeaderClick: (FixturesPerLeagueModel) -> Unit,
-    onPredictionClick: (com.android.domain.entities.FixtureEntity) -> Unit
+    onPredictionClick: (FixtureEntity) -> Unit
 ) {
     Column(
         modifier = Modifier
