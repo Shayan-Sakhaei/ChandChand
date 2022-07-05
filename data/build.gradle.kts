@@ -27,6 +27,7 @@ android {
             buildConfigField("String", "API_KEY", apiKey)
         }
         getByName("release") {
+            buildConfigField("String", "API_KEY", apiKey)
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile(
