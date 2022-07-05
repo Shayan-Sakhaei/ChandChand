@@ -33,6 +33,11 @@ android {
                 ), "proguard-rules.pro"
             )
         }
+        create("benchmark") {
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
     }
 
     buildFeatures {
@@ -133,4 +138,7 @@ dependencies {
     kaptAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    //PERFORMANCE
+    implementation(libs.androidx.profileinstaller)
 }
