@@ -9,10 +9,10 @@ import androidx.compose.ui.unit.sp
 import com.android.chandchand.R
 
 val Shabnam = FontFamily(
-    Font(R.font.shabnam_light, FontWeight.W300),
-    Font(R.font.shabnam_regular, FontWeight.W400),
-    Font(R.font.shabnam_medium, FontWeight.W500),
-    Font(R.font.shabnam_bold, FontWeight.W600),
+    Font(R.font.dana_light, FontWeight.W300),
+    Font(R.font.dana_regular, FontWeight.W400),
+    Font(R.font.dana_medium, FontWeight.W500),
+    Font(R.font.dana_bold, FontWeight.W600),
 )
 
 val ChandChandTypography = Typography(

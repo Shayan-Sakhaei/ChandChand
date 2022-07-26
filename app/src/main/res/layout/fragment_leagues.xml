@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
             android:layout_marginEnd="56dp"
-            android:fontFamily="@font/shabnam_bold"
+            android:fontFamily="@font/dana_bold"
             android:gravity="center"
             android:text="@string/leagues"
             android:textColor="@color/colorWhite"

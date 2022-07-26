@@ -28,7 +28,7 @@
     <style name="Base.Theme.ChandChand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">?android:colorBackground</item>
         <!--        <item name="android:windowLightStatusBar" tools:ignore="newApi">?attr/isLightTheme</item>-->
-        <item name="android:fontFamily">@font/shabnam_regular</item>
+        <item name="android:fontFamily">@font/dana_regular</item>
         <item name="shapeAppearanceMediumComponent">
             @style/ShapeAppearance.ChandChand.MediumComponent
         </item>

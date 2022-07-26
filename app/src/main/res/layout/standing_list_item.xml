@@ -101,7 +101,7 @@
         android:layout_height="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/shabnam_bold"
+        android:fontFamily="@font/dana_bold"
         android:gravity="center"
         android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
