@@ -91,10 +91,6 @@ fun View.roundedColoredStrokeBackground(
     }
 }
 
-suspend fun bitmapFromUrl(context: Context, url: String): Bitmap = withContext(Dispatchers.IO) {
-    Glide.with(context).asBitmap().load(url).submit(64.toDp(), 64.toDp()).get()
-}
-
 @ColorInt
 @SuppressLint("Recycle")
 fun Context.themeColor(
@@ -127,6 +123,8 @@ fun Context.themeInterpolator(@AttrRes attr: Int): Interpolator {
 fun Context.getDrawableOrNull(@DrawableRes id: Int?): Drawable? {
     return if (id == null || id == 0) null else AppCompatResources.getDrawable(this, id)
 }
+
+fun String.getDigits(): String = replace("[^0-9]".toRegex(), "")
 
 interface NavigationListener : NavController.OnDestinationChangedListener
 

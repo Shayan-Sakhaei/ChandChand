@@ -36,7 +36,9 @@ class PredictionsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 ChandChandTheme {
-                    PredictionsScreen(viewModel = viewModel)
+                    PredictionsScreen(viewModel = viewModel,
+                        { drawable -> viewModel.palette(drawable, HomeAway.HOME) },
+                        { drawable -> viewModel.palette(drawable, HomeAway.AWAY) })
                 }
             }
         }

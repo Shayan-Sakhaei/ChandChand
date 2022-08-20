@@ -18,8 +18,8 @@ data class PredictApi(
 data class PredictPredictions(
     @Json(name = "match_winner") val match_winner: String? = "",
     @Json(name = "under_over") val under_over: String? = "",
-    @Json(name = "goals_home") val goals_home: Double? = 0.0,
-    @Json(name = "goals_away") val goals_away: Double? = 0.0,
+    @Json(name = "goals_home") val goals_home: String? = "",
+    @Json(name = "goals_away") val goals_away: String? = "",
     @Json(name = "advice") val advice: String? = "",
     @Json(name = "winning_percent") val winning_percent: PredictWinningPercent,
     @Json(name = "teams") val teams: PredictTeams,

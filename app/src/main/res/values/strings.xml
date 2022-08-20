@@ -36,4 +36,17 @@
     <string name="fixture_prediction">پیش بینی بازی</string>
 
     <string name="standings_transition_name">standings</string>
+    <string name="match_result">نتیجه بازی</string>
+    <string name="winning_chance">شانس برد</string>
+    <string name="draw_chance">شانس تساوی</string>
+    <string name="goals_prediction">پیش‌بینی گل‌ها</string>
+    <string name="vs">VS</string>
+    <string name="match_goals_sum">مجموع گل‌های بازی</string>
+    <string name="percent_placeholder">%% %d</string>
+    <string name="form">فرم</string>
+    <string name="attacking_potential">توان حمله</string>
+    <string name="defensive_potential">توان دفاعی</string>
+    <string name="head2head_matches">بازی‌های رو در رو</string>
+    <string name="goals_head2head">گل‌های رو در رو</string>
+    <string name="fish_law">Fish Law</string>
 </resources>

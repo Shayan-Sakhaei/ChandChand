@@ -1,7 +1,11 @@
 package com.android.chandchand.presentation.predictions
 
+import android.graphics.drawable.Drawable
+import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.palette.graphics.Palette
 import com.android.chandchand.data.common.Result
 import com.android.chandchand.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
@@ -83,4 +87,29 @@ class PredictionsViewModel @Inject constructor(
             }
         }
     }
+
+    fun palette(drawable: Drawable?, homeAway: HomeAway) {
+        drawable?.let {
+            val builder = Palette.Builder(it.toBitmap())
+            builder.generate { palette: Palette? ->
+                val dominantRGB: Int? = palette?.dominantSwatch?.rgb
+                dominantRGB?.let { rgb ->
+                    updateTeamColor(Color(rgb), homeAway)
+                }
+            }
+        }
+
+    }
+
+    private fun updateTeamColor(color: Color, homeAway: HomeAway) =
+        viewModelScope.launch {
+            when (homeAway) {
+                HomeAway.HOME -> {
+                    updateState { it.copy(homeTeamColor = color) }
+                }
+                HomeAway.AWAY -> {
+                    updateState { it.copy(awayTeamColor = color) }
+                }
+            }
+        }
 }

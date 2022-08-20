@@ -1,10 +1,12 @@
 package com.android.chandchand.domain.entities
 
+import com.android.chandchand.presentation.predictions.Winner
+
 data class PredictionsEntity(
-    val match_winner: String?,
+    val match_winner: Winner,
     val under_over: String?,
-    val goals_home: Double?,
-    val goals_away: Double?,
+    val goals_home: String?,
+    val goals_away: String?,
     val advice: String?,
     val winning_percent_home: String,
     val draws_percent: String,
@@ -32,5 +34,17 @@ data class PredictionsEntity(
     val comparison_away_def: String?,
     val comparison_away_fish_law: String?,
     val comparison_away_h2h: String?,
-    val comparison_away_goals_h2h: String?
+    val comparison_away_goals_h2h: String?,
+    val comparison_home_forme_number: Int?,
+    val comparison_home_att_number: Int?,
+    val comparison_home_def_number: Int?,
+    val comparison_home_fish_law_number: Int?,
+    val comparison_home_h2h_number: Int?,
+    val comparison_home_goals_h2h_number: Int?,
+    val comparison_away_forme_number: Int?,
+    val comparison_away_att_number: Int?,
+    val comparison_away_def_number: Int?,
+    val comparison_away_fish_law_number: Int?,
+    val comparison_away_h2h_number: Int?,
+    val comparison_away_goals_h2h_number: Int?
 )
