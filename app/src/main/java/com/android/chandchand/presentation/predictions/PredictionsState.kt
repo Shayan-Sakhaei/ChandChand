@@ -1,9 +1,10 @@
 package com.android.chandchand.presentation.predictions
 
 import androidx.compose.ui.graphics.Color
-import com.android.chandchand.domain.entities.PredictionsEntity
 import com.android.chandchand.presentation.common.IState
 import com.android.chandchand.presentation.theme.LightSurfaceInfo
+import com.android.domain.entities.PredictionsEntity
+import com.android.domain.entities.Winner
 
 data class PredictionsState(
     val idle: Boolean = true,
@@ -35,7 +36,6 @@ data class PredictionsState(
 }
 
 enum class HomeAway { HOME, AWAY }
-enum class Winner { HOME, HOME_DRAW, DRAW, AWAY_DRAW, AWAY, NOT_DEFINED }
 
 fun humanReadableMatchWinner(entity: PredictionsEntity?): String {
     return if (entity == null) "N/A"

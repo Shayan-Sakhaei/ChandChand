@@ -1,7 +1,5 @@
 package com.android.domain.entities
 
-import com.android.chandchand.presentation.predictions.Winner
-
 data class PredictionsEntity(
     val match_winner: Winner,
     val under_over: String?,

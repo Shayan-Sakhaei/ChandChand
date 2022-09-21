@@ -120,8 +120,6 @@ fun Context.getDrawableOrNull(@DrawableRes id: Int?): Drawable? {
     return if (id == null || id == 0) null else AppCompatResources.getDrawable(this, id)
 }
 
-fun String.getDigits(): String = replace("[^0-9]".toRegex(), "")
-
 interface NavigationListener : NavController.OnDestinationChangedListener
 
 fun BottomNavigationView.setupWithNavController(

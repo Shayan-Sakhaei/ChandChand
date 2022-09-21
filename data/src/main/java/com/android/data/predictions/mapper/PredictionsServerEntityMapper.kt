@@ -1,10 +1,10 @@
-package com.android.chandchand.data.predictions.mapper
+package com.android.data.predictions.mapper
 
-import com.android.chandchand.data.common.Mapper
-import com.android.chandchand.data.predictions.entity.PredictionsServerModel
-import com.android.chandchand.domain.entities.PredictionsEntity
-import com.android.chandchand.presentation.predictions.Winner
-import com.android.chandchand.presentation.utils.getDigits
+import com.android.data.predictions.entity.PredictionsServerModel
+import com.android.data.utils.getDigits
+import com.android.domain.common.Mapper
+import com.android.domain.entities.PredictionsEntity
+import com.android.domain.entities.Winner
 import javax.inject.Inject
 
 class PredictionsServerEntityMapper @Inject constructor(

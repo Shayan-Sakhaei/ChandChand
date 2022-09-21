@@ -6,14 +6,12 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
-import com.android.chandchand.data.common.Result
-import com.android.domain.usecase.GetPredictionsUseCase
 import com.android.chandchand.presentation.common.IModel
+import com.android.domain.common.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,27 +49,20 @@ class PredictionsViewModel @Inject constructor(
 
     private fun getPredictions(fixtureId: Int) {
         viewModelScope.launch {
-            updateState { it.copy(isLoading = true, errorMessage = null) }
-            getPredictionsUseCase.execute(fixtureId)
-                .catch {
-                    updateState { it.copy(isLoading = false, errorMessage = "failed") }
-                }
-                .collect { predictionsEntity ->
-                    when (predictionsEntity) {
-                        is Result.Success -> {
-                            updateState {
-                                it.copy(
-                                    isLoading = false,
-                                    predictions = predictionsEntity.data,
-                                    errorMessage = null
-                                )
-                            }
-                        }
-                        is Result.Error -> {
-                            updateState { it.copy(isLoading = false, errorMessage = "failed!") }
-                        }
+            when (val response = getPredictionsUseCase.execute(fixtureId)) {
+                is Result.Success -> {
+                    updateState {
+                        it.copy(
+                            isLoading = false,
+                            predictions = response.data,
+                            errorMessage = null
+                        )
                     }
                 }
+                is Result.Error -> {
+                    updateState { it.copy(isLoading = false, errorMessage = "failed!") }
+                }
+            }
         }
     }
 
