@@ -21,22 +21,22 @@ class FixtureEntityUiMapper @Inject constructor() :
 
         item.map { fixtureEntity ->
             when (fixtureEntity.league_id) {
-                3935 -> {
+                4640 -> {
                     persianGulfCup.add(fixtureEntity)
                 }
-                3456 -> {
+                4335 -> {
                     englishPremierLeague.add(fixtureEntity)
                 }
-                3513 -> {
+                4378 -> {
                     spanishLaLiga.add(fixtureEntity)
                 }
-                3576 -> {
+                4399 -> {
                     italianSerieA.add(fixtureEntity)
                 }
-                3510 -> {
+                4346 -> {
                     germanBundesliga1.add(fixtureEntity)
                 }
-                3506 -> {
+                4347 -> {
                     frenchLigue1.add(fixtureEntity)
                 }
                 else -> {

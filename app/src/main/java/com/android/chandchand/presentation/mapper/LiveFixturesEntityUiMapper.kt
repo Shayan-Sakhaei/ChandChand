@@ -23,22 +23,22 @@ class LiveFixtureEntityUiMapper @Inject constructor() :
 
         item.entities.map { fixtureEntity ->
             when (fixtureEntity.league_id) {
-                3030 -> {
+                4640 -> {
                     persianGulfCup.add(fixtureEntity)
                 }
-                2790 -> {
+                4335 -> {
                     englishPremierLeague.add(fixtureEntity)
                 }
-                2833 -> {
+                4378 -> {
                     spanishLaLiga.add(fixtureEntity)
                 }
-                2857 -> {
+                4399 -> {
                     italianSerieA.add(fixtureEntity)
                 }
-                2755 -> {
+                4346 -> {
                     germanBundesliga1.add(fixtureEntity)
                 }
-                2664 -> {
+                4347 -> {
                     frenchLigue1.add(fixtureEntity)
                 }
                 else -> {
