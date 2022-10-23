@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         applicationId = "com.android.chandchand"
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
         multiDexEnabled = true
         versionCode = 1
         versionName = "1.0"
@@ -55,7 +55,7 @@ android {
     }
 
     kotlinOptions {
-        val options = this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+        val options = this
         options.jvmTarget = "1.8"
     }
 
@@ -115,6 +115,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.coil.kt.compose)
     implementation(libs.accompanist.pager)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowsizeclass)
+    implementation(libs.androidx.navigation.compose)
 
     //PERSIAN DATE
     implementation(libs.persian.date)
