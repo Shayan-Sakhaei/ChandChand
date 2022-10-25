@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation.ui.components
+package com.android.chandchand.presentation.leagues.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,15 +10,43 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
 import com.android.chandchand.presentation.model.LeagueTitleModel
+import com.android.chandchand.presentation.ui.components.ChandChandAppBar
+import com.android.chandchand.presentation.ui.components.LeagueTitle
+import com.android.chandchand.presentation.ui.navigation.ChandChandNavigationDestination
 
 @Composable
-fun LeaguesScreen(onLeagueTitleClick: (LeagueTitleModel) -> Unit) {
+fun LeaguesRoute(
+    modifier: Modifier = Modifier,
+    onNavigate: (ChandChandNavigationDestination, String) -> Unit,
+) {
+    LeaguesScreen(
+        modifier = modifier,
+        onNavigate = onNavigate
+    )
+}
+
+@Composable
+fun LeaguesScreen(
+    modifier: Modifier = Modifier,
+    onNavigate: (ChandChandNavigationDestination, String) -> Unit
+) {
     Column {
-        ChandChandAppBar(title = stringResource(id = R.string.leagues))
-        LazyColumn(modifier = Modifier.padding(top = 8.dp)) {
-            items(leaguesTitleList, key = { it.id }) { leagueTitleModel: LeagueTitleModel ->
-                LeagueTitle(leagueTitleModel) { model: LeagueTitleModel ->
-                    onLeagueTitleClick(model)
+        ChandChandAppBar(
+            isTopLevelDestination = true,
+            title = stringResource(id = R.string.leagues)
+        )
+        LazyColumn(
+            modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+        ) {
+            items(
+                items = leaguesTitleList,
+                key = { it.id }
+            ) { leagueTitleModel: LeagueTitleModel ->
+                LeagueTitle(
+                    modifier,
+                    leagueTitleModel
+                ) { destination: ChandChandNavigationDestination, route: String ->
+                    onNavigate(destination, route)
                 }
             }
         }

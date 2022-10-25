@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.ui.components.LeaguesScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -22,7 +19,7 @@ class LeaguesFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ChandChandTheme {
+/*                ChandChandTheme {
                     LeaguesScreen { selectedLeagueTitleModel ->
                         findNavController().navigate(
                             LeaguesFragmentDirections.actionLeaguesFragmentToStandingsFragment(
@@ -30,7 +27,7 @@ class LeaguesFragment : Fragment() {
                             )
                         )
                     }
-                }
+                }*/
             }
         }
     }

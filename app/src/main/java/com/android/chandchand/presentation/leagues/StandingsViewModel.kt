@@ -16,14 +16,14 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class LeaguesViewModel @Inject constructor(
+class StandingsViewModel @Inject constructor(
     private val getStandingsUseCase: GetStandingsUseCase
-) : ViewModel(), IModel<LeaguesState, LeaguesIntent> {
+) : ViewModel(), IModel<StandingsState, LeaguesIntent> {
 
 
     override val intents: Channel<LeaguesIntent> = Channel(Channel.UNLIMITED)
-    private val _state = MutableStateFlow(LeaguesState())
-    override val state: StateFlow<LeaguesState> get() = _state
+    private val _state = MutableStateFlow(StandingsState())
+    override val state: StateFlow<StandingsState> get() = _state
 
     init {
         viewModelScope.launch {
@@ -39,7 +39,7 @@ class LeaguesViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateState(handler: suspend (intent: LeaguesState) -> LeaguesState) {
+    private suspend fun updateState(handler: suspend (intent: StandingsState) -> StandingsState) {
         _state.value = handler(state.value)
     }
 

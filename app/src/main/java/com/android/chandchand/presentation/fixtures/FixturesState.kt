@@ -11,7 +11,6 @@ data class FixturesState(
     val tomorrowFixturesState: DailyFixturesState = DailyFixturesState(),
     val dayAfterTomorrowFixturesState: DailyFixturesState = DailyFixturesState(),
     val somedayDate: String = "",
-    val somedayDateDescription: String = "",
     val somedayFixturesState: DailyFixturesState = DailyFixturesState(),
     val errorMessage: String? = null
 ) : IState

@@ -1,15 +1,21 @@
 package com.android.chandchand
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.android.chandchand.databinding.ActivityMainBinding
+import com.android.chandchand.presentation.ui.ChandChandApp
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 import com.android.chandchand.presentation.utils.NavigationListener
 import com.android.chandchand.presentation.utils.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationListener {
 
@@ -19,9 +25,15 @@ class MainActivity : AppCompatActivity(), NavigationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+/*        setContentView(binding.root)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
+        }*/
+
+        setContent {
+            ChandChandTheme {
+                ChandChandApp(windowSizeClass = calculateWindowSizeClass(activity = this))
+            }
         }
     }
 

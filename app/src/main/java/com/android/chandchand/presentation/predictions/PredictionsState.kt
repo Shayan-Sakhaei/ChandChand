@@ -2,7 +2,7 @@ package com.android.chandchand.presentation.predictions
 
 import androidx.compose.ui.graphics.Color
 import com.android.chandchand.presentation.common.IState
-import com.android.chandchand.presentation.theme.LightSurfaceInfo
+import com.android.chandchand.presentation.ui.theme.LightSurfaceInfo
 import com.android.domain.entities.PredictionsEntity
 import com.android.domain.entities.Winner
 

@@ -3,10 +3,10 @@ package com.android.chandchand.presentation.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -20,7 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.android.chandchand.R
 import com.android.chandchand.presentation.predictions.PredictionsState
-import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 
 @Composable
 fun PredictionResult(state: PredictionsState) {
@@ -33,7 +33,7 @@ fun PredictionResult(state: PredictionsState) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             val (matchResultRef, winnerBadgeRef, winnerLogoRef, winnerNameRef, dividerRef,
                 homeTeamLogoRef, awayTeamLogoRef, homeWinningPercentRef, drawPercentRef, awayWinningPercentRef,
@@ -42,7 +42,7 @@ fun PredictionResult(state: PredictionsState) {
             //MATCH RESULT
             Text(
                 text = stringResource(id = R.string.match_result),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -93,7 +93,7 @@ fun PredictionResult(state: PredictionsState) {
             //WINNER NAME
             Text(
                 text = state.winnerTitle,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -179,7 +179,7 @@ fun PredictionResult(state: PredictionsState) {
             //HOME PERCENT
             Text(
                 text = state.predictions?.winning_percent_home ?: "?%",
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(homeWinningPercentRef) {}
             )
@@ -187,7 +187,7 @@ fun PredictionResult(state: PredictionsState) {
             //HOME CHANCE
             Text(
                 text = stringResource(id = R.string.winning_chance),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(homeWinningChanceRef) {
                     start.linkTo(homeWinningPercentRef.start)
@@ -198,7 +198,7 @@ fun PredictionResult(state: PredictionsState) {
             //DRAW PERCENT
             Text(
                 text = state.predictions?.draws_percent ?: "?%",
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(drawPercentRef) {}
             )
@@ -206,7 +206,7 @@ fun PredictionResult(state: PredictionsState) {
             //DRAW CHANCE
             Text(
                 text = stringResource(id = R.string.draw_chance),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(drawChanceRef) {
                     start.linkTo(drawPercentRef.start)
@@ -217,7 +217,7 @@ fun PredictionResult(state: PredictionsState) {
             //AWAY PERCENT
             Text(
                 text = state.predictions?.winning_percent_away ?: "?%",
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(awayWinningPercentRef) {}
             )
@@ -225,7 +225,7 @@ fun PredictionResult(state: PredictionsState) {
             //AWAY CHANCE
             Text(
                 text = stringResource(id = R.string.winning_chance),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.constrainAs(awayWinningChanceRef) {
                     start.linkTo(awayWinningPercentRef.start)

@@ -1,9 +1,9 @@
 package com.android.chandchand.presentation.ui.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,9 +16,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.android.chandchand.R
-import com.android.domain.entities.StandingEntity
-import com.android.chandchand.presentation.theme.ChandChandTheme
 import com.android.chandchand.presentation.ui.PreviewData
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 
 @Composable
 fun Standing(standing: com.android.domain.entities.StandingEntity) {
@@ -41,8 +40,8 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(parent.start)
                 },
             text = "${standing.points}",
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.primaryVariant,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center
         )
 
@@ -57,7 +56,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(point.end)
                 },
             text = "${standing.goalsDiff}",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -72,7 +71,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(diff.end)
                 },
             text = "${standing.allLose}",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -87,7 +86,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(lose.end)
                 },
             text = "${standing.allDraw}",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -102,7 +101,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(draw.end)
                 },
             text = "${standing.allWin}",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -117,7 +116,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     start.linkTo(win.end)
                 },
             text = "${standing.allMatchsPlayed}",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -133,7 +132,7 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     width = Dimension.fillToConstraints
                 },
             text = standing.teamName ?: "",
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
 
@@ -163,8 +162,8 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
                     end.linkTo(parent.end)
                 },
             text = "${standing.rank}",
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.primary,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center
         )
 

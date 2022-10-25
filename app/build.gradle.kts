@@ -108,7 +108,6 @@ dependencies {
 
     //COMPOSE
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

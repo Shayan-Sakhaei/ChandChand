@@ -168,6 +168,7 @@ class FixturesViewModel @Inject constructor(
                     updateState {
                         it.copy(
                             isLoading = false,
+                            somedayDate = date,
                             somedayFixturesState = DailyFixturesState(fixtures = fixtures)
                         )
                     }
@@ -236,12 +237,6 @@ class FixturesViewModel @Inject constructor(
                     }
                 }
             }
-        }
-    }
-
-    fun setSomedayDate(date: String, dateDescription: String) {
-        viewModelScope.launch {
-            updateState { it.copy(somedayDate = date, somedayDateDescription = dateDescription) }
         }
     }
 }

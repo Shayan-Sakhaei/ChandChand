@@ -3,9 +3,9 @@ package com.android.chandchand.presentation.ui.components
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.android.chandchand.R
 import com.android.chandchand.presentation.predictions.PredictionsState
-import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 
 @Composable
 fun PredictionHeader(
@@ -32,7 +32,7 @@ fun PredictionHeader(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             val (homeTeamNameRef, homeTeamLogoRef, dateRef,
                 timeRef, awayTeamLogoRef, awayTeamNameRef) = createRefs()
@@ -41,7 +41,7 @@ fun PredictionHeader(
 
             Text(
                 text = state.date ?: "?",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 16.dp)
@@ -52,9 +52,9 @@ fun PredictionHeader(
 
             Text(
                 text = state.time ?: "?",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .padding(bottom = 16.dp)
                     .constrainAs(timeRef) {
@@ -77,7 +77,7 @@ fun PredictionHeader(
 
             Text(
                 text = state.predictions?.away_team_name ?: "?",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(end = 4.dp)
@@ -103,7 +103,7 @@ fun PredictionHeader(
 
             Text(
                 text = state.predictions?.home_team_name ?: "?",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(start = 4.dp)

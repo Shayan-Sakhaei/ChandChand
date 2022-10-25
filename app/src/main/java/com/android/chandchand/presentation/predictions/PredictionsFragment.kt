@@ -8,8 +8,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.ui.components.PredictionsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,11 +33,11 @@ class PredictionsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ChandChandTheme {
+/*                ChandChandTheme {
                     PredictionsScreen(viewModel = viewModel,
                         { drawable -> viewModel.palette(drawable, HomeAway.HOME) },
                         { drawable -> viewModel.palette(drawable, HomeAway.AWAY) })
-                }
+                }*/
             }
         }
     }

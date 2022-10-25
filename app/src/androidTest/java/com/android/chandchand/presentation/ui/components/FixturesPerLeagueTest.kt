@@ -3,7 +3,7 @@ package com.android.chandchand.presentation.ui.components
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.android.chandchand.fake.FakeData
-import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 import org.junit.Rule
 import org.junit.Test
 

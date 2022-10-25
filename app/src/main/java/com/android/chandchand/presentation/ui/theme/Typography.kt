@@ -1,6 +1,6 @@
-package com.android.chandchand.presentation.theme
+package com.android.chandchand.presentation.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -16,68 +16,80 @@ val Shabnam = FontFamily(
 )
 
 val ChandChandTypography = Typography(
-    defaultFontFamily = Shabnam,
-    h1 = TextStyle(
+    displayLarge = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W300,
         fontSize = 96.sp,
         letterSpacing = (-1.5).sp
     ),
-    h2 = TextStyle(
+    displayMedium = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W300,
         fontSize = 60.sp,
         letterSpacing = (-0.5).sp
     ),
-    h3 = TextStyle(
+    displaySmall = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.Normal,
         fontSize = 48.sp,
         letterSpacing = 0.sp
     ),
-    h4 = TextStyle(
+    headlineMedium = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W600,
         fontSize = 30.sp,
         letterSpacing = 0.sp
     ),
-    h5 = TextStyle(
+    headlineSmall = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W600,
         fontSize = 24.sp,
         letterSpacing = 0.sp
     ),
-    h6 = TextStyle(
+    titleLarge = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W600,
         fontSize = 20.sp,
         letterSpacing = 0.sp
     ),
-    subtitle1 = TextStyle(
+    titleMedium = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W600,
         fontSize = 16.sp,
         letterSpacing = 0.15.sp
     ),
-    subtitle2 = TextStyle(
+    titleSmall = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W500,
         fontSize = 14.sp,
         letterSpacing = 0.1.sp
     ),
-    body1 = TextStyle(
+    bodyLarge = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W500,
         fontSize = 16.sp,
         letterSpacing = 0.5.sp
     ),
-    body2 = TextStyle(
+    bodyMedium = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W500,
         fontSize = 14.sp,
         letterSpacing = 0.25.sp
     ),
-    button = TextStyle(
-        fontWeight = FontWeight.W600,
-        fontSize = 14.sp,
-        letterSpacing = 0.25.sp
-    ),
-    caption = TextStyle(
+    bodySmall = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W500,
         fontSize = 12.sp,
         letterSpacing = 0.4.sp
     ),
-    overline = TextStyle(
+    labelLarge = TextStyle(
+        fontFamily = Shabnam,
+        fontWeight = FontWeight.W600,
+        fontSize = 14.sp,
+        letterSpacing = 0.25.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Shabnam,
         fontWeight = FontWeight.W600,
         fontSize = 12.sp,
         letterSpacing = 1.sp

@@ -8,6 +8,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,9 +24,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.android.chandchand.R
 import com.android.chandchand.presentation.predictions.PredictionsState
-import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.theme.DarkSurfaceInfo
-import com.android.chandchand.presentation.theme.LightSurfaceInfo
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.DarkSurfaceInfo
+import com.android.chandchand.presentation.ui.theme.LightSurfaceInfo
 
 @Composable
 fun PredictionGoals(state: PredictionsState) {
@@ -38,7 +39,7 @@ fun PredictionGoals(state: PredictionsState) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             val (
                 goalsPredictionRef, homeTeamLogoRef, homeTeamNameRef, homeTeamGoalsText,
@@ -49,7 +50,7 @@ fun PredictionGoals(state: PredictionsState) {
             //MATCH RESULT
             Text(
                 text = stringResource(id = R.string.goals_prediction),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -110,7 +111,7 @@ fun PredictionGoals(state: PredictionsState) {
             //AWAY NAME
             Text(
                 text = state.predictions?.away_team_name ?: "?",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -124,7 +125,7 @@ fun PredictionGoals(state: PredictionsState) {
             //HOME NAME
             Text(
                 text = state.predictions?.home_team_name ?: "?",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
@@ -173,7 +174,7 @@ fun PredictionGoals(state: PredictionsState) {
             //MATCH GOALS TITLE
             Text(
                 text = stringResource(id = R.string.match_goals_sum),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 16.dp)
@@ -199,7 +200,7 @@ fun PredictionGoals(state: PredictionsState) {
             ) {
                 Text(
                     text = state.predictions?.under_over ?: "N/A",
-                    style = MaterialTheme.typography.overline,
+                    style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center
                 )
             }
@@ -225,7 +226,7 @@ fun PredictionGoal(
         ) {
             Text(
                 text = goals,
-                style = MaterialTheme.typography.overline,
+                style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
             )
 

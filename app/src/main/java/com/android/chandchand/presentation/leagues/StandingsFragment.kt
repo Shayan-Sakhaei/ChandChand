@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.ui.components.StandingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -19,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class StandingsFragment : Fragment() {
 
-    private val viewModel: LeaguesViewModel by viewModels()
+    private val viewModel: StandingsViewModel by viewModels()
 
     private val args: StandingsFragmentArgs by navArgs()
 
@@ -29,12 +27,12 @@ class StandingsFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ChandChandTheme {
+/*                ChandChandTheme {
                     StandingsScreen(
                         viewModel = viewModel,
                         args.leagueTitleResId
                     )
-                }
+                }*/
             }
         }
     }

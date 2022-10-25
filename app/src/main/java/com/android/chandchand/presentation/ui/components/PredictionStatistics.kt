@@ -4,9 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.android.chandchand.R
 import com.android.chandchand.presentation.predictions.PredictionsState
-import com.android.chandchand.presentation.theme.*
+import com.android.chandchand.presentation.ui.theme.*
 
 @Composable
 fun PredictionStatistics(state: PredictionsState) {
@@ -33,7 +33,7 @@ fun PredictionStatistics(state: PredictionsState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface),
+                .background(MaterialTheme.colorScheme.surface),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -41,7 +41,7 @@ fun PredictionStatistics(state: PredictionsState) {
             //HEAD TO HEAD
             Text(
                 text = stringResource(id = R.string.statistics),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp, bottom = 12.dp)
@@ -130,7 +130,7 @@ fun PredictionStatistic(
         modifier = Modifier
             .fillMaxWidth()
             .height(62.dp)
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colorScheme.surface)
     ) {
 
         val (titleRef, homePercentRef, awayPercentRef, barRef, homeBarRef, awayBarRef) = createRefs()
@@ -138,7 +138,7 @@ fun PredictionStatistic(
         //TITLE
         Text(
             text = title,
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -152,7 +152,7 @@ fun PredictionStatistic(
         Text(
             text = awayTeamPercentText,
             color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(top = 8.dp, start = 12.dp)
@@ -166,7 +166,7 @@ fun PredictionStatistic(
         Text(
             text = homeTeamPercentText,
             color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
-            style = MaterialTheme.typography.caption,
+            style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(top = 8.dp, end = 12.dp)

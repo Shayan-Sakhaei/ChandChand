@@ -3,9 +3,10 @@ package com.android.chandchand.presentation.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -17,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.android.chandchand.R
-import com.android.domain.entities.LiveFixtureEntity
 import com.android.chandchand.presentation.utils.*
 
 @Composable
@@ -28,12 +28,12 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
             .padding(start = 12.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
             .fillMaxWidth()
             .height(if (fixture.status_short == NOT_STARTED) 112.dp else 144.dp),
-        elevation = 4.dp
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colorScheme.surface)
         ) {
             val (homeTeamLogo, homeTeamName, homeTeamGoals,
                 predictionIcon, timeText, statusText,
@@ -66,7 +66,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
 
             Text(
                 text = fixture.home_team_name ?: "",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(start = 14.dp, top = 12.dp)
@@ -90,7 +90,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
 
             Text(
                 text = fixture.away_team_name ?: "",
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(end = 14.dp, top = 12.dp)
@@ -105,7 +105,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //TIME
                     Text(
                         text = fixture.timestamp?.toHourMin() ?: "",
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 12.dp)
@@ -119,8 +119,8 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //STATUS
                     Text(
                         text = stringResource(id = R.string.postponed),
-                        color = MaterialTheme.colors.error,
-                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 48.dp)
@@ -133,7 +133,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //HOME GOALS
                     Text(
                         text = "?",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(start = 14.dp)
@@ -147,7 +147,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //AWAY GOALS
                     Text(
                         text = "?",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(end = 14.dp)
@@ -162,8 +162,8 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //STATUS
                     Text(
                         text = stringResource(id = R.string.cancelled),
-                        color = MaterialTheme.colors.error,
-                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 48.dp)
@@ -176,7 +176,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //HOME GOALS
                     Text(
                         text = "_",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(start = 14.dp)
@@ -190,7 +190,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //AWAY GOALS
                     Text(
                         text = "_",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(end = 14.dp)
@@ -205,7 +205,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //TIME
                     Text(
                         text = fixture.timestamp?.toHourMin() ?: "",
-                        style = MaterialTheme.typography.body1.copy(
+                        style = MaterialTheme.typography.bodyLarge.copy(
                             textDecoration = TextDecoration.LineThrough
                         ),
                         textAlign = TextAlign.Center,
@@ -220,8 +220,8 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //STATUS
                     Text(
                         text = stringResource(id = R.string.match_finished),
-                        color = MaterialTheme.colors.error,
-                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 48.dp)
@@ -234,7 +234,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //HOME GOALS
                     Text(
                         text = fixture.goals_home ?: "",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(start = 14.dp)
@@ -248,7 +248,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //AWAY GOALS
                     Text(
                         text = fixture.goals_away ?: "",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(end = 14.dp)
@@ -263,7 +263,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //TIME
                     Text(
                         text = fixture.timestamp?.toHourMin() ?: "",
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 12.dp)
@@ -276,8 +276,8 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //STATUS
                     Text(
                         text = stringResource(id = R.string.ongoing),
-                        color = MaterialTheme.colors.error,
-                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(top = 48.dp)
@@ -290,7 +290,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //HOME GOALS
                     Text(
                         text = fixture.goals_home ?: "",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(start = 14.dp)
@@ -304,7 +304,7 @@ fun LiveFixture(fixture: com.android.domain.entities.LiveFixtureEntity) {
                     //AWAY GOALS
                     Text(
                         text = fixture.goals_away ?: "",
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(end = 14.dp)

@@ -1,19 +1,24 @@
 package com.android.chandchand.presentation.ui.components
 
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.chandchand.fake.FakeFixturesRepository
 import com.android.chandchand.presentation.fixtures.FixturesViewModel
+import com.android.chandchand.presentation.fixtures.compose.FixturesScreen
 import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
-import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 import com.android.domain.usecase.GetFixturesUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalCoroutinesApi
 class FixturesScreenTest {
 
@@ -37,7 +42,15 @@ class FixturesScreenTest {
     fun topAppBar_displayedInUi() {
         composeTestRule.setContent {
             ChandChandTheme {
-                FixturesScreen(viewModel = viewModel, onNavigate = {}) {}
+
+                val state by viewModel.state.collectAsStateWithLifecycle()
+
+                FixturesScreen(
+                    state = state,
+                    onNavigate = { destination, route -> },
+                    onCalendarClick = {},
+                    onLeagueHeaderClick = { model, day -> }
+                )
             }
         }
 
@@ -55,7 +68,15 @@ class FixturesScreenTest {
     fun tabLayout_displayedInUi() {
         composeTestRule.setContent {
             ChandChandTheme {
-                FixturesScreen(viewModel = viewModel, onNavigate = {}) {}
+
+                val state by viewModel.state.collectAsStateWithLifecycle()
+
+                FixturesScreen(
+                    state = state,
+                    onNavigate = { destination, route -> },
+                    onCalendarClick = {},
+                    onLeagueHeaderClick = { model, day -> }
+                )
             }
         }
 
@@ -76,7 +97,15 @@ class FixturesScreenTest {
     fun pager_displayedInUi() {
         composeTestRule.setContent {
             ChandChandTheme {
-                FixturesScreen(viewModel = viewModel, onNavigate = {}) {}
+
+                val state by viewModel.state.collectAsStateWithLifecycle()
+
+                FixturesScreen(
+                    state = state,
+                    onNavigate = { destination, route -> },
+                    onCalendarClick = {},
+                    onLeagueHeaderClick = { model, day -> }
+                )
             }
         }
 

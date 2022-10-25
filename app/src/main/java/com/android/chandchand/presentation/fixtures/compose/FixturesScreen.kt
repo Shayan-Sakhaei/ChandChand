@@ -1,17 +1,16 @@
-package com.android.chandchand.presentation.ui.components
+package com.android.chandchand.presentation.fixtures.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,29 +20,63 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDirections
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.chandchand.R
-import com.android.chandchand.presentation.fixtures.FixturesFragmentDirections
+import com.android.chandchand.presentation.fixtures.FixturesIntent
+import com.android.chandchand.presentation.fixtures.FixturesState
 import com.android.chandchand.presentation.fixtures.FixturesViewModel
-import com.android.chandchand.presentation.theme.ChandChandTheme
+import com.android.chandchand.presentation.model.FixturesPerLeagueModel
+import com.android.chandchand.presentation.ui.components.ChandChandAppBar
+import com.android.chandchand.presentation.ui.components.FixturesPerDay
+import com.android.chandchand.presentation.ui.navigation.ChandChandNavigationDestination
+import com.android.chandchand.presentation.ui.navigation.LiveFixturesDestination
+import com.android.chandchand.presentation.ui.navigation.PredictionsDestination
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.android.chandchand.presentation.ui.theme.DarkAppBar
+import com.android.chandchand.presentation.ui.theme.LightAppBar
 import com.android.chandchand.presentation.utils.DAY
 import com.android.chandchand.presentation.utils.toHourMin
 import com.android.chandchand.presentation.utils.toPersianDate
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ExperimentalLifecycleComposeApi::class)
+@Composable
+fun FixturesRoute(
+    modifier: Modifier = Modifier,
+    viewModel: FixturesViewModel = hiltViewModel(),
+    onNavigate: (ChandChandNavigationDestination, String) -> Unit,
+    onCalendarClick: () -> Unit,
+) {
+    LaunchedEffect(true) {
+        viewModel.intents.send(FixturesIntent.GetFixtures)
+    }
+
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    FixturesScreen(
+        modifier = modifier,
+        state = state,
+        onNavigate = onNavigate,
+        onCalendarClick = onCalendarClick,
+        onLeagueHeaderClick = viewModel::onLeagueHeaderClick
+    )
+}
+
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun FixturesScreen(
-    viewModel: FixturesViewModel,
-    onNavigate: (NavDirections) -> Unit,
-    onCalendarClick: () -> Unit
+    modifier: Modifier = Modifier,
+    state: FixturesState,
+    onNavigate: (ChandChandNavigationDestination, String) -> Unit,
+    onCalendarClick: () -> Unit,
+    onLeagueHeaderClick: (model: FixturesPerLeagueModel, day: DAY) -> Unit
 ) {
-
-    val state by viewModel.state.collectAsState()
-
     val tabs = listOf(
         stringResource(id = R.string.yesterday),
         stringResource(id = R.string.today),
@@ -55,15 +88,19 @@ fun FixturesScreen(
     val coroutineScope = rememberCoroutineScope()
 
     Column {
-        ChandChandAppBar(title = stringResource(R.string.fixtures)) {
+        ChandChandAppBar(
+            isTopLevelDestination = true,
+            title = stringResource(R.string.fixtures)
+        ) {
             IconButton(onClick = { onCalendarClick() }) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_calendar_24),
                     contentDescription = "calendar"
                 )
             }
-
-            IconButton(onClick = { onNavigate(FixturesFragmentDirections.actionFixturesFragmentToLiveFixturesFragment()) }) {
+            IconButton(onClick = {
+                onNavigate(LiveFixturesDestination, LiveFixturesDestination.route)
+            }) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_tv_24),
                     contentDescription = "live"
@@ -72,14 +109,14 @@ fun FixturesScreen(
         }
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            backgroundColor = MaterialTheme.colors.primary,
+            containerColor = if (isSystemInDarkTheme()) DarkAppBar else LightAppBar,
             indicator = { tabPositions ->
                 Box(
                     modifier = Modifier
                         .tabIndicatorOffset(tabPositions[pagerState.currentPage])
                         .height(4.dp)
                         .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                        .background(contentColorFor(backgroundColor = MaterialTheme.colors.primary))
+                        .background(contentColorFor(backgroundColor = MaterialTheme.colorScheme.primary))
                 )
             }
         ) {
@@ -88,16 +125,16 @@ fun FixturesScreen(
                     modifier = Modifier.semantics { contentDescription = text },
                     selected = pagerState.currentPage == index,
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
-                    text = { Text(text = text) })
+                    text = { Text(text = text, color = MaterialTheme.colorScheme.onPrimary) })
             }
         }
-
         HorizontalPager(
             count = tabs.size,
             modifier = Modifier
                 .weight(1f)
                 .semantics { contentDescription = "HorizontalPager" },
             state = pagerState,
+            key = { page -> tabs[page] },
             verticalAlignment = Alignment.Top
         ) {
             when (currentPage) {
@@ -105,16 +142,17 @@ fun FixturesScreen(
                     FixturesPerDay(
                         fixtures = state.yesterdayFixturesState.fixtures,
                         onHeaderClick = {
-                            viewModel.onLeagueHeaderClick(it, DAY.YESTERDAY)
+                            onLeagueHeaderClick(it, DAY.YESTERDAY)
                         },
                         onPredictionClick = { fixtureEntity ->
                             onNavigate(
-                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                PredictionsDestination,
+                                PredictionsDestination.createNavigationRoute(
                                     fixtureEntity.id,
-                                    fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo,
-                                    fixtureEntity.date?.toPersianDate(),
-                                    fixtureEntity.timestamp?.toHourMin()
+                                    fixtureEntity.home_team_logo ?: "",
+                                    fixtureEntity.away_team_logo ?: "",
+                                    fixtureEntity.date?.toPersianDate() ?: "",
+                                    fixtureEntity.timestamp?.toHourMin() ?: ""
                                 )
                             )
                         }
@@ -124,16 +162,17 @@ fun FixturesScreen(
                     FixturesPerDay(
                         fixtures = state.todayFixturesState.fixtures,
                         onHeaderClick = {
-                            viewModel.onLeagueHeaderClick(it, DAY.TODAY)
+                            onLeagueHeaderClick(it, DAY.TODAY)
                         },
                         onPredictionClick = { fixtureEntity ->
                             onNavigate(
-                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                PredictionsDestination,
+                                PredictionsDestination.createNavigationRoute(
                                     fixtureEntity.id,
-                                    fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo,
-                                    fixtureEntity.date?.toPersianDate(),
-                                    fixtureEntity.timestamp?.toHourMin()
+                                    fixtureEntity.home_team_logo ?: "",
+                                    fixtureEntity.away_team_logo ?: "",
+                                    fixtureEntity.date?.toPersianDate() ?: "",
+                                    fixtureEntity.timestamp?.toHourMin() ?: ""
                                 )
                             )
                         }
@@ -143,16 +182,17 @@ fun FixturesScreen(
                     FixturesPerDay(
                         fixtures = state.tomorrowFixturesState.fixtures,
                         onHeaderClick = {
-                            viewModel.onLeagueHeaderClick(it, DAY.TOMORROW)
+                            onLeagueHeaderClick(it, DAY.TOMORROW)
                         },
                         onPredictionClick = { fixtureEntity ->
                             onNavigate(
-                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                PredictionsDestination,
+                                PredictionsDestination.createNavigationRoute(
                                     fixtureEntity.id,
-                                    fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo,
-                                    fixtureEntity.date?.toPersianDate(),
-                                    fixtureEntity.timestamp?.toHourMin()
+                                    fixtureEntity.home_team_logo ?: "",
+                                    fixtureEntity.away_team_logo ?: "",
+                                    fixtureEntity.date?.toPersianDate() ?: "",
+                                    fixtureEntity.timestamp?.toHourMin() ?: ""
                                 )
                             )
                         }
@@ -162,16 +202,17 @@ fun FixturesScreen(
                     FixturesPerDay(
                         fixtures = state.dayAfterTomorrowFixturesState.fixtures,
                         onHeaderClick = {
-                            viewModel.onLeagueHeaderClick(it, DAY.DAY_AFTER_TOMORROW)
+                            onLeagueHeaderClick(it, DAY.DAY_AFTER_TOMORROW)
                         },
                         onPredictionClick = { fixtureEntity ->
                             onNavigate(
-                                FixturesFragmentDirections.actionFixturesFragmentToPredictionsFragment(
+                                PredictionsDestination,
+                                PredictionsDestination.createNavigationRoute(
                                     fixtureEntity.id,
-                                    fixtureEntity.home_team_logo,
-                                    fixtureEntity.away_team_logo,
-                                    fixtureEntity.date?.toPersianDate(),
-                                    fixtureEntity.timestamp?.toHourMin()
+                                    fixtureEntity.home_team_logo ?: "",
+                                    fixtureEntity.away_team_logo ?: "",
+                                    fixtureEntity.date?.toPersianDate() ?: "",
+                                    fixtureEntity.timestamp?.toHourMin() ?: ""
                                 )
                             )
                         }

@@ -10,8 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.android.chandchand.R
-import com.android.chandchand.presentation.theme.ChandChandTheme
-import com.android.chandchand.presentation.ui.components.FixturesScreen
 import com.android.chandchand.presentation.utils.toDate
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hamsaa.persiandatepicker.Listener
@@ -39,7 +37,7 @@ class FixturesFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ChandChandTheme {
+/*                ChandChandTheme {
                     FixturesScreen(
                         viewModel,
                         onNavigate = { navDirections ->
@@ -47,7 +45,7 @@ class FixturesFragment : Fragment() {
                         },
                         onCalendarClick = { datePicker.show() }
                     )
-                }
+                }*/
             }
         }
     }

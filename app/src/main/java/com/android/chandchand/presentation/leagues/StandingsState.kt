@@ -1,9 +1,8 @@
 package com.android.chandchand.presentation.leagues
 
-import com.android.domain.entities.StandingEntity
 import com.android.chandchand.presentation.common.IState
 
-data class LeaguesState(
+data class StandingsState(
     val idle: Boolean = true,
     val isLoading: Boolean = false,
     val standings: List<com.android.domain.entities.StandingEntity> = listOf(),
