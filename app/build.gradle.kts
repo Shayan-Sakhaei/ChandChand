@@ -41,7 +41,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         compose = true
     }
 
@@ -73,32 +72,13 @@ dependencies {
     implementation(project(":data"))
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.legacy.support)
 
     //MULTIDEX
     implementation(libs.androidx.multidex)
 
-    //FRAGMENT
-    implementation(libs.androidx.fragment.ktx)
-
-    //MATERIAL
-    implementation(libs.androidx.material)
-
-    //NAVIGATION
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
     //HILT
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.androidx.hilt.lifecycle.viewmodel)
-
-    //KTX
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     //PERSIAN DATE PICKER
     implementation(libs.persian.date.picker.dialog)
@@ -107,18 +87,18 @@ dependencies {
     implementation(libs.androidx.palette.ktx)
 
     //COMPOSE
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.windowsizeclass)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.coil.kt.compose)
     implementation(libs.accompanist.pager)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material3.windowsizeclass)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.lifecycle.runtime.compose)
 
     //PERSIAN DATE
     implementation(libs.persian.date)

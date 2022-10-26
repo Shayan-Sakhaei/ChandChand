@@ -51,7 +51,7 @@ object OkHttpModule {
     @Singleton
     fun provideClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: com.android.data.common.AuthInterceptor,
+        authInterceptor: AuthInterceptor,
         cache: Cache
     ): OkHttpClient {
         return OkHttpClient.Builder()

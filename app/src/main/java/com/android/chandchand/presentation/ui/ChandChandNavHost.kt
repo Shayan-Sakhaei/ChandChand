@@ -4,7 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.android.chandchand.presentation.ui.navigation.*
+import com.android.chandchand.presentation.fixtures.navigation.FixturesDestination
+import com.android.chandchand.presentation.fixtures.navigation.fixturesGraph
+import com.android.chandchand.presentation.fixtures.navigation.liveFixturesGraph
+import com.android.chandchand.presentation.fixtures.navigation.somedayFixturesGraph
+import com.android.chandchand.presentation.leagues.navigation.leaguesGraph
+import com.android.chandchand.presentation.leagues.navigation.standingsGraph
+import com.android.chandchand.presentation.predictions.navigation.predictionsGraph
+import com.android.chandchand.presentation.ui.navigation.ChandChandNavigationDestination
 
 @Composable
 fun ChandChandNavHost(

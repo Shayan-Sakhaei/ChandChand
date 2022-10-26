@@ -10,9 +10,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.android.chandchand.R
+import com.android.chandchand.presentation.fixtures.navigation.FixturesDestination
+import com.android.chandchand.presentation.leagues.navigation.LeaguesDestination
 import com.android.chandchand.presentation.ui.navigation.ChandChandNavigationDestination
-import com.android.chandchand.presentation.ui.navigation.FixturesDestination
-import com.android.chandchand.presentation.ui.navigation.LeaguesDestination
 import com.android.chandchand.presentation.ui.navigation.TopLevelDestination
 
 @Composable
