@@ -5,6 +5,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 
 
 private val LightColors = lightColorScheme(
@@ -70,6 +73,7 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun ChandChandTheme(
+    isRTL: Boolean = true,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
@@ -78,6 +82,9 @@ fun ChandChandTheme(
         colorScheme = colors,
         typography = ChandChandTypography,
         shapes = ChandChandShapes,
-        content = content
+        content = {
+            if (isRTL) CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) { content() }
+            else content()
+        }
     )
 }

@@ -11,10 +11,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.android.chandchand.R
 import com.android.chandchand.presentation.leagues.navigation.StandingsDestination
@@ -50,22 +52,24 @@ fun LeagueTitle(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                modifier = Modifier.padding(start = 16.dp),
-                painter = painterResource(id = R.drawable.ic_arrow_left_24),
-                contentDescription = "arrow left"
+                modifier = Modifier.padding(start = 12.dp),
+                painter = painterResource(id = leagueTitleModel.logoResId),
+                contentDescription = "${stringResource(id = leagueTitleModel.titleResId)} logo"
             )
 
             Text(
                 text = stringResource(id = leagueTitleModel.titleResId), modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp)
                     .weight(1f),
-                textAlign = TextAlign.End
+                textAlign = TextAlign.Start
             )
 
             Image(
-                modifier = Modifier.padding(end = 12.dp),
-                painter = painterResource(id = leagueTitleModel.logoResId),
-                contentDescription = "${stringResource(id = leagueTitleModel.titleResId)} logo"
+                modifier = Modifier.padding(end = 16.dp),
+                painter = painterResource(
+                    id = if (LocalLayoutDirection.current == LayoutDirection.Rtl) R.drawable.ic_arrow_left_24 else R.drawable.ic_arrow_right_24
+                ),
+                contentDescription = "arrow_left_right"
             )
         }
     }

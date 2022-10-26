@@ -29,113 +29,20 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
 
         val (point, diff, lose, draw, win, match, name, logo, rowNumber, divider) = createRefs()
 
-        //Point
+        //Row Number
         Text(
             modifier = Modifier
-                .padding(start = 4.dp)
-                .width(32.dp)
-                .constrainAs(point) {
+                .padding(start = 8.dp)
+                .constrainAs(rowNumber) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                 },
-            text = "${standing.points}",
+            text = "${standing.rank}",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center
         )
-
-        //Diff
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp)
-                .width(38.dp)
-                .constrainAs(diff) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(point.end)
-                },
-            text = "${standing.goalsDiff}",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
-        //Lose
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp)
-                .width(32.dp)
-                .constrainAs(lose) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(diff.end)
-                },
-            text = "${standing.allLose}",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
-        //Draw
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp)
-                .width(40.dp)
-                .constrainAs(draw) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(lose.end)
-                },
-            text = "${standing.allDraw}",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
-        //Win
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp)
-                .width(26.dp)
-                .constrainAs(win) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(draw.end)
-                },
-            text = "${standing.allWin}",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
-        //Match
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp)
-                .width(32.dp)
-                .constrainAs(match) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(win.end)
-                },
-            text = "${standing.allMatchsPlayed}",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
-        //Name
-        Text(
-            modifier = Modifier
-                .padding(start = 4.dp, end = 14.dp)
-                .constrainAs(name) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(match.end)
-                    end.linkTo(logo.start)
-                    width = Dimension.fillToConstraints
-                },
-            text = standing.teamName ?: "",
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-
         //Logo
         AsyncImage(
             model = standing.logo,
@@ -143,42 +50,126 @@ fun Standing(standing: com.android.domain.entities.StandingEntity) {
             contentScale = ContentScale.Inside,
             placeholder = painterResource(id = R.drawable.ic_flag_placeholder_32),
             modifier = Modifier
-                .padding(end = 6.dp)
+                .padding(start = 6.dp)
                 .size(32.dp)
                 .constrainAs(logo) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
-                    end.linkTo(rowNumber.start)
+                    start.linkTo(rowNumber.end)
                 }
         )
-
-        //Row Number
+        //Name
         Text(
             modifier = Modifier
-                .padding(end = 8.dp)
-                .constrainAs(rowNumber) {
+                .padding(start = 12.dp, end = 4.dp)
+                .constrainAs(name) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(logo.end)
+                    end.linkTo(match.start)
+                    width = Dimension.fillToConstraints
+                },
+            text = standing.teamName ?: "",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Match
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(32.dp)
+                .constrainAs(match) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(win.start)
+                },
+            text = "${standing.allMatchsPlayed}",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Win
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(26.dp)
+                .constrainAs(win) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(draw.start)
+                },
+            text = "${standing.allWin}",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Draw
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(40.dp)
+                .constrainAs(draw) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(lose.start)
+                },
+            text = "${standing.allDraw}",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Lose
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(32.dp)
+                .constrainAs(lose) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(diff.start)
+                },
+            text = "${standing.allLose}",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Diff
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(38.dp)
+                .constrainAs(diff) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(point.start)
+                },
+            text = "${standing.goalsDiff}",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+        //Point
+        Text(
+            modifier = Modifier
+                .padding(end = 4.dp)
+                .width(32.dp)
+                .constrainAs(point) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                 },
-            text = "${standing.rank}",
+            text = "${standing.points}",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center
         )
-
+        //Vertical Divider
         Divider(
             modifier = Modifier
                 .constrainAs(divider) {
-                    start.linkTo(parent.start)
-                    end.linkTo(name.end)
+                    start.linkTo(parent.end)
+                    end.linkTo(name.start)
                     top.linkTo(parent.bottom)
                 },
             color = Color.Black.copy(alpha = .10f),
             thickness = 1.dp
         )
     }
-
 }
 
 @Composable

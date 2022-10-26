@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension.Companion.fillToConstraints
@@ -50,14 +52,14 @@ fun ChandChandAppBar(
             })
 
         Row(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically,
             content = actions,
             modifier = Modifier.constrainAs(rowRef) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(titleRef.start, 16.dp)
+                end.linkTo(parent.end)
+                start.linkTo(titleRef.end, 16.dp)
                 width = fillToConstraints
             }
         )
@@ -67,12 +69,14 @@ fun ChandChandAppBar(
             modifier = Modifier.constrainAs(backIconRef) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-                end.linkTo(parent.end)
+                start.linkTo(parent.start)
             }) {
             IconButton(onClick = onBackClick) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_right_24),
-                    contentDescription = "arrow_right",
+                    painter = painterResource(
+                        id = if (LocalLayoutDirection.current == LayoutDirection.Rtl) R.drawable.ic_arrow_right_24 else R.drawable.ic_arrow_left_24
+                    ),
+                    contentDescription = "arrow_right_left",
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary)
                 )
             }

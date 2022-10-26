@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
@@ -23,6 +25,7 @@ import com.android.chandchand.presentation.leagues.LeaguesIntent
 import com.android.chandchand.presentation.leagues.StandingsState
 import com.android.chandchand.presentation.leagues.StandingsViewModel
 import com.android.chandchand.presentation.ui.components.ChandChandAppBar
+import com.android.chandchand.presentation.ui.theme.ChandChandTheme
 import com.android.domain.entities.StandingEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -68,53 +71,62 @@ fun StandingsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 modifier = Modifier
-                    .padding(start = 4.dp)
+                    .padding(end = 4.dp)
+                    .width(32.dp),
+                text = stringResource(id = R.string.match),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .width(26.dp),
+                text = stringResource(id = R.string.win),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .width(40.dp),
+                text = stringResource(id = R.string.draw),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .width(32.dp),
+                text = stringResource(id = R.string.lose),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .width(38.dp),
+                text = stringResource(id = R.string.difference),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                modifier = Modifier
+                    .padding(end = 4.dp)
                     .width(32.dp),
                 text = stringResource(id = R.string.point),
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .width(38.dp),
-                text = stringResource(id = R.string.difference),
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .width(32.dp),
-                text = stringResource(id = R.string.lose),
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .width(40.dp),
-                text = stringResource(id = R.string.draw),
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .width(26.dp),
-                text = stringResource(id = R.string.win),
-                style = MaterialTheme.typography.bodySmall
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .width(32.dp),
-                text = stringResource(id = R.string.match),
-                style = MaterialTheme.typography.bodySmall
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = TextAlign.Center
             )
         }
+
         Divider(color = Color.Black.copy(alpha = .10f), thickness = 1.dp)
+
         LazyColumn {
             items(
                 state.standings,
@@ -122,5 +134,50 @@ fun StandingsScreen(
                 Standing(standing = standingEntity)
             }
         }
+    }
+}
+
+@Composable
+@Preview(name = "Fixture", showBackground = true)
+private fun PreviewFixture() {
+    ChandChandTheme {
+        StandingsScreen(
+            onBackClick = {},
+            state = StandingsState(
+                standings = listOf(
+                    StandingEntity(
+                        1,
+                        0,
+                        "Perspolis",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        10,
+                        7,
+                        1,
+                        2,
+                        20,
+                        7,
+                        4,
+                        3,
+                        1,
+                        2,
+                        12,
+                        5,
+                        10,
+                        4,
+                        3,
+                        1,
+                        2,
+                        12,
+                        5,
+                        10,
+                        ""
+                    ),
+                )
+            ), leagueTitleResId = R.string.persian_gulf_cup
+        )
     }
 }

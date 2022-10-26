@@ -63,43 +63,17 @@ fun PredictionHeader(
                     }
             )
 
-            AsyncImageWithDrawable(model = state.awayTeamLogoUrl,
-                contentDescription = "away team logo",
+             AsyncImageWithDrawable(model = state.homeTeamLogoUrl,
+                contentDescription = "home team logo",
                 contentScale = ContentScale.Inside,
                 placeholderResId = R.drawable.ic_flag_placeholder_32,
                 modifier = Modifier
                     .padding(end = 6.dp)
                     .size(40.dp)
-                    .constrainAs(awayTeamLogoRef) {
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        end.linkTo(dateRef.start)
-                    }) { drawable -> onAwayDrawableLoad(drawable) }
-
-            Text(
-                text = state.predictions?.away_team_name ?: "?",
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(end = 4.dp)
-                    .constrainAs(awayTeamNameRef) {
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        end.linkTo(awayTeamLogoRef.start)
-                    }
-            )
-
-            AsyncImageWithDrawable(model = state.homeTeamLogoUrl,
-                contentDescription = "home team logo",
-                contentScale = ContentScale.Inside,
-                placeholderResId = R.drawable.ic_flag_placeholder_32,
-                modifier = Modifier
-                    .padding(start = 6.dp)
-                    .size(40.dp)
                     .constrainAs(homeTeamLogoRef) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
-                        start.linkTo(dateRef.end)
+                        end.linkTo(dateRef.start)
                     }) { drawable -> onHomeDrawableLoad(drawable) }
 
             Text(
@@ -107,11 +81,37 @@ fun PredictionHeader(
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(start = 4.dp)
+                    .padding(end = 4.dp)
                     .constrainAs(homeTeamNameRef) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
-                        start.linkTo(homeTeamLogoRef.end)
+                        end.linkTo(homeTeamLogoRef.start)
+                    }
+            )
+
+            AsyncImageWithDrawable(model = state.awayTeamLogoUrl,
+                contentDescription = "away team logo",
+                contentScale = ContentScale.Inside,
+                placeholderResId = R.drawable.ic_flag_placeholder_32,
+                modifier = Modifier
+                    .padding(start = 6.dp)
+                    .size(40.dp)
+                    .constrainAs(awayTeamLogoRef) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(dateRef.end)
+                    }) { drawable -> onAwayDrawableLoad(drawable) }
+
+            Text(
+                text = state.predictions?.away_team_name ?: "?",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .constrainAs(awayTeamNameRef) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(awayTeamLogoRef.end)
                     }
             )
         }

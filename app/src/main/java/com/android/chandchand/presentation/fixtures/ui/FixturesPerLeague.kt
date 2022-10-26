@@ -50,16 +50,22 @@ fun FixturesPerLeague(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    modifier = Modifier.padding(start = 16.dp),
-                    painter = painterResource(
-                        id = if (fixtures.isExpanded) R.drawable.ic_drop_down_arrow_up_24 else R.drawable.ic_drop_down_arrow_down_24
-                    ),
-                    contentDescription = "arrow_up_or_down"
+                    modifier = Modifier.padding(start = 12.dp),
+                    painter = painterResource(id = fixtures.leagueModel.leagueLogo),
+                    contentDescription = "${stringResource(id = fixtures.leagueModel.leagueTitle)} logo"
+                )
+
+                Text(
+                    text = stringResource(id = fixtures.leagueModel.leagueTitle),
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp)
+                        .weight(1f),
+                    textAlign = TextAlign.Start
                 )
 
                 Box(
                     modifier = Modifier
-                        .padding(start = 8.dp)
+                        .padding(end = 8.dp)
                         .size(32.dp)
                         .border(
                             BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
@@ -72,21 +78,14 @@ fun FixturesPerLeague(
                     )
                 }
 
-                Text(
-                    text = stringResource(id = fixtures.leagueModel.leagueTitle),
-                    modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp)
-                        .weight(1f),
-                    textAlign = TextAlign.End
-                )
-
                 Image(
-                    modifier = Modifier.padding(end = 12.dp),
-                    painter = painterResource(id = fixtures.leagueModel.leagueLogo),
-                    contentDescription = "${stringResource(id = fixtures.leagueModel.leagueTitle)} logo"
+                    modifier = Modifier.padding(end = 16.dp),
+                    painter = painterResource(
+                        id = if (fixtures.isExpanded) R.drawable.ic_drop_down_arrow_up_24 else R.drawable.ic_drop_down_arrow_down_24
+                    ),
+                    contentDescription = "arrow_up_or_down"
                 )
             }
-
         }
 
         if (fixtures.isExpanded) {

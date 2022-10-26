@@ -148,20 +148,6 @@ fun PredictionStatistic(
                 }
         )
 
-        //AWAY PERCENT
-        Text(
-            text = awayTeamPercentText,
-            color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 8.dp, start = 12.dp)
-                .constrainAs(awayPercentRef) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                }
-        )
-
         //HOME PERCENT
         Text(
             text = homeTeamPercentText,
@@ -169,8 +155,22 @@ fun PredictionStatistic(
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(top = 8.dp, end = 12.dp)
+                .padding(top = 8.dp, start = 12.dp)
                 .constrainAs(homePercentRef) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
+        )
+
+        //AWAY PERCENT
+        Text(
+            text = awayTeamPercentText,
+            color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(top = 8.dp, end = 12.dp)
+                .constrainAs(awayPercentRef) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                 }
@@ -193,29 +193,29 @@ fun PredictionStatistic(
 
         val verticalGuideline = createGuidelineFromStart(.5f)
 
-        //AWAY BAR
+        //HOME BAR
         Box(
             modifier = Modifier
                 .padding(start = 24.dp)
-                .fillMaxWidth(awayTeamPercentNumber / (2 * 100f))
+                .fillMaxWidth(homeTeamPercentNumber / (2 * 100f))
                 .height(6.dp)
                 .clip(RoundedCornerShape(topStart = 3.dp, bottomStart = 3.dp))
-                .background(awayTeamColor)
-                .constrainAs(awayBarRef) {
+                .background(homeTeamColor)
+                .constrainAs(homeBarRef) {
                     bottom.linkTo(barRef.bottom)
                     end.linkTo(verticalGuideline)
                 }
         )
 
-        //HOME BAR
+        //AWAY BAR
         Box(
             modifier = Modifier
                 .padding(end = 24.dp)
-                .fillMaxWidth(homeTeamPercentNumber / (2 * 100f))
+                .fillMaxWidth(awayTeamPercentNumber / (2 * 100f))
                 .height(6.dp)
                 .clip(RoundedCornerShape(topEnd = 3.dp, bottomEnd = 3.dp))
-                .background(homeTeamColor)
-                .constrainAs(homeBarRef) {
+                .background(awayTeamColor)
+                .constrainAs(awayBarRef) {
                     bottom.linkTo(barRef.bottom)
                     start.linkTo(verticalGuideline)
                 }

@@ -118,12 +118,12 @@ fun PredictionResult(state: PredictionsState) {
                 contentScale = ContentScale.Inside,
                 placeholder = painterResource(id = R.drawable.ic_flag_placeholder_32),
                 modifier = Modifier
-                    .padding(end = 12.dp)
+                    .padding(start = 12.dp)
                     .size(32.dp)
                     .constrainAs(homeTeamLogoRef) {
                         top.linkTo(dividerRef.bottom)
                         bottom.linkTo(parent.bottom)
-                        end.linkTo(parent.end)
+                        start.linkTo(parent.start)
                     })
 
             //AWAY LOGO
@@ -132,20 +132,20 @@ fun PredictionResult(state: PredictionsState) {
                 contentScale = ContentScale.Inside,
                 placeholder = painterResource(id = R.drawable.ic_flag_placeholder_32),
                 modifier = Modifier
-                    .padding(start = 12.dp)
+                    .padding(end = 12.dp)
                     .size(32.dp)
                     .constrainAs(awayTeamLogoRef) {
                         top.linkTo(dividerRef.bottom)
                         bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
                     })
 
             val horizontalChainRef =
-                createHorizontalChain(awayWinningPercentRef, drawPercentRef, homeWinningPercentRef)
+                createHorizontalChain(homeWinningPercentRef, drawPercentRef, awayWinningPercentRef)
 
             constrain(horizontalChainRef) {
-                start.linkTo(awayTeamLogoRef.end)
-                end.linkTo(homeTeamLogoRef.start)
+                start.linkTo(homeTeamLogoRef.end)
+                end.linkTo(awayTeamLogoRef.start)
             }
 
             val homeVerticalChain = createVerticalChain(

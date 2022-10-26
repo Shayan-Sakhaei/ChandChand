@@ -58,18 +58,6 @@ fun PredictionGoals(state: PredictionsState) {
                     }
             )
 
-            //AWAY LOGO
-            AsyncImage(model = state.awayTeamLogoUrl,
-                contentDescription = "away logo",
-                contentScale = ContentScale.Inside,
-                placeholder = painterResource(id = R.drawable.ic_flag_placeholder_32),
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .size(56.dp)
-                    .constrainAs(awayTeamLogoRef) {
-                        top.linkTo(goalsPredictionRef.bottom)
-                    })
-
             //HOME LOGO
             AsyncImage(model = state.homeTeamLogoUrl,
                 contentDescription = "home logo",
@@ -79,6 +67,18 @@ fun PredictionGoals(state: PredictionsState) {
                     .padding(top = 16.dp)
                     .size(56.dp)
                     .constrainAs(homeTeamLogoRef) {
+                        top.linkTo(goalsPredictionRef.bottom)
+                    })
+
+            //AWAY LOGO
+            AsyncImage(model = state.awayTeamLogoUrl,
+                contentDescription = "away logo",
+                contentScale = ContentScale.Inside,
+                placeholder = painterResource(id = R.drawable.ic_flag_placeholder_32),
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .size(56.dp)
+                    .constrainAs(awayTeamLogoRef) {
                         top.linkTo(goalsPredictionRef.bottom)
                     })
 
@@ -94,7 +94,7 @@ fun PredictionGoals(state: PredictionsState) {
                     }
             )
 
-            createHorizontalChain(awayTeamLogoRef, vsRef, homeTeamLogoRef)
+            createHorizontalChain(homeTeamLogoRef, vsRef, awayTeamLogoRef)
 
             //VERTICAL DIVIDER
             VerticalDivider(modifier = Modifier
@@ -104,21 +104,6 @@ fun PredictionGoals(state: PredictionsState) {
                     top.linkTo(vsRef.bottom)
                     centerHorizontallyTo(parent)
                 })
-
-
-            //AWAY NAME
-            Text(
-                text = state.predictions?.away_team_name ?: "?",
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .constrainAs(awayTeamNameRef) {
-                        top.linkTo(awayTeamLogoRef.bottom)
-                        start.linkTo(awayTeamLogoRef.start)
-                        end.linkTo(awayTeamLogoRef.end)
-                    }
-            )
 
             //HOME NAME
             Text(
@@ -134,17 +119,18 @@ fun PredictionGoals(state: PredictionsState) {
                     }
             )
 
-            PredictionGoal(
+            //AWAY NAME
+            Text(
+                text = state.predictions?.away_team_name ?: "?",
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(top = 12.dp)
-                    .constrainAs(awayTeamGoalsText) {
-                        top.linkTo(awayTeamNameRef.bottom)
-                        start.linkTo(awayTeamNameRef.start)
-                        end.linkTo(awayTeamNameRef.end)
-                    },
-                color = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) LightSurfaceInfo else DarkSurfaceInfo,
-                goals = state.predictions?.goals_away ?: "-"
+                    .constrainAs(awayTeamNameRef) {
+                        top.linkTo(awayTeamLogoRef.bottom)
+                        start.linkTo(awayTeamLogoRef.start)
+                        end.linkTo(awayTeamLogoRef.end)
+                    }
             )
 
             PredictionGoal(
@@ -158,6 +144,19 @@ fun PredictionGoals(state: PredictionsState) {
                 color = state.homeTeamColor
                     ?: if (isSystemInDarkTheme()) LightSurfaceInfo else DarkSurfaceInfo,
                 goals = state.predictions?.goals_home ?: "-"
+            )
+
+            PredictionGoal(
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .constrainAs(awayTeamGoalsText) {
+                        top.linkTo(awayTeamNameRef.bottom)
+                        start.linkTo(awayTeamNameRef.start)
+                        end.linkTo(awayTeamNameRef.end)
+                    },
+                color = state.awayTeamColor
+                    ?: if (isSystemInDarkTheme()) LightSurfaceInfo else DarkSurfaceInfo,
+                goals = state.predictions?.goals_away ?: "-"
             )
 
             //HORIZONTAL DIVIDER
@@ -222,17 +221,17 @@ fun PredictionGoal(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = goals,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-            )
-
             Image(
                 modifier = Modifier.size(16.dp),
                 painter = painterResource(id = R.drawable.ic_ball_16),
                 contentDescription = "ball icon",
                 colorFilter = ColorFilter.tint(color)
+            )
+
+            Text(
+                text = goals,
+                style = MaterialTheme.typography.labelSmall,
+                textAlign = TextAlign.Center,
             )
         }
     }
