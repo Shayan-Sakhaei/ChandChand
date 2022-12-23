@@ -7,7 +7,6 @@ buildscript {
         classpath(libs.android.gradle.pluginx)
         classpath(libs.kotlin.gradle.pluginx)
         classpath(libs.hilt.gradle.pluginx)
-        classpath(libs.navigation.gradle.pluginx)
     }
 }
 

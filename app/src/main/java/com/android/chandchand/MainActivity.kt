@@ -5,8 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import com.android.chandchand.presentation.ui.ChandChandApp
-import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.android.chandchand.ui.ChandChandApp
+import com.anonymous.designsystem.theme.ChandChandTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

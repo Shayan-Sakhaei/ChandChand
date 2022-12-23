@@ -3,13 +3,13 @@ package com.android.chandchand.presentation.fixtures.live
 import androidx.lifecycle.viewModelScope
 import com.android.chandchand.MainCoroutineRule
 import com.android.chandchand.presentation.fake.FakeFixturesRepository
-import com.android.chandchand.presentation.fixtures.LiveFixturesIntent
-import com.android.chandchand.presentation.fixtures.LiveFixturesState
-import com.android.chandchand.presentation.fixtures.LiveFixturesViewModel
+import com.anonymous.fixtures.LiveFixturesIntent
+import com.anonymous.fixtures.LiveFixturesState
+import com.anonymous.fixtures.LiveFixturesViewModel
 import com.android.chandchand.presentation.mapper.LiveFixtureEntityUiMapper
-import com.android.chandchand.presentation.model.LiveFixturesPerLeagueModels
-import com.android.domain.entities.LiveFixtureEventsEntity
-import com.android.domain.usecase.GetLiveFixturesUseCase
+import com.anonymous.ui.model.LiveFixturesPerLeagueModels
+import com.anonymous.data.model.LiveFixtureEventsEntity
+import com.anonymous.domain.model.GetLiveFixturesUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,9 +27,9 @@ class LiveFixturesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var getLiveFixturesUseCase: GetLiveFixturesUseCase
+    private lateinit var getLiveFixturesUseCase: com.anonymous.domain.model.GetLiveFixturesUseCase
     private lateinit var mapper: LiveFixtureEntityUiMapper
-    private lateinit var viewModel: LiveFixturesViewModel
+    private lateinit var viewModel: com.anonymous.fixtures.LiveFixturesViewModel
 
     @Before
     fun setUp() {
@@ -38,26 +38,29 @@ class LiveFixturesViewModelTest {
 
     @Test
     fun `getLiveFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
-        getLiveFixturesUseCase = GetLiveFixturesUseCase(
+        getLiveFixturesUseCase = com.anonymous.domain.model.GetLiveFixturesUseCase(
             FakeFixturesRepository(liveFixtures = fakeLiveFixtureEntities)
         )
-        viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+        viewModel = com.anonymous.fixtures.LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
 
-        val states = mutableListOf<LiveFixturesState>()
+        val states = mutableListOf<com.anonymous.fixtures.LiveFixturesState>()
 
         viewModel.viewModelScope.launch {
             viewModel.state.toList(states)
         }
 
-        val liveFixturesPerLeague: LiveFixturesPerLeagueModels = mapper.map(fakeLiveFixtureEntities)
+        val liveFixturesPerLeague: com.anonymous.ui.model.LiveFixturesPerLeagueModels = mapper.map(fakeLiveFixtureEntities)
 
         val assertions = listOf(
-            LiveFixturesState(),
-            LiveFixturesState(isLoading = true),
-            LiveFixturesState(isLoading = false, liveFixtures = liveFixturesPerLeague)
+            com.anonymous.fixtures.LiveFixturesState(),
+            com.anonymous.fixtures.LiveFixturesState(isLoading = true),
+            com.anonymous.fixtures.LiveFixturesState(
+                isLoading = false,
+                liveFixtures = liveFixturesPerLeague
+            )
         )
 
-        val intent = LiveFixturesIntent.GetLiveFixtures
+        val intent = com.anonymous.fixtures.LiveFixturesIntent.GetLiveFixtures
         viewModel.intents.send(intent)
 
         Assert.assertEquals(assertions.size, states.size)
@@ -69,22 +72,23 @@ class LiveFixturesViewModelTest {
 
     @Test
     fun `getLiveFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getLiveFixturesUseCase = GetLiveFixturesUseCase(FakeFixturesRepository())
-        viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+        getLiveFixturesUseCase =
+            com.anonymous.domain.model.GetLiveFixturesUseCase(FakeFixturesRepository())
+        viewModel = com.anonymous.fixtures.LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
 
-        val states = mutableListOf<LiveFixturesState>()
+        val states = mutableListOf<com.anonymous.fixtures.LiveFixturesState>()
 
         viewModel.viewModelScope.launch {
             viewModel.state.toList(states)
         }
 
         val assertions = listOf(
-            LiveFixturesState(),
-            LiveFixturesState(isLoading = true),
-            LiveFixturesState(isLoading = false, errorMessage = "failed!")
+            com.anonymous.fixtures.LiveFixturesState(),
+            com.anonymous.fixtures.LiveFixturesState(isLoading = true),
+            com.anonymous.fixtures.LiveFixturesState(isLoading = false, errorMessage = "failed!")
         )
 
-        val intent = LiveFixturesIntent.GetLiveFixtures
+        val intent = com.anonymous.fixtures.LiveFixturesIntent.GetLiveFixtures
         viewModel.intents.send(intent)
 
         Assert.assertEquals(assertions.size, states.size)
@@ -99,18 +103,18 @@ class LiveFixturesViewModelTest {
         mainCoroutineRule.runBlockingTest {
 
             getLiveFixturesUseCase = mockk()
-            viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+            viewModel = com.anonymous.fixtures.LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
 
-            val intent = LiveFixturesIntent.GetLiveFixtures
+            val intent = com.anonymous.fixtures.LiveFixturesIntent.GetLiveFixtures
             viewModel.intents.send(intent)
 
             coVerify { getLiveFixturesUseCase.execute() }
         }
 }
 
-private val fakeLiveFixtureEntities = com.android.domain.entities.LiveFixtureEntities(
+private val fakeLiveFixtureEntities = com.anonymous.data.model.LiveFixtureEntities(
     1, listOf(
-        com.android.domain.entities.LiveFixtureEntity(
+        com.anonymous.data.model.LiveFixtureEntity(
             836275,
             4067,
             "J. League Div.1",
@@ -137,7 +141,7 @@ private val fakeLiveFixtureEntities = com.android.domain.entities.LiveFixtureEnt
             null,
             null,
             listOf(
-                LiveFixtureEventsEntity(
+                com.anonymous.data.model.LiveFixtureEventsEntity(
                     39,
                     null,
                     280,

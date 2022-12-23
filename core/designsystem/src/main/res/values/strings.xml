@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ChandChand</string>
+    <string name="fixtures">بازی ها</string>
+    <string name="leagues">لیگ ها</string>
+
+    <string name="persian_gulf_cup">لیگ برتر خلیج فارس</string>
+    <string name="english_premier_league">لیگ برتر انگلیس</string>
+    <string name="spanish_la_liga">لالیگا اسپانیا</string>
+    <string name="german_bundesliga_1">بوندسلیگا آلمان</string>
+    <string name="italian_serie_a">سری آ ایتالیا</string>
+    <string name="french_ligue_1">لیگ یک فرانسه</string>
+
+    <string name="yesterday">دیروز</string>
+    <string name="today">امروز</string>
+    <string name="tomorrow">فردا</string>
+    <string name="day_after_tomorrow">پس فردا</string>
+    <string name="calendar">تقویم</string>
+    <string name="quit">انصراف</string>
+    <string name="choose">انتخاب</string>
+
+    <string name="postponed">تعویق</string>
+    <string name="cancelled">کنسل شد</string>
+    <string name="match_finished">اتمام بازی</string>
+    <string name="ongoing">در حال برگذاری</string>
+    <string name="fixtures_of">بازی های</string>
+
+    <string name="point">امتیاز</string>
+    <string name="difference">تفاضل</string>
+    <string name="lose">باخت</string>
+    <string name="draw">مساوی</string>
+    <string name="win">برد</string>
+    <string name="match">بازی</string>
+    <string name="table">جدول</string>
+    <string name="statistics">آمار</string>
+    <string name="ongoing_fixtures">بازی های در حال برگزاری</string>
+    <string name="fixture_prediction">پیش بینی بازی</string>
+
+    <string name="standings_transition_name">standings</string>
+    <string name="match_result">نتیجه بازی</string>
+    <string name="winning_chance">شانس برد</string>
+    <string name="draw_chance">شانس تساوی</string>
+    <string name="goals_prediction">پیش‌بینی گل‌ها</string>
+    <string name="vs">VS</string>
+    <string name="match_goals_sum">مجموع گل‌های بازی</string>
+    <string name="percent_placeholder">%% %d</string>
+    <string name="form">فرم</string>
+    <string name="attacking_potential">توان حمله</string>
+    <string name="defensive_potential">توان دفاعی</string>
+    <string name="head2head_matches">بازی‌های رو در رو</string>
+    <string name="goals_head2head">گل‌های رو در رو</string>
+    <string name="fish_law">Fish Law</string>
+</resources>

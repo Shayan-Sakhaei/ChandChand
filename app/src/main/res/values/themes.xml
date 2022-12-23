@@ -29,9 +29,6 @@
         <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:statusBarColor">?android:colorPrimary</item>
         <item name="android:fontFamily">@font/dana_regular</item>
-        <item name="shapeAppearanceMediumComponent">
-            @style/ShapeAppearance.ChandChand.MediumComponent
-        </item>
     </style>
 
 </resources>
