@@ -3,10 +3,7 @@ package com.anonymous.fixtures.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +25,8 @@ fun PredictionResult(state: PredictionsState) {
         modifier = Modifier
             .padding(start = 8.dp, end = 8.dp, top = 8.dp)
             .fillMaxWidth()
-            .height(320.dp)
+            .height(320.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier

@@ -42,7 +42,7 @@ fun LiveFixturesPerLeague(
                 .fillMaxWidth()
                 .height(64.dp)
                 .clickable { onHeaderClick(fixtures) },
-            elevation = CardDefaults.cardElevation(4.dp)
+            elevation = CardDefaults.cardElevation(0.dp)
         ) {
             Row(
                 modifier = Modifier

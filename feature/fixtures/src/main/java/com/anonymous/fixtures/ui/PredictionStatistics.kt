@@ -5,6 +5,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,8 @@ fun PredictionStatistics(state: PredictionsState) {
         modifier = Modifier
             .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 20.dp)
             .fillMaxWidth()
-            .height(370.dp)
+            .height(370.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Column(
             modifier = Modifier
@@ -55,9 +57,9 @@ fun PredictionStatistics(state: PredictionsState) {
                 homeTeamPercentNumber = state.predictions?.comparison_home_forme_number ?: 0,
                 awayTeamPercentNumber = state.predictions?.comparison_away_forme_number ?: 0,
                 homeTeamColor = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
                 awayTeamColor = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant
             )
 
             //ATTACKING
@@ -68,9 +70,9 @@ fun PredictionStatistics(state: PredictionsState) {
                 homeTeamPercentNumber = state.predictions?.comparison_home_att_number ?: 0,
                 awayTeamPercentNumber = state.predictions?.comparison_away_att_number ?: 0,
                 homeTeamColor = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
                 awayTeamColor = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant
             )
 
             //DEFENSIVE
@@ -81,9 +83,9 @@ fun PredictionStatistics(state: PredictionsState) {
                 homeTeamPercentNumber = state.predictions?.comparison_home_def_number ?: 0,
                 awayTeamPercentNumber = state.predictions?.comparison_away_def_number ?: 0,
                 homeTeamColor = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
                 awayTeamColor = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant
             )
 
             //HEAD2HEAD
@@ -94,9 +96,9 @@ fun PredictionStatistics(state: PredictionsState) {
                 homeTeamPercentNumber = state.predictions?.comparison_home_h2h_number ?: 0,
                 awayTeamPercentNumber = state.predictions?.comparison_away_h2h_number ?: 0,
                 homeTeamColor = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
                 awayTeamColor = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant
             )
 
             //GOALS HEAD2HEAD
@@ -107,9 +109,9 @@ fun PredictionStatistics(state: PredictionsState) {
                 homeTeamPercentNumber = state.predictions?.comparison_home_goals_h2h_number ?: 0,
                 awayTeamPercentNumber = state.predictions?.comparison_away_goals_h2h_number ?: 0,
                 homeTeamColor = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
                 awayTeamColor = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo
+                    ?: if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant
             )
         }
     }
@@ -151,7 +153,7 @@ fun PredictionStatistic(
         //HOME PERCENT
         Text(
             text = homeTeamPercentText,
-            color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
+            color = if (isSystemInDarkTheme()) dark_onSurfaceVariant else light_onSurfaceVariant,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -165,7 +167,7 @@ fun PredictionStatistic(
         //AWAY PERCENT
         Text(
             text = awayTeamPercentText,
-            color = if (isSystemInDarkTheme()) DarkOnBackgroundVariant else LightOnBackgroundVariant,
+            color = if (isSystemInDarkTheme()) dark_onSurfaceVariant else light_onSurfaceVariant,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -183,7 +185,7 @@ fun PredictionStatistic(
                 .fillMaxWidth()
                 .height(6.dp)
                 .clip(RoundedCornerShape(3.dp))
-                .background(if (isSystemInDarkTheme()) DarkController else LightController)
+                .background(if (isSystemInDarkTheme()) dark_outline else light_outline)
                 .constrainAs(barRef) {
                     top.linkTo(titleRef.bottom)
                     start.linkTo(parent.start)

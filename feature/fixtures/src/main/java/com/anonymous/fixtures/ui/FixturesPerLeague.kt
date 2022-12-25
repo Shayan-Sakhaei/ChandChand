@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -19,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anonymous.data.model.FixtureEntity
 import com.anonymous.designsystem.theme.ChandChandTheme
+import com.anonymous.designsystem.theme.dark_onSurfaceVariant
+import com.anonymous.designsystem.theme.light_onSurfaceVariant
 import com.anonymous.fixtures.R
 import com.anonymous.fixtures.model.FixturesPerLeagueModel
 import com.anonymous.fixtures.model.LeagueHeaderModel
@@ -42,7 +45,7 @@ fun FixturesPerLeague(
                 .fillMaxWidth()
                 .height(64.dp)
                 .clickable { onHeaderClick(fixtures) },
-            elevation = CardDefaults.cardElevation(4.dp)
+            elevation = CardDefaults.cardElevation(0.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -84,7 +87,11 @@ fun FixturesPerLeague(
                     painter = painterResource(
                         id = if (fixtures.isExpanded) R.drawable.ic_drop_down_arrow_up_24 else R.drawable.ic_drop_down_arrow_down_24
                     ),
-                    contentDescription = "arrow_up_or_down"
+                    contentDescription = "arrow_up_or_down",
+                    colorFilter = ColorFilter.tint(
+                        if (isSystemInDarkTheme()) dark_onSurfaceVariant
+                        else light_onSurfaceVariant
+                    )
                 )
             }
         }

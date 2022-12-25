@@ -32,7 +32,7 @@ fun LiveFixture(fixture: com.anonymous.data.model.LiveFixtureEntity) {
             .padding(start = 12.dp, end = 12.dp, top = 6.dp, bottom = 6.dp)
             .fillMaxWidth()
             .height(if (fixture.status_short == NOT_STARTED) 112.dp else 144.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier

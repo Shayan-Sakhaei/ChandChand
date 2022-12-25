@@ -3,6 +3,7 @@ package com.anonymous.leagues.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.anonymous.designsystem.theme.ChandChandTheme
+import com.anonymous.designsystem.theme.dark_onSurfaceVariant
+import com.anonymous.designsystem.theme.light_onSurfaceVariant
 import com.anonymous.leagues.R
 import com.anonymous.leagues.model.LeagueTitleModel
 import com.anonymous.leagues.navigation.StandingsDestination
@@ -43,7 +47,7 @@ fun LeagueTitle(
                     )
                 )
             },
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Row(
             modifier = Modifier
@@ -58,7 +62,8 @@ fun LeagueTitle(
             )
 
             Text(
-                text = stringResource(id = leagueTitleModel.titleResId), modifier = Modifier
+                text = stringResource(id = leagueTitleModel.titleResId),
+                modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp)
                     .weight(1f),
                 textAlign = TextAlign.Start
@@ -69,7 +74,11 @@ fun LeagueTitle(
                 painter = painterResource(
                     id = if (LocalLayoutDirection.current == LayoutDirection.Rtl) R.drawable.ic_arrow_left_24 else R.drawable.ic_arrow_right_24
                 ),
-                contentDescription = "arrow_left_right"
+                contentDescription = "arrow_left_right",
+                colorFilter = ColorFilter.tint(
+                    if (isSystemInDarkTheme()) dark_onSurfaceVariant
+                    else light_onSurfaceVariant
+                )
             )
         }
     }

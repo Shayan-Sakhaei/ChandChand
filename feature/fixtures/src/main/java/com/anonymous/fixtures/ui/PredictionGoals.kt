@@ -21,8 +21,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.anonymous.designsystem.component.VerticalDivider
 import com.anonymous.designsystem.theme.ChandChandTheme
-import com.anonymous.designsystem.theme.DarkSurfaceInfo
-import com.anonymous.designsystem.theme.LightSurfaceInfo
+import com.anonymous.designsystem.theme.dark_surfaceVariant
+import com.anonymous.designsystem.theme.light_surfaceVariant
 import com.anonymous.fixtures.PredictionsState
 import com.anonymous.fixtures.R
 
@@ -32,7 +32,8 @@ fun PredictionGoals(state: PredictionsState) {
         modifier = Modifier
             .padding(start = 8.dp, end = 8.dp, top = 8.dp)
             .fillMaxWidth()
-            .height(310.dp)
+            .height(310.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -55,8 +56,7 @@ fun PredictionGoals(state: PredictionsState) {
                     .constrainAs(goalsPredictionRef) {
                         top.linkTo(parent.top)
                         centerHorizontallyTo(parent)
-                    }
-            )
+                    })
 
             //HOME LOGO
             AsyncImage(model = state.homeTeamLogoUrl,
@@ -83,16 +83,14 @@ fun PredictionGoals(state: PredictionsState) {
                     })
 
             //VS
-            Image(
-                painter = painterResource(id = R.drawable.ic_vs_24),
+            Image(painter = painterResource(id = R.drawable.ic_vs_24),
                 contentDescription = "vs",
                 modifier = Modifier
                     .padding(top = 34.dp)
                     .size(24.dp)
                     .constrainAs(vsRef) {
                         top.linkTo(goalsPredictionRef.bottom)
-                    }
-            )
+                    })
 
             createHorizontalChain(homeTeamLogoRef, vsRef, awayTeamLogoRef)
 
@@ -106,8 +104,7 @@ fun PredictionGoals(state: PredictionsState) {
                 })
 
             //HOME NAME
-            Text(
-                text = state.predictions?.home_team_name ?: "?",
+            Text(text = state.predictions?.home_team_name ?: "?",
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -116,8 +113,7 @@ fun PredictionGoals(state: PredictionsState) {
                         top.linkTo(homeTeamLogoRef.bottom)
                         start.linkTo(homeTeamLogoRef.start)
                         end.linkTo(homeTeamLogoRef.end)
-                    }
-            )
+                    })
 
             //AWAY NAME
             Text(
@@ -130,8 +126,7 @@ fun PredictionGoals(state: PredictionsState) {
                         top.linkTo(awayTeamLogoRef.bottom)
                         start.linkTo(awayTeamLogoRef.start)
                         end.linkTo(awayTeamLogoRef.end)
-                    }
-            )
+                    })
 
             PredictionGoal(
                 modifier = Modifier
@@ -142,7 +137,7 @@ fun PredictionGoals(state: PredictionsState) {
                         end.linkTo(homeTeamNameRef.end)
                     },
                 color = state.homeTeamColor
-                    ?: if (isSystemInDarkTheme()) LightSurfaceInfo else DarkSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) light_surfaceVariant else dark_surfaceVariant,
                 goals = state.predictions?.goals_home ?: "-"
             )
 
@@ -155,7 +150,7 @@ fun PredictionGoals(state: PredictionsState) {
                         end.linkTo(awayTeamNameRef.end)
                     },
                 color = state.awayTeamColor
-                    ?: if (isSystemInDarkTheme()) LightSurfaceInfo else DarkSurfaceInfo,
+                    ?: if (isSystemInDarkTheme()) light_surfaceVariant else dark_surfaceVariant,
                 goals = state.predictions?.goals_away ?: "-"
             )
 
@@ -169,8 +164,7 @@ fun PredictionGoals(state: PredictionsState) {
                 })
 
             //MATCH GOALS TITLE
-            Text(
-                text = stringResource(id = R.string.match_goals_sum),
+            Text(text = stringResource(id = R.string.match_goals_sum),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -178,23 +172,19 @@ fun PredictionGoals(state: PredictionsState) {
                     .constrainAs(matchGoalsTitleRef) {
                         top.linkTo(horizontalDividerRef.bottom)
                         centerHorizontallyTo(parent)
-                    }
-            )
+                    })
 
-            Box(
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .constrainAs(matchGoalsTextRef) {
-                        top.linkTo(matchGoalsTitleRef.bottom)
-                        centerHorizontallyTo(parent)
-                    }
-                    .size(width = 54.dp, height = 30.dp)
-                    .background(
-                        color = if (isSystemInDarkTheme()) DarkSurfaceInfo else LightSurfaceInfo,
-                        shape = RoundedCornerShape(15.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
+            Box(modifier = Modifier
+                .padding(top = 12.dp)
+                .constrainAs(matchGoalsTextRef) {
+                    top.linkTo(matchGoalsTitleRef.bottom)
+                    centerHorizontallyTo(parent)
+                }
+                .size(width = 54.dp, height = 30.dp)
+                .background(
+                    color = if (isSystemInDarkTheme()) dark_surfaceVariant else light_surfaceVariant,
+                    shape = RoundedCornerShape(15.dp)
+                ), contentAlignment = Alignment.Center) {
                 Text(
                     text = state.predictions?.under_over ?: "N/A",
                     style = MaterialTheme.typography.labelSmall,

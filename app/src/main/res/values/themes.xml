@@ -27,7 +27,7 @@
 
     <style name="Base.Theme.ChandChand" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="android:statusBarColor">?android:colorPrimary</item>
+        <item name="android:statusBarColor">?colorAppBar</item>
         <item name="android:fontFamily">@font/dana_regular</item>
     </style>
 

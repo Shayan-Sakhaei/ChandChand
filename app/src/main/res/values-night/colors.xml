@@ -6,7 +6,7 @@
     <color name="colorPrimaryDark">#15122B</color>
     <color name="colorSecondary">#2C57C7</color>
     <color name="colorSecondaryVariant">#202055</color>
-    <color name="colorBackground">#181438</color>
+    <color name="colorBackground">#121219</color>
     <color name="colorSurface">#212047</color>
     <color name="colorError">#EB3D63</color>
     <color name="colorOnPrimary">#FFFFFF</color>
@@ -16,7 +16,7 @@
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="colorText">#FFFFFF</color>
-    <color name="colorAppBar">#1A1636</color>
+    <color name="colorAppBar">#1D1D26</color>
     <color name="colorCountBackground">#212047</color>
     <color name="colorArrowIcon">#908FA3</color>
     <color name="colorSurfaceSecondary">#333256</color>

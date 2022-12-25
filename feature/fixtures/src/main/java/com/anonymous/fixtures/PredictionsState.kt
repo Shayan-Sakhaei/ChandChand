@@ -3,7 +3,7 @@ package com.anonymous.fixtures
 import androidx.compose.ui.graphics.Color
 import com.anonymous.data.model.PredictionsEntity
 import com.anonymous.data.model.Winner
-import com.anonymous.designsystem.theme.LightSurfaceInfo
+import com.anonymous.designsystem.theme.light_surfaceVariant
 import com.anonymous.ui.model.IState
 
 data class PredictionsState(
@@ -15,8 +15,8 @@ data class PredictionsState(
     val time: String? = "",
     val predictions: PredictionsEntity? = null,
     val errorMessage: String? = null,
-    val homeTeamColor: Color? = LightSurfaceInfo,
-    val awayTeamColor: Color? = LightSurfaceInfo,
+    val homeTeamColor: Color? = light_surfaceVariant,
+    val awayTeamColor: Color? = light_surfaceVariant,
 ) : IState {
     val winnerTitle: String
         get() = humanReadableMatchWinner(predictions)

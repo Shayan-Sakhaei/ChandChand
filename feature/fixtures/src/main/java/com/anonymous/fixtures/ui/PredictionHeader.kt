@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,8 @@ fun PredictionHeader(
         modifier = Modifier
             .padding(top = 8.dp, start = 8.dp, end = 8.dp)
             .fillMaxWidth()
-            .height(72.dp)
+            .height(72.dp),
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier
