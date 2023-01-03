@@ -2,6 +2,7 @@ package com.anonymous.network.di
 
 import android.content.Context
 import android.util.Log
+import com.anonymous.network.adapter.ChandChandCallAdapterFactory
 import com.anonymous.network.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Lazy
@@ -62,7 +63,11 @@ object OkHttpModule {
     }
 
     @Provides
-    fun provideRetrofit(moshi: Moshi, client: Lazy<OkHttpClient>): Retrofit {
+    fun provideRetrofit(
+        client: Lazy<OkHttpClient>,
+        moshi: Moshi,
+        chandChandCallAdapterFactory: ChandChandCallAdapterFactory
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .callFactory(object : Call.Factory {
@@ -71,6 +76,7 @@ object OkHttpModule {
                 }
             })
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(chandChandCallAdapterFactory)
             .build()
     }
 }
