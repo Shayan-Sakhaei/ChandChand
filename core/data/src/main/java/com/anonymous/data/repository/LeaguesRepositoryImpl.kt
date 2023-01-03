@@ -4,6 +4,7 @@ import com.anonymous.common.result.Result
 import com.anonymous.data.mapper.StandingServerEntityMapper
 import com.anonymous.data.model.StandingEntity
 import com.anonymous.network.datasource.LeaguesDataSource
+import com.anonymous.network.model.StandingsServerModel
 import javax.inject.Inject
 
 class LeaguesRepositoryImpl @Inject constructor(
@@ -13,14 +14,14 @@ class LeaguesRepositoryImpl @Inject constructor(
 
     override suspend fun getStandings(leagueId: Int): Result<List<StandingEntity>> {
         val response = remoteDataSource.getStandingsByLeagueId(leagueId)
-        val body = response.body()
-        return if (!response.isSuccessful || body == null) {
-            Result.Error("")
-        } else {
-            val entities = body.api.standings[0].map {
-                serverEntityMapper.map(it)
+        return response.fold(
+            onSuccess = { model: StandingsServerModel ->
+                val entities = model.api.standings[0].map { serverEntityMapper.map(it) }
+                Result.Success(entities)
+            },
+            onFailure = { t: Throwable ->
+                Result.Error(t.localizedMessage ?: "failed to get Response!")
             }
-            Result.Success(entities)
-        }
+        )
     }
 }

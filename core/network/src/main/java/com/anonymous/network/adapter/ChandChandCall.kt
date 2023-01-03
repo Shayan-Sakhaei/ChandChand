@@ -48,7 +48,11 @@ class ChandChandCall<R : Any>(
     private fun Response<R>.toResult(): Result<R> {
         val body = this.body()
         return if (!this.isSuccessful || body == null) {
-            Result.failure(Throwable())
+            Result.failure(
+                Throwable(
+                    "failed request with code: ${code()} | body: ${errorBody().toString()}"
+                )
+            )
         } else {
             Result.success(body)
         }

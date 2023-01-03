@@ -6,6 +6,8 @@ import com.anonymous.data.mapper.LiveFixtureServerEntityMapper
 import com.anonymous.data.model.FixtureEntity
 import com.anonymous.data.model.LiveFixtureEntities
 import com.anonymous.network.datasource.FixturesDataSource
+import com.anonymous.network.model.FixturesServerModel
+import com.anonymous.network.model.LiveFixturesServerModel
 import javax.inject.Inject
 
 class FixturesRepositoryImpl @Inject constructor(
@@ -16,32 +18,29 @@ class FixturesRepositoryImpl @Inject constructor(
 
     override suspend fun getFixtures(date: String): Result<List<FixtureEntity>> {
         val response = remoteDataSource.getFixturesByDate(date)
-        val body = response.body()
-        return if (!response.isSuccessful || body == null) {
-            Result.Error("")
-        } else {
-            val entities = body.api.fixtures.map {
-                fixtureServerEntityMapper.map(it)
+        return response.fold(
+            onSuccess = { model: FixturesServerModel ->
+                val entities = model.api.fixtures.map { fixtureServerEntityMapper.map(it) }
+                Result.Success(entities)
+            },
+            onFailure = { t: Throwable ->
+                Result.Error(t.localizedMessage ?: "failed to get Response!")
             }
-            Result.Success(entities)
-        }
+        )
     }
 
     override suspend fun getLiveFixtures(): Result<LiveFixtureEntities> {
         val response = remoteDataSource.getLiveFixtures()
-        val body = response.body()
-        return if (!response.isSuccessful || body == null) {
-            Result.Error("")
-        } else {
-            val entities = body.api.fixtures.map {
-                liveFixtureServerEntityMapper.map(it)
-            }
-            Result.Success(
-                LiveFixtureEntities(
-                    body.api.results,
-                    entities
+        return response.fold(
+            onSuccess = { model: LiveFixturesServerModel ->
+                val entities = model.api.fixtures.map { liveFixtureServerEntityMapper.map(it) }
+                Result.Success(
+                    LiveFixtureEntities(model.api.results, entities)
                 )
-            )
-        }
+            },
+            onFailure = { t: Throwable ->
+                Result.Error(t.localizedMessage ?: "failed to get Response!")
+            }
+        )
     }
 }
