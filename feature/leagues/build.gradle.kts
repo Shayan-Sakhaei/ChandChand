@@ -51,7 +51,8 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
 
-    implementation(project(":core:testing"))
+    testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
 
     //HILT
     implementation(libs.hilt.android)

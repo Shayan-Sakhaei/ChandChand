@@ -1,4 +1,4 @@
-package com.android.chandchand.presentation.ui.components
+package com.anonymous.fixtures.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.test.assertIsDisplayed
@@ -7,12 +7,11 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.android.chandchand.fake.FakeFixturesRepository
-import com.anonymous.fixtures.FixturesViewModel
-import com.android.chandchand.presentation.fixtures.compose.FixturesScreen
-import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
-import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.anonymous.data.repository.fake.androidtest.FakeFixturesRepository
+import com.anonymous.designsystem.theme.ChandChandTheme
 import com.anonymous.domain.model.GetFixturesUseCase
+import com.anonymous.fixtures.FixturesViewModel
+import com.anonymous.fixtures.mapper.FixtureEntityUiMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -23,9 +22,9 @@ import org.junit.Test
 class FixturesScreenTest {
 
     private lateinit var fakeFixturesRepository: FakeFixturesRepository
-    private lateinit var getFixturesUseCase: com.anonymous.domain.model.GetFixturesUseCase
+    private lateinit var getFixturesUseCase: GetFixturesUseCase
     private lateinit var entityUiMapper: FixtureEntityUiMapper
-    private lateinit var viewModel: com.anonymous.fixtures.FixturesViewModel
+    private lateinit var viewModel: FixturesViewModel
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -33,9 +32,9 @@ class FixturesScreenTest {
     @Before
     fun setUp() {
         fakeFixturesRepository = FakeFixturesRepository()
-        getFixturesUseCase = com.anonymous.domain.model.GetFixturesUseCase(fakeFixturesRepository)
+        getFixturesUseCase = GetFixturesUseCase(fakeFixturesRepository)
         entityUiMapper = FixtureEntityUiMapper()
-        viewModel = com.anonymous.fixtures.FixturesViewModel(getFixturesUseCase, entityUiMapper)
+        viewModel = FixturesViewModel(getFixturesUseCase, entityUiMapper)
     }
 
     @Test

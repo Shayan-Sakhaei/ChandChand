@@ -53,6 +53,10 @@ dependencies {
 
     implementation(project(":core:testing"))
 
+    testImplementation(libs.mockk)
+    testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
+
     //PALETTE
     implementation(libs.androidx.palette.ktx)
 

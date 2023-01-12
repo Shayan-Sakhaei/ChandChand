@@ -1,11 +1,10 @@
-package com.android.chandchand.presentation.ui.components
+package com.anonymous.leagues.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.anonymous.leagues.ui.LeaguesScreen
-import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.anonymous.designsystem.theme.ChandChandTheme
 import org.junit.Rule
 import org.junit.Test
 
@@ -18,7 +17,7 @@ class LeaguesScreenTest {
     fun leagueTitles_displayedInUi() {
         composeTestRule.setContent {
             ChandChandTheme {
-                com.anonymous.leagues.ui.LeaguesScreen(onNavigate = { destination, route -> })
+                LeaguesScreen(onNavigate = { destination, route -> })
             }
         }
 

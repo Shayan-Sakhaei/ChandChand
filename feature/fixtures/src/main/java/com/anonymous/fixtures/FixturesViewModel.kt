@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.anonymous.domain.model.GetFixturesUseCase
 import com.anonymous.fixtures.mapper.FixtureEntityUiMapper
 import com.anonymous.fixtures.model.FixturesPerLeagueModel
-import com.anonymous.testing.wrapEspressoIdlingResource
 import com.anonymous.ui.extension.getDateFromToday
 import com.anonymous.ui.model.DAY
 import com.anonymous.ui.model.IModel
@@ -53,107 +52,105 @@ class FixturesViewModel @Inject constructor(
 
     private fun getFixtures() {
         viewModelScope.launch {
-            wrapEspressoIdlingResource {
-                try {
-                    updateState { it.copy(isLoading = true) }
+            try {
+                updateState { it.copy(isLoading = true) }
 
-                    coroutineScope {
-                        val yesterday =
-                            async { getFixturesUseCase.execute(getDateFromToday(-1)) }
-                        val today =
-                            async { getFixturesUseCase.execute(getDateFromToday(0)) }
-                        val tomorrow =
-                            async { getFixturesUseCase.execute(getDateFromToday(1)) }
-                        val dayAfterTomorrow =
-                            async { getFixturesUseCase.execute(getDateFromToday(2)) }
+                coroutineScope {
+                    val yesterday =
+                        async { getFixturesUseCase.execute(getDateFromToday(-1)) }
+                    val today =
+                        async { getFixturesUseCase.execute(getDateFromToday(0)) }
+                    val tomorrow =
+                        async { getFixturesUseCase.execute(getDateFromToday(1)) }
+                    val dayAfterTomorrow =
+                        async { getFixturesUseCase.execute(getDateFromToday(2)) }
 
-                        when (val yesterdayResponse = yesterday.await()) {
-                            is com.anonymous.common.result.Result.Success -> {
-                                val fixtures = entityUiMapper.map(yesterdayResponse.data)
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        yesterdayFixturesState = DailyFixturesState(fixtures = fixtures)
-                                    )
-                                }
-                            }
-                            is com.anonymous.common.result.Result.Error -> {
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!")
-                                    )
-                                }
+                    when (val yesterdayResponse = yesterday.await()) {
+                        is com.anonymous.common.result.Result.Success -> {
+                            val fixtures = entityUiMapper.map(yesterdayResponse.data)
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    yesterdayFixturesState = DailyFixturesState(fixtures = fixtures)
+                                )
                             }
                         }
-
-                        when (val todayResponse = today.await()) {
-                            is com.anonymous.common.result.Result.Success -> {
-                                val fixtures = entityUiMapper.map(todayResponse.data)
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        todayFixturesState = DailyFixturesState(fixtures = fixtures)
-                                    )
-                                }
-                            }
-                            is com.anonymous.common.result.Result.Error -> {
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!")
-                                    )
-                                }
+                        is com.anonymous.common.result.Result.Error -> {
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!")
+                                )
                             }
                         }
-
-                        when (val tomorrowResponse = tomorrow.await()) {
-                            is com.anonymous.common.result.Result.Success -> {
-                                val fixtures = entityUiMapper.map(tomorrowResponse.data)
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        tomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
-                                    )
-                                }
-                            }
-                            is com.anonymous.common.result.Result.Error -> {
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
-                                    )
-                                }
-                            }
-                        }
-
-                        when (val dayAfterTomorrowResponse = dayAfterTomorrow.await()) {
-                            is com.anonymous.common.result.Result.Success -> {
-                                val fixtures = entityUiMapper.map(dayAfterTomorrowResponse.data)
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        dayAfterTomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
-                                    )
-                                }
-                            }
-                            is com.anonymous.common.result.Result.Error -> {
-                                updateState {
-                                    it.copy(
-                                        isLoading = false,
-                                        dayAfterTomorrowFixturesState = DailyFixturesState(
-                                            errorMessage = "dayAfterTomorrow fixtures failed!"
-                                        )
-                                    )
-                                }
-                            }
-                        }
-
-
                     }
-                } catch (e: Exception) {
-                    updateState { it.copy(isLoading = false, errorMessage = e.message) }
+
+                    when (val todayResponse = today.await()) {
+                        is com.anonymous.common.result.Result.Success -> {
+                            val fixtures = entityUiMapper.map(todayResponse.data)
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    todayFixturesState = DailyFixturesState(fixtures = fixtures)
+                                )
+                            }
+                        }
+                        is com.anonymous.common.result.Result.Error -> {
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!")
+                                )
+                            }
+                        }
+                    }
+
+                    when (val tomorrowResponse = tomorrow.await()) {
+                        is com.anonymous.common.result.Result.Success -> {
+                            val fixtures = entityUiMapper.map(tomorrowResponse.data)
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    tomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
+                                )
+                            }
+                        }
+                        is com.anonymous.common.result.Result.Error -> {
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
+                                )
+                            }
+                        }
+                    }
+
+                    when (val dayAfterTomorrowResponse = dayAfterTomorrow.await()) {
+                        is com.anonymous.common.result.Result.Success -> {
+                            val fixtures = entityUiMapper.map(dayAfterTomorrowResponse.data)
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    dayAfterTomorrowFixturesState = DailyFixturesState(fixtures = fixtures)
+                                )
+                            }
+                        }
+                        is com.anonymous.common.result.Result.Error -> {
+                            updateState {
+                                it.copy(
+                                    isLoading = false,
+                                    dayAfterTomorrowFixturesState = DailyFixturesState(
+                                        errorMessage = "dayAfterTomorrow fixtures failed!"
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+
                 }
+            } catch (e: Exception) {
+                updateState { it.copy(isLoading = false, errorMessage = e.message) }
             }
         }
     }

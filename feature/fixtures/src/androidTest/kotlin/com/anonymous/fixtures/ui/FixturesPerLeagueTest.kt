@@ -1,9 +1,9 @@
-package com.android.chandchand.presentation.ui.components
+package com.anonymous.fixtures.ui
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.android.chandchand.fake.FakeData
-import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.anonymous.designsystem.theme.ChandChandTheme
+import com.anonymous.fixtures.Fake
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,7 +17,7 @@ class FixturesPerLeagueTest {
         composeTestRule.setContent {
             ChandChandTheme {
                 FixturesPerDay(
-                    fixtures = FakeData.fixturesPerLeague,
+                    fixtures = Fake.fixturesPerLeague,
                     onHeaderClick = {},
                     onPredictionClick = {})
             }

@@ -6,7 +6,6 @@ import com.anonymous.domain.model.GetLiveFixturesUseCase
 import com.anonymous.fixtures.mapper.LiveFixtureEntityUiMapper
 import com.anonymous.fixtures.model.LiveFixturesPerLeagueModel
 import com.anonymous.fixtures.model.LiveFixturesPerLeagueModels
-import com.anonymous.testing.wrapEspressoIdlingResource
 import com.anonymous.ui.model.IModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -48,34 +47,32 @@ class LiveFixturesViewModel @Inject constructor(
 
     private fun getLiveFixtures() {
         viewModelScope.launch {
-            wrapEspressoIdlingResource {
-                try {
-                    updateState { it.copy(isLoading = true) }
-                    when (val liveResponse = getLiveFixturesUseCase.execute()) {
-                        is com.anonymous.common.result.Result.Success -> {
-                            val liveFixtures = liveEntityUiMapper.map(
-                                liveResponse.data
+            try {
+                updateState { it.copy(isLoading = true) }
+                when (val liveResponse = getLiveFixturesUseCase.execute()) {
+                    is com.anonymous.common.result.Result.Success -> {
+                        val liveFixtures = liveEntityUiMapper.map(
+                            liveResponse.data
+                        )
+                        updateState {
+                            it.copy(
+                                isLoading = false,
+                                liveFixtures = liveFixtures
                             )
-                            updateState {
-                                it.copy(
-                                    isLoading = false,
-                                    liveFixtures = liveFixtures
-                                )
-                            }
-                        }
-                        is com.anonymous.common.result.Result.Error -> {
-                            updateState {
-                                it.copy(
-                                    isLoading = false,
-                                    errorMessage = "failed!"
-                                )
-                            }
                         }
                     }
-
-                } catch (e: Exception) {
-                    updateState { it.copy(isLoading = false, errorMessage = e.message) }
+                    is com.anonymous.common.result.Result.Error -> {
+                        updateState {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = "failed!"
+                            )
+                        }
+                    }
                 }
+
+            } catch (e: Exception) {
+                updateState { it.copy(isLoading = false, errorMessage = e.message) }
             }
         }
     }

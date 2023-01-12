@@ -1,38 +1,38 @@
-package com.android.chandchand.fake
+package com.anonymous.data.repository.fake.androidtest
 
-import com.android.data.fixtures.entity.*
+import com.anonymous.common.result.Result
 import com.anonymous.data.mapper.FixtureServerEntityMapper
 import com.anonymous.data.mapper.LiveFixEventsServerEntityMapper
 import com.anonymous.data.mapper.LiveFixtureServerEntityMapper
-import com.anonymous.common.result.Result
 import com.anonymous.data.model.FixtureEntity
 import com.anonymous.data.model.LiveFixtureEntities
 import com.anonymous.data.model.LiveFixtureEntity
 import com.anonymous.data.repository.FixturesRepository
+import com.anonymous.network.model.*
 
-class FakeFixturesRepository : com.anonymous.data.repository.FixturesRepository {
+class FakeFixturesRepository : FixturesRepository {
 
-    private val fixturesMapper = com.anonymous.data.mapper.FixtureServerEntityMapper()
+    private val fixturesMapper = FixtureServerEntityMapper()
     private val liveFixturesMapper =
-        com.anonymous.data.mapper.LiveFixtureServerEntityMapper(com.anonymous.data.mapper.LiveFixEventsServerEntityMapper())
+        LiveFixtureServerEntityMapper(LiveFixEventsServerEntityMapper())
 
-    override suspend fun getFixtures(date: String): com.anonymous.common.result.Result<List<com.anonymous.data.model.FixtureEntity>> {
-        val fixtureEntityList: List<com.anonymous.data.model.FixtureEntity> =
+    override suspend fun getFixtures(date: String): Result<List<FixtureEntity>> {
+        val fixtureEntityList: List<FixtureEntity> =
             fakeServerFixtures.api.fixtures.map { fixFixture ->
                 fixturesMapper.map(fixFixture)
             }
-        return com.anonymous.common.result.Result.Success(fixtureEntityList)
+        return Result.Success(fixtureEntityList)
     }
 
 
-    override suspend fun getLiveFixtures(): com.anonymous.common.result.Result<com.anonymous.data.model.LiveFixtureEntities> {
-        val liveFixtureEntityList: List<com.anonymous.data.model.LiveFixtureEntity> =
+    override suspend fun getLiveFixtures(): Result<LiveFixtureEntities> {
+        val liveFixtureEntityList: List<LiveFixtureEntity> =
             fakeLiveServerFixtures.api.fixtures.map { liveFixFixtures ->
                 liveFixturesMapper.map(liveFixFixtures)
             }
 
-        return com.anonymous.common.result.Result.Success(
-            com.anonymous.data.model.LiveFixtureEntities(
+        return Result.Success(
+            LiveFixtureEntities(
                 fakeLiveServerFixtures.api.results,
                 liveFixtureEntityList
             )

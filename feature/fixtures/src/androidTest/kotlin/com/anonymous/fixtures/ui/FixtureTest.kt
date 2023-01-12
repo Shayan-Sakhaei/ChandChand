@@ -1,11 +1,11 @@
-package com.android.chandchand.presentation.ui.components
+package com.anonymous.fixtures.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.android.chandchand.fake.FakeData
-import com.android.chandchand.presentation.ui.theme.ChandChandTheme
+import com.anonymous.designsystem.theme.ChandChandTheme
+import com.anonymous.fixtures.Fake
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class FixtureTest {
         composeTestRule.setContent {
             ChandChandTheme {
                 Fixture(
-                    fixture = FakeData.persianGulfCupFixture,
+                    fixture = Fake.persianGulfCupFixture,
                     onPredictionClick = {}
                 )
             }

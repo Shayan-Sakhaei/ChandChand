@@ -37,22 +37,13 @@ android {
 dependencies {
 
     //TEST
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.test.core.ktx)
-    testImplementation(libs.androidx.test.junit.ktx)
-    testImplementation(libs.robolectric.core)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.mockk)
-    testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler)
+    api(libs.junit)
+    api(libs.androidx.test.core.ktx)
+    api(libs.kotlinx.coroutines.test)
 
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.test.espresso.contrib)
-    implementation(libs.androidx.test.espresso.idling.resource)
-    debugImplementation(libs.androidx.fragment.testing)
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    api(libs.androidx.test.espresso.core)
+    api(libs.androidx.test.espresso.idling.resource)
+    api(libs.hilt.android.testing)
+    api(libs.androidx.compose.ui.test.junit4)
+    debugApi(libs.androidx.compose.ui.test.manifest)
 }

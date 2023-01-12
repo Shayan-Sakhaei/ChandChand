@@ -1,13 +1,11 @@
-package com.android.chandchand.presentation.fixtures
+package com.anonymous.fixtures
 
 import androidx.lifecycle.viewModelScope
-import com.android.chandchand.MainCoroutineRule
-import com.android.chandchand.presentation.fake.FakeFixturesRepository
-import com.android.chandchand.presentation.mapper.FixtureEntityUiMapper
-import com.anonymous.ui.model.DailyFixturesState
-import com.anonymous.ui.model.FixturesPerLeagueModel
-import com.anonymous.data.model.FixtureEntity
+import com.anonymous.data.repository.fake.test.FakeFixturesRepository
 import com.anonymous.domain.model.GetFixturesUseCase
+import com.anonymous.fixtures.mapper.FixtureEntityUiMapper
+import com.anonymous.fixtures.model.FixturesPerLeagueModel
+import com.anonymous.testing.MainCoroutineRule
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,9 +23,9 @@ class FixturesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var getFixturesUseCase: com.anonymous.domain.model.GetFixturesUseCase
+    private lateinit var getFixturesUseCase: GetFixturesUseCase
     private lateinit var mapper: FixtureEntityUiMapper
-    private lateinit var viewModel: com.anonymous.fixtures.FixturesViewModel
+    private lateinit var viewModel: FixturesViewModel
 
     @Before
     fun setUp() {
@@ -36,42 +34,41 @@ class FixturesViewModelTest {
 
     @Test
     fun `getFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
-        getFixturesUseCase = com.anonymous.domain.model.GetFixturesUseCase(
+        getFixturesUseCase = GetFixturesUseCase(
             FakeFixturesRepository(
                 fixtures = fakeFixtureEntities
             )
         )
-        viewModel = com.anonymous.fixtures.FixturesViewModel(getFixturesUseCase, mapper)
+        viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
-        val states = mutableListOf<com.anonymous.fixtures.FixturesState>()
+        val states = mutableListOf<FixturesState>()
 
         viewModel.viewModelScope.launch {
             viewModel.state.toList(states)
         }
 
-        val fixturesPerLeague: List<com.anonymous.ui.model.FixturesPerLeagueModel> = mapper.map(fakeFixtureEntities)
-        val dailyFixturesState =
-            com.anonymous.ui.model.DailyFixturesState(fixtures = fixturesPerLeague)
+        val fixturesPerLeague: List<FixturesPerLeagueModel> = mapper.map(fakeFixtureEntities)
+        val dailyFixturesState = DailyFixturesState(fixtures = fixturesPerLeague)
 
         val assertions = listOf(
-            com.anonymous.fixtures.FixturesState(),
-            com.anonymous.fixtures.FixturesState(isLoading = true),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(),
+            FixturesState(isLoading = true),
+            FixturesState(
                 isLoading = false,
                 yesterdayFixturesState = dailyFixturesState,
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
                 yesterdayFixturesState = dailyFixturesState,
                 todayFixturesState = dailyFixturesState,
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
                 yesterdayFixturesState = dailyFixturesState,
                 todayFixturesState = dailyFixturesState,
                 tomorrowFixturesState = dailyFixturesState
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
                 yesterdayFixturesState = dailyFixturesState,
                 todayFixturesState = dailyFixturesState,
@@ -80,7 +77,7 @@ class FixturesViewModelTest {
             )
         )
 
-        val intent = com.anonymous.fixtures.FixturesIntent.GetFixtures
+        val intent = FixturesIntent.GetFixtures
         viewModel.intents.send(intent)
 
         assertEquals(assertions.size, states.size)
@@ -92,45 +89,45 @@ class FixturesViewModelTest {
 
     @Test
     fun `getFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getFixturesUseCase = com.anonymous.domain.model.GetFixturesUseCase(FakeFixturesRepository())
-        viewModel = com.anonymous.fixtures.FixturesViewModel(getFixturesUseCase, mapper)
+        getFixturesUseCase = GetFixturesUseCase(FakeFixturesRepository())
+        viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
-        val states = mutableListOf<com.anonymous.fixtures.FixturesState>()
+        val states = mutableListOf<FixturesState>()
 
         viewModel.viewModelScope.launch {
             viewModel.state.toList(states)
         }
 
         val assertions = listOf(
-            com.anonymous.fixtures.FixturesState(),
-            com.anonymous.fixtures.FixturesState(isLoading = true),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(),
+            FixturesState(isLoading = true),
+            FixturesState(
                 isLoading = false,
-                yesterdayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
-                yesterdayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "today fixtures failed!"),
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
-                yesterdayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "today fixtures failed!"),
-                tomorrowFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
             ),
-            com.anonymous.fixtures.FixturesState(
+            FixturesState(
                 isLoading = false,
-                yesterdayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "today fixtures failed!"),
-                tomorrowFixturesState = com.anonymous.ui.model.DailyFixturesState(errorMessage = "tomorrow fixtures failed!"),
-                dayAfterTomorrowFixturesState = com.anonymous.ui.model.DailyFixturesState(
+                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!"),
+                dayAfterTomorrowFixturesState = DailyFixturesState(
                     errorMessage = "dayAfterTomorrow fixtures failed!"
                 ),
             )
         )
 
-        val intent = com.anonymous.fixtures.FixturesIntent.GetFixtures
+        val intent = FixturesIntent.GetFixtures
         viewModel.intents.send(intent)
 
         assertEquals(assertions.size, states.size)
@@ -144,9 +141,9 @@ class FixturesViewModelTest {
         mainCoroutineRule.runBlockingTest {
 
             getFixturesUseCase = mockk()
-            viewModel = com.anonymous.fixtures.FixturesViewModel(getFixturesUseCase, mapper)
+            viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
-            val intent = com.anonymous.fixtures.FixturesIntent.GetFixtures
+            val intent = FixturesIntent.GetFixtures
             viewModel.intents.send(intent)
 
             coVerify { getFixturesUseCase.execute(any()) }

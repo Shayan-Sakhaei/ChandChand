@@ -1,14 +1,13 @@
-package com.android.chandchand.fake
+package com.anonymous.fixtures
 
-import com.android.chandchand.R
-import com.anonymous.ui.model.FixturesPerLeagueModel
-import com.anonymous.ui.model.LeagueModel
-import com.android.data.fixtures.entity.*
 import com.anonymous.data.mapper.FixtureServerEntityMapper
+import com.anonymous.fixtures.model.FixturesPerLeagueModel
+import com.anonymous.fixtures.model.LeagueHeaderModel
+import com.anonymous.network.model.*
 
-object FakeData {
+object Fake {
 
-    private val fixturesMapper = com.anonymous.data.mapper.FixtureServerEntityMapper()
+    private val fixturesMapper = FixtureServerEntityMapper()
 
     private val persianGulfCupFixFixture =
         FixFixtures(
@@ -71,11 +70,11 @@ object FakeData {
         )
 
     val persianGulfCupFixture = fixturesMapper.map(persianGulfCupFixFixture)
-    val premierLeagueFixture = fixturesMapper.map(premierLeagueFixFixture)
+    private val premierLeagueFixture = fixturesMapper.map(premierLeagueFixFixture)
 
     val fixturesPerLeague = listOf(
-        com.anonymous.ui.model.FixturesPerLeagueModel(
-            com.anonymous.ui.model.LeagueModel(
+        FixturesPerLeagueModel(
+            LeagueHeaderModel(
                 R.drawable.ic_persian_gulf_cup_32,
                 R.string.persian_gulf_cup,
                 1
@@ -83,8 +82,8 @@ object FakeData {
             listOf(persianGulfCupFixture),
             true
         ),
-        com.anonymous.ui.model.FixturesPerLeagueModel(
-            com.anonymous.ui.model.LeagueModel(
+        FixturesPerLeagueModel(
+            LeagueHeaderModel(
                 R.drawable.ic_premier_league_32,
                 R.string.english_premier_league,
                 1
