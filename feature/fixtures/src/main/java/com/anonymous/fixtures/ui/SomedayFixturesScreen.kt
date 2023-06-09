@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anonymous.designsystem.component.ChandChandAppBar
 import com.anonymous.fixtures.FixturesIntent
@@ -25,7 +24,7 @@ import com.anonymous.ui.model.DAY
 import com.anonymous.ui.navigation.ChandChandNavigationDestination
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalCoroutinesApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun SomedayFixturesRoute(
     modifier: Modifier = Modifier,

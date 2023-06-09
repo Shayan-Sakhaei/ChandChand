@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anonymous.designsystem.component.ChandChandAppBar
 import com.anonymous.fixtures.LiveFixturesIntent
@@ -24,7 +23,7 @@ import com.anonymous.fixtures.R
 import com.anonymous.fixtures.model.LiveFixturesPerLeagueModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalCoroutinesApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun LiveFixturesRoute(
     modifier: Modifier = Modifier,

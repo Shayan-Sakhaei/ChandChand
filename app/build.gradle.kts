@@ -42,8 +42,10 @@ android {
         compose = true
     }
 
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion =
+            libs.findVersion("androidxComposeCompiler").get().toString()
     }
 
     compileOptions {
@@ -58,6 +60,7 @@ android {
 
     testOptions.unitTests.isIncludeAndroidResources = true
     testOptions.unitTests.isReturnDefaultValues = true
+    namespace = "com.android.chandchand"
 
     hilt {
         enableAggregatingTask = true
@@ -65,6 +68,15 @@ android {
 }
 
 dependencies {
+
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 
     implementation(project(":core:common"))
     implementation(project(":core:ui"))

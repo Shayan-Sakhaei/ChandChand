@@ -21,7 +21,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anonymous.designsystem.component.ChandChandAppBar
 import com.anonymous.designsystem.theme.ChandChandTheme
@@ -44,7 +43,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoroutinesApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun FixturesRoute(
     modifier: Modifier = Modifier,
@@ -157,6 +156,7 @@ fun FixturesScreen(
                         }
                     )
                 }
+
                 1 -> {
                     FixturesPerDay(
                         fixtures = state.todayFixturesState.fixtures,
@@ -177,6 +177,7 @@ fun FixturesScreen(
                         }
                     )
                 }
+
                 2 -> {
                     FixturesPerDay(
                         fixtures = state.tomorrowFixturesState.fixtures,
@@ -197,6 +198,7 @@ fun FixturesScreen(
                         }
                     )
                 }
+
                 3 -> {
                     FixturesPerDay(
                         fixtures = state.dayAfterTomorrowFixturesState.fixtures,

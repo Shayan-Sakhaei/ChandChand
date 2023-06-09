@@ -1,7 +1,6 @@
 rootProject.name = "ChandChand"
 include(":app")
 include(":benchmark")
-enableFeaturePreview("VERSION_CATALOGS")
 
 include(":core:common")
 include(":core:data")

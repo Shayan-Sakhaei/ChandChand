@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anonymous.data.model.StandingEntity
 import com.anonymous.designsystem.component.ChandChandAppBar
@@ -29,10 +28,7 @@ import com.anonymous.leagues.StandingsState
 import com.anonymous.leagues.StandingsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(
-    ExperimentalCoroutinesApi::class,
-    ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun StandingsRoute(
     modifier: Modifier = Modifier,

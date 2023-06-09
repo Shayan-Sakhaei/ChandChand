@@ -10,12 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.anonymous.designsystem.component.ChandChandAppBar
-import com.anonymous.fixtures.*
+import com.anonymous.fixtures.HomeAway
+import com.anonymous.fixtures.PredictionsIntent
+import com.anonymous.fixtures.PredictionsState
+import com.anonymous.fixtures.PredictionsViewModel
+import com.anonymous.fixtures.R
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun PredictionsRoute(
     modifier: Modifier = Modifier,
