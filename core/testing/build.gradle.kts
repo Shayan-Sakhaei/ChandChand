@@ -40,6 +40,7 @@ dependencies {
     api(libs.junit)
     api(libs.androidx.test.core.ktx)
     api(libs.kotlinx.coroutines.test)
+    api(libs.turbine)
 
     api(libs.androidx.test.espresso.core)
     api(libs.androidx.test.espresso.idling.resource)

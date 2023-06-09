@@ -1,18 +1,20 @@
 package com.anonymous.fixtures
 
-import androidx.lifecycle.viewModelScope
+import app.cash.turbine.test
+import com.anonymous.data.model.LiveFixtureEntities
+import com.anonymous.data.model.LiveFixtureEntity
+import com.anonymous.data.model.LiveFixtureEventsEntity
 import com.anonymous.data.repository.fake.test.FakeFixturesRepository
 import com.anonymous.domain.model.GetLiveFixturesUseCase
 import com.anonymous.fixtures.mapper.LiveFixtureEntityUiMapper
 import com.anonymous.fixtures.model.LiveFixturesPerLeagueModels
-import com.anonymous.testing.MainCoroutineRule
+import com.anonymous.testing.MainDispatcherRule
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +23,7 @@ import org.junit.Test
 class LiveFixturesViewModelTest {
 
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var getLiveFixturesUseCase: GetLiveFixturesUseCase
     private lateinit var mapper: LiveFixtureEntityUiMapper
@@ -32,86 +34,75 @@ class LiveFixturesViewModelTest {
         mapper = LiveFixtureEntityUiMapper()
     }
 
+
     @Test
-    fun `getLiveFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
+    fun `getLiveFixtures Happy Path`() = runTest {
         getLiveFixturesUseCase = GetLiveFixturesUseCase(
             FakeFixturesRepository(liveFixtures = fakeLiveFixtureEntities)
         )
         viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
 
-        val states = mutableListOf<LiveFixturesState>()
+        viewModel.state.test {
 
-        viewModel.viewModelScope.launch {
-            viewModel.state.toList(states)
-        }
-
-        val liveFixturesPerLeague: LiveFixturesPerLeagueModels =
-            mapper.map(fakeLiveFixtureEntities)
-
-        val assertions = listOf(
-            LiveFixturesState(),
-            LiveFixturesState(isLoading = true),
-            LiveFixturesState(
-                isLoading = false,
-                liveFixtures = liveFixturesPerLeague
-            )
-        )
-
-        val intent = LiveFixturesIntent.GetLiveFixtures
-        viewModel.intents.send(intent)
-
-        Assert.assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
-        }
-    }
-
-
-    @Test
-    fun `getLiveFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getLiveFixturesUseCase =
-            GetLiveFixturesUseCase(FakeFixturesRepository())
-        viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
-
-        val states = mutableListOf<LiveFixturesState>()
-
-        viewModel.viewModelScope.launch {
-            viewModel.state.toList(states)
-        }
-
-        val assertions = listOf(
-            LiveFixturesState(),
-            LiveFixturesState(isLoading = true),
-            LiveFixturesState(isLoading = false, errorMessage = "failed!")
-        )
-
-        val intent = LiveFixturesIntent.GetLiveFixtures
-        viewModel.intents.send(intent)
-
-        Assert.assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            Assert.assertEquals(assertion, state)
-        }
-    }
-
-
-    @Test
-    fun `getLiveFixtures should invoke GetLiveFixturesUseCase`() =
-        mainCoroutineRule.runBlockingTest {
-
-            getLiveFixturesUseCase = mockk()
-            viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+            val liveFixturesPerLeague: LiveFixturesPerLeagueModels =
+                mapper.map(fakeLiveFixtureEntities)
 
             val intent = LiveFixturesIntent.GetLiveFixtures
             viewModel.intents.send(intent)
 
-            coVerify { getLiveFixturesUseCase.execute() }
+            assertEquals(LiveFixturesState(), awaitItem())
+
+            assertEquals(LiveFixturesState(isLoading = true), awaitItem())
+
+            assertEquals(
+                LiveFixturesState(
+                    isLoading = false, liveFixtures = liveFixturesPerLeague
+                ), awaitItem()
+            )
         }
+    }
+
+
+    @Test
+    fun `getLiveFixtures Unhappy Path`() = runTest {
+        getLiveFixturesUseCase = GetLiveFixturesUseCase(FakeFixturesRepository())
+        viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+
+        val intent = LiveFixturesIntent.GetLiveFixtures
+        viewModel.intents.send(intent)
+
+        viewModel.state.test {
+
+            assertEquals(LiveFixturesState(), awaitItem())
+
+            assertEquals(LiveFixturesState(isLoading = true), awaitItem())
+
+            assertEquals(
+                LiveFixturesState(isLoading = false, errorMessage = "failed!"),
+                awaitItem()
+            )
+        }
+    }
+
+
+    @Test
+    fun `getLiveFixtures should invoke GetLiveFixturesUseCase`() = runTest {
+
+        getLiveFixturesUseCase = mockk()
+        viewModel = LiveFixturesViewModel(getLiveFixturesUseCase, mapper)
+
+        val intent = LiveFixturesIntent.GetLiveFixtures
+        viewModel.intents.send(intent)
+
+        advanceUntilIdle()
+
+        coVerify { getLiveFixturesUseCase.execute() }
+    }
 }
 
-private val fakeLiveFixtureEntities = com.anonymous.data.model.LiveFixtureEntities(
+private val fakeLiveFixtureEntities = LiveFixtureEntities(
     1, listOf(
-        com.anonymous.data.model.LiveFixtureEntity(
+        LiveFixtureEntity(
             836275,
             4067,
             "J. League Div.1",
@@ -138,7 +129,7 @@ private val fakeLiveFixtureEntities = com.anonymous.data.model.LiveFixtureEntiti
             null,
             null,
             listOf(
-                com.anonymous.data.model.LiveFixtureEventsEntity(
+                LiveFixtureEventsEntity(
                     39,
                     null,
                     280,

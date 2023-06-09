@@ -1,17 +1,17 @@
 package com.anonymous.fixtures
 
-import androidx.lifecycle.viewModelScope
+import app.cash.turbine.test
+import com.anonymous.data.model.FixtureEntity
 import com.anonymous.data.repository.fake.test.FakeFixturesRepository
 import com.anonymous.domain.model.GetFixturesUseCase
 import com.anonymous.fixtures.mapper.FixtureEntityUiMapper
 import com.anonymous.fixtures.model.FixturesPerLeagueModel
-import com.anonymous.testing.MainCoroutineRule
+import com.anonymous.testing.MainDispatcherRule
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -21,7 +21,7 @@ import org.junit.Test
 class FixturesViewModelTest {
 
     @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
+    var mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var getFixturesUseCase: GetFixturesUseCase
     private lateinit var mapper: FixtureEntityUiMapper
@@ -33,7 +33,7 @@ class FixturesViewModelTest {
     }
 
     @Test
-    fun `getFixtures Happy Path`() = mainCoroutineRule.runBlockingTest {
+    fun `getFixtures Happy Path`() = runTest {
         getFixturesUseCase = GetFixturesUseCase(
             FakeFixturesRepository(
                 fixtures = fakeFixtureEntities
@@ -41,119 +41,127 @@ class FixturesViewModelTest {
         )
         viewModel = FixturesViewModel(getFixturesUseCase, mapper)
 
-        val states = mutableListOf<FixturesState>()
+        viewModel.state.test {
 
-        viewModel.viewModelScope.launch {
-            viewModel.state.toList(states)
-        }
-
-        val fixturesPerLeague: List<FixturesPerLeagueModel> = mapper.map(fakeFixtureEntities)
-        val dailyFixturesState = DailyFixturesState(fixtures = fixturesPerLeague)
-
-        val assertions = listOf(
-            FixturesState(),
-            FixturesState(isLoading = true),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = dailyFixturesState,
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = dailyFixturesState,
-                todayFixturesState = dailyFixturesState,
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = dailyFixturesState,
-                todayFixturesState = dailyFixturesState,
-                tomorrowFixturesState = dailyFixturesState
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = dailyFixturesState,
-                todayFixturesState = dailyFixturesState,
-                tomorrowFixturesState = dailyFixturesState,
-                dayAfterTomorrowFixturesState = dailyFixturesState,
-            )
-        )
-
-        val intent = FixturesIntent.GetFixtures
-        viewModel.intents.send(intent)
-
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
-    }
-
-
-    @Test
-    fun `getFixtures Unhappy Path`() = mainCoroutineRule.runBlockingTest {
-        getFixturesUseCase = GetFixturesUseCase(FakeFixturesRepository())
-        viewModel = FixturesViewModel(getFixturesUseCase, mapper)
-
-        val states = mutableListOf<FixturesState>()
-
-        viewModel.viewModelScope.launch {
-            viewModel.state.toList(states)
-        }
-
-        val assertions = listOf(
-            FixturesState(),
-            FixturesState(isLoading = true),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
-                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
-            ),
-            FixturesState(
-                isLoading = false,
-                yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
-                todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
-                tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!"),
-                dayAfterTomorrowFixturesState = DailyFixturesState(
-                    errorMessage = "dayAfterTomorrow fixtures failed!"
-                ),
-            )
-        )
-
-        val intent = FixturesIntent.GetFixtures
-        viewModel.intents.send(intent)
-
-        assertEquals(assertions.size, states.size)
-        assertions.zip(states) { assertion, state ->
-            assertEquals(assertion, state)
-        }
-    }
-
-    @Test
-    fun `getFixtures should invoke GetFixturesUseCase`() =
-        mainCoroutineRule.runBlockingTest {
-
-            getFixturesUseCase = mockk()
-            viewModel = FixturesViewModel(getFixturesUseCase, mapper)
+            val fixturesPerLeague: List<FixturesPerLeagueModel> = mapper.map(fakeFixtureEntities)
+            val dailyFixturesState = DailyFixturesState(fixtures = fixturesPerLeague)
 
             val intent = FixturesIntent.GetFixtures
             viewModel.intents.send(intent)
 
-            coVerify { getFixturesUseCase.execute(any()) }
+            assertEquals(FixturesState(), awaitItem())
+
+            assertEquals(FixturesState(isLoading = true), awaitItem())
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = dailyFixturesState,
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = dailyFixturesState,
+                    todayFixturesState = dailyFixturesState,
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = dailyFixturesState,
+                    todayFixturesState = dailyFixturesState,
+                    tomorrowFixturesState = dailyFixturesState
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = dailyFixturesState,
+                    todayFixturesState = dailyFixturesState,
+                    tomorrowFixturesState = dailyFixturesState,
+                    dayAfterTomorrowFixturesState = dailyFixturesState,
+                ), awaitItem()
+            )
         }
+    }
+
+
+    @Test
+    fun `getFixtures Unhappy Path`() = runTest {
+        getFixturesUseCase = GetFixturesUseCase(FakeFixturesRepository())
+        viewModel = FixturesViewModel(getFixturesUseCase, mapper)
+
+        viewModel.state.test {
+
+            val intent = FixturesIntent.GetFixtures
+            viewModel.intents.send(intent)
+
+            assertEquals(FixturesState(), awaitItem())
+
+            assertEquals(FixturesState(isLoading = true), awaitItem())
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                    todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                    todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                    tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!")
+                ), awaitItem()
+            )
+
+            assertEquals(
+                FixturesState(
+                    isLoading = false,
+                    yesterdayFixturesState = DailyFixturesState(errorMessage = "yesterday fixtures failed!"),
+                    todayFixturesState = DailyFixturesState(errorMessage = "today fixtures failed!"),
+                    tomorrowFixturesState = DailyFixturesState(errorMessage = "tomorrow fixtures failed!"),
+                    dayAfterTomorrowFixturesState = DailyFixturesState(
+                        errorMessage = "dayAfterTomorrow fixtures failed!"
+                    )
+                ), awaitItem()
+            )
+        }
+    }
+
+
+    @Test
+    fun `getFixtures should invoke GetFixturesUseCase`() = runTest {
+
+        getFixturesUseCase = mockk()
+        viewModel = FixturesViewModel(getFixturesUseCase, mapper)
+
+        val intent = FixturesIntent.GetFixtures
+        viewModel.intents.send(intent)
+
+        advanceUntilIdle()
+
+        coVerify { getFixturesUseCase.execute(any()) }
+    }
 }
 
 private val fakeFixtureEntities = listOf(
-    com.anonymous.data.model.FixtureEntity(
+    FixtureEntity(
         844125,
-        3935,
+        4640,
         "Persian Gulf Cup",
         "Iran",
         "https://media.api-sports.io/football/leagues/290.png",
