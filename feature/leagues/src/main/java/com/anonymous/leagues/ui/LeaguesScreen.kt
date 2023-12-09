@@ -57,31 +57,31 @@ val leaguesTitleList =
         LeagueTitleModel(
             R.string.persian_gulf_cup,
             R.drawable.ic_persian_gulf_cup_32,
-            4640
+            5505
         ),
         LeagueTitleModel(
             R.string.english_premier_league,
             R.drawable.ic_premier_league_32,
-            4335
+            5267
         ),
         LeagueTitleModel(
             R.string.spanish_la_liga,
             R.drawable.ic_la_liga_32,
-            4378
+            5284
         ),
         LeagueTitleModel(
             R.string.italian_serie_a,
             R.drawable.ic_serie_a_32,
-            4399
+            5367
         ),
         LeagueTitleModel(
             R.string.german_bundesliga_1,
             R.drawable.ic_bundesliga_32,
-            4346
+            5347
         ),
         LeagueTitleModel(
             R.string.french_ligue_1,
             R.drawable.ic_ligue_1_32,
-            4347
+            5322
         )
     )

@@ -12,7 +12,7 @@ interface FixturesApi {
         @Path("date") date: String
     ): Result<FixturesServerModel>
 
-    @GET("fixtures/live/4640-4335-4378-4399-4346-4347")
+    @GET("fixtures/live/5505-5267-5284-5367-5347-5322")
     suspend fun getAllLiveFixtures(
     ): Result<LiveFixturesServerModel>
 }
